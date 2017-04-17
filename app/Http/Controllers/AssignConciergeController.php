@@ -25,7 +25,7 @@ class AssignConciergeController extends Controller
      */
     public function index()
     {
-      $selectDataUser = DB::table('listaruserreportes')->orderBy('id', 'asc')->get();
+      $selectDataUser = DB::table('ListarUserReportes')->orderBy('id', 'asc')->get();
       return view('assign.assign', compact('selectDataUser'));
       //return view('assign.assign');
     }

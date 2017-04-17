@@ -85,8 +85,8 @@
                             <select id="selectEditPriv" name="selectEditPriv"  class="form-control" required>
         				                <option value="">{{ trans('message.selectopt') }}</option>
         				                <option value="Admin">{{ trans('message.priv_one') }}</option>
-                                <option value="Programador">{{ trans('message.privIT') }}</option>
-                                <option value="IT">{{ trans('message.priv_IT') }}</option>
+                                <option value="Programador">{{ trans('message.priv_two') }}</option>
+                                <option value="IT">{{ trans('message.privIT') }}</option>
                                 <option value="Cliente">{{ trans('message.priv_four') }}</option>
         				            </select>
                           </div>
