@@ -61,9 +61,6 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/config_two_ed', 'UserController@edit');
 	 Route::post('/config_two_exit', 'UserController@editDos');
 	 Route::post('/config_two_sobre', 'UserController@update');
-
-
-
-
-
+	 //Captura por medio de SNMP
+	 Route::post('/generateSNMP', 'GenerateController@rdata');
 });
