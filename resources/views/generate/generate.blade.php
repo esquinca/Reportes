@@ -12,7 +12,9 @@
   <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
   <script src="/js/generate/generate.js"></script>
   @endpush
+
   @section('main-content')
+
   <section class="content">
 
   <!-- SELECT2 EXAMPLE -->
@@ -27,17 +29,30 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
+      <!-- row -->
       <div class="row">
-                <!-- /.col -->
+        <div class="col-sm-12">
+           {{ csrf_field() }}
+          <form class="form-inline">
+            <div>
+              <div class="form-group">
+                <label for="select_one">Seleccione el Hotel: </label>
+                <select class="form-control select2" id="select_one">
+                  <option value="" selected>{{ trans('message.optionOne')}}</option>
+                  @foreach ($selectDatahotel as $info)
+                  <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                  @endforeach
+                </select>
+              </div>
+              <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> Generar</a>
+            </div>
+          </form>
+        </div>
       </div>
       <!-- /.row -->
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
-      <!--
-      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
-      the plugin.
-      --->
     </div>
   </div>
 </section>

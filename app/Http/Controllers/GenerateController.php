@@ -22,7 +22,7 @@ class GenerateController extends Controller
         $ID = Auth::user()->id;
         $correo = Auth::user()->email;
         $priv = Auth::user()->Privilegio;
-            
+
         if($priv == 'Cliente'){
             $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
             if ($exitecliente != 0) {
@@ -41,13 +41,31 @@ class GenerateController extends Controller
             else {
                 /*SI existe no existe en la lista de clientes*/
                 $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
-                return view('generate.generate', compact('selectDatahotel'));   
+                return view('generate.generate', compact('selectDatahotel'));
             }
         }
         if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
             $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
-            return view('generate.generate', compact('selectDatahotel'));          
-        }        
+            return view('generate.generate', compact('selectDatahotel'));
+        }
+    }
+
+    public function rdata(Request $request)
+    {
+      $id= $request->ident;
+      $countreg= DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->count();
+      $address_IP=DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->pluck('ip');
+
+      //print_r($address_IP[0]);
+
+      for ($i=0; $i < $countreg; $i++) {
+          //echo ${"var" . $i} = $address_IP[$i];
+          echo ${"snmp_a_" . $i} = snmp2_real_walk($address_IP[$i], "public", "RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName");
+          echo "/";
+          //$sysname_$i = snmp2_real_walk("172.200.0.2:160", "public", "RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName");
+      }
+
+      return $countreg;
     }
 
     /**
