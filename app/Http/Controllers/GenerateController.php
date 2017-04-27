@@ -59,13 +59,62 @@ class GenerateController extends Controller
 
       for ($i=0; $i < $countreg; $i++) {
         //System Name
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName'));//Nombre del sistema
+         ${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName');//Nombre del sistema
+         ${"snmp_a".$i}= array_shift(${"snmp_a".$i});
+         ${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
+         echo ${"snmp_a".$i}[1];// Nombre sin tanto caracter
+         echo "/";
+         
+         ${"snmp_b".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemIPAddr');//IP del sistema
+         ${"snmp_b".$i}= array_shift(${"snmp_b".$i});
+         ${"snmp_b".$i}= explode(': ', ${"snmp_b".$i});
+         echo ${"snmp_b".$i}[1];// IP del sistema sin tanto caracter
+         echo "/";
+         
+         ${"snmp_c".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMacAddr');// MAC
+         ${"snmp_c".$i}= array_shift(${"snmp_c".$i});
+         ${"snmp_c".$i}= explode(': ', ${"snmp_c".$i});
+         echo ${"snmp_c".$i}[1];// MAC sin tanto caracter
+         echo "/";
+         
+         ${"snmp_d".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemModel');// Model
+         ${"snmp_d".$i}= array_shift(${"snmp_d".$i});
+         ${"snmp_d".$i}= explode(': ', ${"snmp_d".$i});
+         echo ${"snmp_d".$i}[1];// Model sin tanto caracter
+         echo "/";
+         
+         ${"snmp_e".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumAP');// Number of APs
+         ${"snmp_e".$i}= array_shift(${"snmp_e".$i});
+         ${"snmp_e".$i}= explode(': ', ${"snmp_e".$i});
+         echo ${"snmp_e".$i}[1];// Number of APs sin tanto caracter
+         echo "/";
+         
+         ${"snmp_f".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta');// Number of authorized client devices
+         ${"snmp_f".$i}= array_shift(${"snmp_f".$i});
+         ${"snmp_f".$i}= explode(': ', ${"snmp_f".$i});
+         echo ${"snmp_f".$i}[1];// Number of authorized client devices sin tanto caracter
+         echo "/";
+         
+         ${"snmp_g".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumRogue');// Number of rogue device
+         ${"snmp_g".$i}= array_shift(${"snmp_g".$i});
+         ${"snmp_g".$i}= explode(': ', ${"snmp_g".$i});
+         echo ${"snmp_g".$i}[1];//Number of rogue device sin tanto caracter
+         echo "/";
+         
+         ${"snmp_h".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsAllNumSta');//NUmber of All client devices
+         ${"snmp_h".$i}= array_shift(${"snmp_h".$i});
+         ${"snmp_h".$i}= explode(': ', ${"snmp_h".$i});
+         echo ${"snmp_h".$i}[1];//NUmber of All client devices sin tanto caracter
+         echo "/";
+         
+/*
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemIPAddr'));//IP del sistema
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMacAddr'));//MAC
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemUptime'));//uptime
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemModel'));//Model
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemLicensedAPs'));//Licensed APS
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMaxSta'));//Max Stations
+
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemSerialNumber'));//Serial Number
 
         //Devices Overview
@@ -73,7 +122,7 @@ class GenerateController extends Controller
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta'));//Number of authorized client devices
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumRogue'));//Number of rogue device
         print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsAllNumSta'));//NUmber of All client devices
-
+*/
       }
       /*
       $snm= snmp2_real_walk('172.200.0.2', 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName');
