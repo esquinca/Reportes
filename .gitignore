@@ -1,3 +1,4 @@
+/config/mail.php
 /vendor
 /node_modules
 /public/storage
