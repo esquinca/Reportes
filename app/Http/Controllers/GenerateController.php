@@ -52,19 +52,33 @@ class GenerateController extends Controller
 
     public function rdata(Request $request)
     {
-      $id= $request->ident;
+      $id = $request->ident;
       $countreg= DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->count();
-      $address_IP=DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->pluck('ip');
+      $address_ip= DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->pluck('ip');
 
-      //print_r($address_IP[0]);
 
       for ($i=0; $i < $countreg; $i++) {
-          //echo ${"var" . $i} = $address_IP[$i];
-          echo ${"snmp_a_" . $i} = snmp2_real_walk($address_IP[$i], "public", "RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName");
-          echo "/";
-          //$sysname_$i = snmp2_real_walk("172.200.0.2:160", "public", "RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName");
-      }
+        //System Name
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName'));//Nombre del sistema
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemIPAddr'));//IP del sistema
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMacAddr'));//MAC
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemUptime'));//uptime
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemModel'));//Model
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemLicensedAPs'));//Licensed APS
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMaxSta'));//Max Stations
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemSerialNumber'));//Serial Number
 
+        //Devices Overview
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumAP'));//Number of APs
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta'));//Number of authorized client devices
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumRogue'));//Number of rogue device
+        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsAllNumSta'));//NUmber of All client devices
+
+      }
+      /*
+      $snm= snmp2_real_walk('172.200.0.2', 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName');
+      print_r($snm);
+      */
       return $countreg;
     }
 
