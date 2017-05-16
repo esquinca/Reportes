@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use DB;
+
+use Auth;
+
 class ViewReportsController extends Controller
 {
     /**
@@ -15,9 +19,50 @@ class ViewReportsController extends Controller
      */
     public function index()
     {
-      return view('viewreport.viewreports');
+      $ID = Auth::user()->id;
+      $correo = Auth::user()->email;
+      $priv = Auth::user()->Privilegio;
+
+      if($priv == 'Cliente'){
+          $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+          if ($exitecliente != 0) {
+              /*SI existe*/
+              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+              return view('viewreport.viewreports', compact('selectDatahotel'));
+          }
+      }
+      if($priv == 'IT'){
+          $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+          if ($exiteClienteVer != 0) {
+              /*SI existe este en la lista de clientes*/
+              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+              return view('viewreport.viewreports', compact('selectDatahotel'));
+          }
+          else {
+              /*SI existe no existe en la lista de clientes*/
+              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
+              return view('viewreport.viewreports', compact('selectDatahotel'));
+          }
+      }
+      if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
+          $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+          return view('viewreport.viewreports', compact('selectDatahotel'));
+      }
     }
 
+    public function typerep(Request $request)
+    {
+      $value= $request->numero;
+      $selectnivel= DB::table('NivelReporte')->select('id','nivel')->where('hotels_id', '=', $value)->get();
+      return json_encode($selectnivel);
+
+    }
+    public function tableShowComp (Request $request)
+    {
+        $value= $request->numero;
+        $resultado= DB::table('vComparativo')->orderBy('Mes', 'desc')->where('hotels_id', '=', $value)->get();
+        return json_encode($resultado);
+    }
     /**
      * Show the form for creating a new resource.
      *
