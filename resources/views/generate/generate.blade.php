@@ -75,11 +75,11 @@
         <div class="form-group row">
           <div class="col-xs-2">
             <label for="userxday">Numero Total de usuarios</label>
-            <input class="form-control" id="userxday" type="text">
+            <input class="form-control" name="userxday" id="userxday" type="text">
           </div>
           <div class="col-xs-3">
             <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
-            <input class="form-control" id="gigxday" type="text">
+            <input class="form-control" name="gigxday" id="gigxday" type="text">
           </div>
           <div class="form-group">
             <label for="fecha_nueva">Fecha: </label>

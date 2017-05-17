@@ -54,56 +54,52 @@ class GenerateController extends Controller
     {
         $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
+
         $id_hotel = $request->get('idhotel');
+        $usuariosxdia = $request->input('userxday');
+        $giga = $request->input('gigxday');
+
         $fechaInput = $request->input('fecha_nueva');
-
         $numMes = date ("m", strtotime($fechaInput));
-
         $year = date ("Y", strtotime($fechaInput));
 
         $mesyear = $meses[$numMes-1].' '. $year;
         
 
+        $mac1 = $request->input('mac1');
+        $modelo1 = $request->input('modelo1');
+        $cliente1 = $request->input('cliente1');
+        $mac2 = $request->input('mac2');
+        $modelo2 = $request->input('modelo2');
+        $cliente2 = $request->input('cliente2');
+        $mac3 = $request->input('mac3');
+        $modelo3 = $request->input('modelo3');
+        $cliente3 = $request->input('cliente3');
+        $mac4 = $request->input('mac4');
+        $modelo4 = $request->input('modelo4');
+        $cliente4 = $request->input('cliente4');
+        $mac5 = $request->input('mac5');
+        $modelo5 = $request->input('modelo5');
+        $cliente5 = $request->input('cliente5');
 
-
-        // $user = $request->input('userxday');
-        // $giga = $request->input('gigxday');
-
-
-        // $mac1 = $request->input('mac1');
-        // $modelo1 = $request->input('modelo1');
-        // $cliente1 = $request->input('cliente1');
-        // $mac2 = $request->input('mac2');
-        // $modelo2 = $request->input('modelo2');
-        // $cliente2 = $request->input('cliente2');
-        // $mac3 = $request->input('mac3');
-        // $modelo3 = $request->input('modelo3');
-        // $cliente3 = $request->input('cliente3');
-        // $mac4 = $request->input('mac4');
-        // $modelo4 = $request->input('modelo4');
-        // $cliente4 = $request->input('cliente4');
-        // $mac5 = $request->input('mac5');
-        // $modelo5 = $request->input('modelo5');
-        // $cliente5 = $request->input('cliente5');
-
-        // $nombre1 = $request->input('nombre1');
-        // $clientew1 = $request->input('clientew1');
-        // $nombre2 = $request->input('nombre2');
-        // $clientew2 = $request->input('clientew2');
-        // $nombre3 = $request->input('nombre3');
-        // $clientew3 = $request->input('clientew3');
-        // $nombre4 = $request->input('nombre4');
-        // $clientew4 = $request->input('clientew4');
-        // $nombre5 = $request->input('nombre5');
-        // $clientew5 = $request->input('clientew5');
+        $nombre1 = $request->input('nombre1');
+        $clientew1 = $request->input('clientew1');
+        $nombre2 = $request->input('nombre2');
+        $clientew2 = $request->input('clientew2');
+        $nombre3 = $request->input('nombre3');
+        $clientew3 = $request->input('clientew3');
+        $nombre4 = $request->input('nombre4');
+        $clientew4 = $request->input('clientew4');
+        $nombre5 = $request->input('nombre5');
+        $clientew5 = $request->input('clientew5');
 
         // DB::beginTransaction();
-        //     DB::table('UsuariosXDia')->insert([
-        //         ['NumClientes', 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => ]
-        //     ]);
+        // DB::table('UsuariosXDia')->insert([
+        //     ['NumClientes' => $userxdia, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+        // ]);
         // DB::commit();
 
-        return $fechaInput;
+        return $usuariosxdia;
     }
 
     /**
