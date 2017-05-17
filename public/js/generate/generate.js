@@ -1,7 +1,13 @@
 $(function() {
 	$(".select2").select2();
 });
+$('#fecha_nueva').datepicker({
+    format: "dd-mm-yyyy",
 
+    //startDate: '0m',
+    //endDate: '0m',
+    autoclose: true
+});
 function validarSelect(campo) {
   if (campo != '') {
     select=document.getElementById(campo).selectedIndex;
