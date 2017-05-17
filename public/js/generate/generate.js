@@ -2,7 +2,7 @@ $(function() {
 	$(".select2").select2();
 });
 $('#fecha_nueva').datepicker({
-    format: "dd-mm-yyyy",
+    format: "yyyy-mm-dd",
 
     //startDate: '0m',
     //endDate: '0m',

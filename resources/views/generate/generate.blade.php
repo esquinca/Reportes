@@ -46,8 +46,8 @@
               </div>
 
               <div class="form-group">
-                <label for="fecha_nueva">Fecha: </label>
-                <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+                <label for="fecha_nueva2">Fecha: </label>
+                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
               </div>
 
               <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> Generar</a>
@@ -67,18 +67,23 @@
     <div class="box-header with-border">
       <h3 class="box-title">Capturar</h3>
     </div>
+
     <!-- /.box-header -->
     <!-- form start -->
     <form class="form-horizontal">
       <div class="box-body">
         <div class="form-group row">
           <div class="col-xs-2">
-            <label for="ex1">Numero Total de usuarios</label>
-            <input class="form-control" id="ex1" type="text">
+            <label for="userxday">Numero Total de usuarios</label>
+            <input class="form-control" id="userxday" type="text">
           </div>
           <div class="col-xs-3">
-            <label for="ex2">Numero de Gigabytes transmitidos 24hrs</label>
-            <input class="form-control" id="ex2" type="text">
+            <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
+            <input class="form-control" id="gigxday" type="text">
+          </div>
+          <div class="form-group">
+            <label for="fecha_nueva">Fecha: </label>
+            <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
           </div>
         </div>
 
