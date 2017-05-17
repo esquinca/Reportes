@@ -58,6 +58,8 @@ class roguedevices extends Command
         ${"snmp_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
         ${"snmp_d".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
 
+        DB::beginTransaction();
+
         for ($a=0; $a < $contar_reg; $a++) {
 
         /*
@@ -95,6 +97,9 @@ class roguedevices extends Command
             next(${"snmp_c".$i}); //Este es para que avance la key en el array
             next(${"snmp_d".$i}); //Este es para que avance la key en el array
         }
+
+        DB::commit();
+
       }
         $this->info('Successfull registered rogue devices!');
     }

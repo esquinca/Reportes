@@ -52,83 +52,58 @@ class GenerateController extends Controller
 
     public function rdata(Request $request)
     {
-      $id = $request->ident;
-      $countreg= DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->count();
-      $address_ip= DB::table('zonedirect_ip')->where('id_hotel', '=', $id)->pluck('ip');
+        $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+
+        $id_hotel = $request->get('idhotel');
+        $fechaInput = $request->input('fecha_nueva');
+
+        $numMes = date ("m", strtotime($fechaInput));
+
+        $year = date ("Y", strtotime($fechaInput));
+
+        $mesyear = $meses[$numMes-1].' '. $year;
+        
 
 
-      for ($i=0; $i < $countreg; $i++) {
-        //System Name
-         ${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName');//Nombre del sistema
-         ${"snmp_a".$i}= array_shift(${"snmp_a".$i});
-         ${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
-         echo ${"snmp_a".$i}[1];// Nombre sin tanto caracter
-         echo "/";
-         
-         ${"snmp_b".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemIPAddr');//IP del sistema
-         ${"snmp_b".$i}= array_shift(${"snmp_b".$i});
-         ${"snmp_b".$i}= explode(': ', ${"snmp_b".$i});
-         echo ${"snmp_b".$i}[1];// IP del sistema sin tanto caracter
-         echo "/";
-         
-         ${"snmp_c".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMacAddr');// MAC
-         ${"snmp_c".$i}= array_shift(${"snmp_c".$i});
-         ${"snmp_c".$i}= explode(': ', ${"snmp_c".$i});
-         echo ${"snmp_c".$i}[1];// MAC sin tanto caracter
-         echo "/";
-         
-         ${"snmp_d".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemModel');// Model
-         ${"snmp_d".$i}= array_shift(${"snmp_d".$i});
-         ${"snmp_d".$i}= explode(': ', ${"snmp_d".$i});
-         echo ${"snmp_d".$i}[1];// Model sin tanto caracter
-         echo "/";
-         
-         ${"snmp_e".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumAP');// Number of APs
-         ${"snmp_e".$i}= array_shift(${"snmp_e".$i});
-         ${"snmp_e".$i}= explode(': ', ${"snmp_e".$i});
-         echo ${"snmp_e".$i}[1];// Number of APs sin tanto caracter
-         echo "/";
-         
-         ${"snmp_f".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta');// Number of authorized client devices
-         ${"snmp_f".$i}= array_shift(${"snmp_f".$i});
-         ${"snmp_f".$i}= explode(': ', ${"snmp_f".$i});
-         echo ${"snmp_f".$i}[1];// Number of authorized client devices sin tanto caracter
-         echo "/";
-         
-         ${"snmp_g".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumRogue');// Number of rogue device
-         ${"snmp_g".$i}= array_shift(${"snmp_g".$i});
-         ${"snmp_g".$i}= explode(': ', ${"snmp_g".$i});
-         echo ${"snmp_g".$i}[1];//Number of rogue device sin tanto caracter
-         echo "/";
-         
-         ${"snmp_h".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsAllNumSta');//NUmber of All client devices
-         ${"snmp_h".$i}= array_shift(${"snmp_h".$i});
-         ${"snmp_h".$i}= explode(': ', ${"snmp_h".$i});
-         echo ${"snmp_h".$i}[1];//NUmber of All client devices sin tanto caracter
-         echo "/";
-         
-/*
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemIPAddr'));//IP del sistema
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMacAddr'));//MAC
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemUptime'));//uptime
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemModel'));//Model
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemLicensedAPs'));//Licensed APS
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemMaxSta'));//Max Stations
 
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemSerialNumber'));//Serial Number
+        // $user = $request->input('userxday');
+        // $giga = $request->input('gigxday');
 
-        //Devices Overview
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumAP'));//Number of APs
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta'));//Number of authorized client devices
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumRogue'));//Number of rogue device
-        print_r(${"snmp_a".$i}= snmp2_real_walk($address_ip[$i], 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsAllNumSta'));//NUmber of All client devices
-*/
-      }
-      /*
-      $snm= snmp2_real_walk('172.200.0.2', 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemName');
-      print_r($snm);
-      */
-      return $countreg;
+
+        // $mac1 = $request->input('mac1');
+        // $modelo1 = $request->input('modelo1');
+        // $cliente1 = $request->input('cliente1');
+        // $mac2 = $request->input('mac2');
+        // $modelo2 = $request->input('modelo2');
+        // $cliente2 = $request->input('cliente2');
+        // $mac3 = $request->input('mac3');
+        // $modelo3 = $request->input('modelo3');
+        // $cliente3 = $request->input('cliente3');
+        // $mac4 = $request->input('mac4');
+        // $modelo4 = $request->input('modelo4');
+        // $cliente4 = $request->input('cliente4');
+        // $mac5 = $request->input('mac5');
+        // $modelo5 = $request->input('modelo5');
+        // $cliente5 = $request->input('cliente5');
+
+        // $nombre1 = $request->input('nombre1');
+        // $clientew1 = $request->input('clientew1');
+        // $nombre2 = $request->input('nombre2');
+        // $clientew2 = $request->input('clientew2');
+        // $nombre3 = $request->input('nombre3');
+        // $clientew3 = $request->input('clientew3');
+        // $nombre4 = $request->input('nombre4');
+        // $clientew4 = $request->input('clientew4');
+        // $nombre5 = $request->input('nombre5');
+        // $clientew5 = $request->input('clientew5');
+
+        // DB::beginTransaction();
+        //     DB::table('UsuariosXDia')->insert([
+        //         ['NumClientes', 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => ]
+        //     ]);
+        // DB::commit();
+
+        return $fechaInput;
     }
 
     /**
@@ -149,7 +124,7 @@ class GenerateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

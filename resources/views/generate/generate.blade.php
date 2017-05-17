@@ -83,8 +83,9 @@
           </div>
           <div class="form-group">
             <label for="fecha_nueva">Fecha: </label>
-            <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+            <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017'>
           </div>
+          <input type="hidden" name="idhotel" id="idhotel" value="3">
         </div>
 
         <h4>Top 5 de AP'S</h4><hr>
