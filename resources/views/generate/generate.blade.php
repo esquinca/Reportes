@@ -56,6 +56,12 @@
             </div>
           </form>
         </div>
+        <div class="col-sm-12">
+          <b><span>Simbologia</span><b><br>
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"> Requerido</span></button>
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"> No requerido</span></button>
+
+        </div>
       </div>
       <!-- /.row -->
     </div>
