@@ -56,7 +56,7 @@ class GenerateController extends Controller
 
 
         $id_hotel = $request->get('idhotel');
-        $usuariosxdia = $request->input('userxday');
+        $userxdia = $request->input('userxday');
         $giga = $request->input('gigxday');
 
         $fechaInput = $request->input('fecha_nueva');
@@ -64,7 +64,17 @@ class GenerateController extends Controller
         $year = date ("Y", strtotime($fechaInput));
 
         $mesyear = $meses[$numMes-1].' '. $year;
+        $giga = ((($giga * 1024) * 1024) * 1024);
 
+        DB::beginTransaction();
+
+        DB::table('UsuariosXDia')->insert([
+            ['NumClientes' => $userxdia, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+        ]);
+
+        DB::table('GBXDia')->insert([
+            ['CantidadBytes' => $giga, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+        ]);
 
         $mac1 = $request->input('mac1');
         $modelo1 = $request->input('modelo1');
@@ -82,24 +92,64 @@ class GenerateController extends Controller
         $modelo5 = $request->input('modelo5');
         $cliente5 = $request->input('cliente5');
 
-        $nombre1 = $request->input('nombre1');
+        DB::table('MostAP')->insert([
+            ['Fecha' => $fechaInput, 'MAC' => $mac1, 'NumClientes' => $cliente1, 'Modelo' => $modelo1, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+            ['Fecha' => $fechaInput, 'MAC' => $mac2, 'NumClientes' => $cliente2, 'Modelo' => $modelo2, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+            ['Fecha' => $fechaInput, 'MAC' => $mac3, 'NumClientes' => $cliente3, 'Modelo' => $modelo3, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+            ['Fecha' => $fechaInput, 'MAC' => $mac4, 'NumClientes' => $cliente4, 'Modelo' => $modelo4, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+            ['Fecha' => $fechaInput, 'MAC' => $mac5, 'NumClientes' => $cliente5, 'Modelo' => $modelo5, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+        ]);
+
+        $nombre1 = $request->input('nombrew1');
         $clientew1 = $request->input('clientew1');
-        $nombre2 = $request->input('nombre2');
+
+        $nombre2 = $request->input('nombrew2');
         $clientew2 = $request->input('clientew2');
-        $nombre3 = $request->input('nombre3');
+
+        $nombre3 = $request->input('nombrew3');
         $clientew3 = $request->input('clientew3');
-        $nombre4 = $request->input('nombre4');
+
+        $nombre4 = $request->input('nombrew4');
         $clientew4 = $request->input('clientew4');
-        $nombre5 = $request->input('nombre5');
+
+        $nombre5 = $request->input('nombrew5');
         $clientew5 = $request->input('clientew5');
 
-        // DB::beginTransaction();
-        // DB::table('UsuariosXDia')->insert([
-        //     ['NumClientes' => $userxdia, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-        // ]);
-        // DB::commit();
+        if ($request->input('nombrew2') == '' && $request->input('clientew2') == '') {
+            DB::table('WLAN')->insert([
+                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ]);
+        }elseif ($request->input('nombrew3') == '' && $request->input('clientew3') == '') {
+            DB::table('WLAN')->insert([
+                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ]);            
+        }elseif ($request->input('nombrew4') == '' && $request->input('clientew4') == '') {
+            DB::table('WLAN')->insert([
+                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ]);           
+        }elseif ($request->input('nombrew5') == '' && $request->input('clientew5') == '') {
+            DB::table('WLAN')->insert([
+                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ]);            
+        }else{
+            DB::table('WLAN')->insert([
+                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
+                ['NombreWLAN' => $nombre5, 'ClientesWLAN' => $clientew5, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ]);      
+        }
 
-        return $usuariosxdia;
+        DB::commit();
+
+        return back();
     }
 
     /**
