@@ -64,7 +64,7 @@ class GenerateController extends Controller
         $year = date ("Y", strtotime($fechaInput));
 
         $mesyear = $meses[$numMes-1].' '. $year;
-        
+
 
         $mac1 = $request->input('mac1');
         $modelo1 = $request->input('modelo1');
@@ -120,7 +120,7 @@ class GenerateController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -166,5 +166,23 @@ class GenerateController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function vdata(Request $request)
+    {
+      $id_hotel = $request->ident;
+      $fechar = $request->fechae;
+
+      $sql = DB::table('HotelesRegistradosZD')->where('Fecha', '=', $fechar)->where('hotels_id', '=', $id_hotel)->count();
+      $capt_r_sql = 0;
+      //$capt_r_sql= DB::table('HotelesRegistradosZD')->where('Fecha', '=', '$fechar')->where('hotels_id', '=', '$id_hot')->get(); //Retorna un array stdClass Object
+      //$count_reg= count($capt_r_sql); //Cuento el tamaño del array anterior
+      if($sql == 0){
+        $capt_r_sql = 0;
+      }
+      if($sql != 0){
+        $capt_r_sql = 1;
+      }
+      return $capt_r_sql;
+
     }
 }

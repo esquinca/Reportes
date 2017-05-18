@@ -47,10 +47,12 @@
 
               <div class="form-group">
                 <label for="fecha_nueva2">Fecha: </label>
-                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva2" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
               </div>
 
               <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> Generar</a>
+              <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> Cancelar</a>
+
             </div>
           </form>
         </div>
@@ -62,197 +64,297 @@
     </div>
   </div>
 
-  {!! Form::open(['action' => 'GenerateController@rdata', 'url' => '/insertCaptura', 'method' => 'post', 'id' => 'formsnmp']) !!}
-  <div class="box box-info">
-    <div class="box-header with-border">
-      <h3 class="box-title">Capturar</h3>
-    </div>
-
-    <!-- /.box-header -->
-    <!-- form start -->
-    <form class="form-horizontal">
-      <div class="box-body">
-        <div class="form-group row">
-          <div class="col-xs-2">
-            <label for="userxday">Numero Total de usuarios</label>
-            <input class="form-control" name="userxday" id="userxday" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
-            <input class="form-control" name="gigxday" id="gigxday" type="text">
-          </div>
-          <div class="form-group">
-            <label for="fecha_nueva">Fecha: </label>
-            <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017'>
-          </div>
-          <input type="hidden" name="idhotel" id="idhotel" value="3">
-        </div>
-
-        <h4>Top 5 de AP'S</h4><hr>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 1</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="mac1">Mac</label>
-            <input class="form-control" id="mac1" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="modelo1">Modelo</label>
-            <input class="form-control" id="modelo1" type="text">
-          </div>
-          <div class="col-xs-4">
-            <label for="cliente1">No. Clientes</label>
-            <input class="form-control" id="cliente1" type="text">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 2</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="mac2">Mac</label>
-            <input class="form-control" id="mac2" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="modelo2">Modelo</label>
-            <input class="form-control" id="modelo2" type="text">
-          </div>
-          <div class="col-xs-4">
-            <label for="cliente2">No. Clientes</label>
-            <input class="form-control" id="cliente2" type="text">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 3</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="mac3">Mac</label>
-            <input class="form-control" id="mac3" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="modelo3">Modelo</label>
-            <input class="form-control" id="modelo3" type="text">
-          </div>
-          <div class="col-xs-4">
-            <label for="cliente3">No. Clientes</label>
-            <input class="form-control" id="cliente3" type="text">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 4</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="mac4">Mac</label>
-            <input class="form-control" id="mac4" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="modelo4">Modelo</label>
-            <input class="form-control" id="modelo4" type="text">
-          </div>
-          <div class="col-xs-4">
-            <label for="cliente4">No. Clientes</label>
-            <input class="form-control" id="cliente4" type="text">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 5</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="mac5">Mac</label>
-            <input class="form-control" id="mac5" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="modelo5">Modelo</label>
-            <input class="form-control" id="modelo5" type="text">
-          </div>
-          <div class="col-xs-4">
-            <label for="cliente5">No. Clientes</label>
-            <input class="form-control" id="cliente5" type="text">
-          </div>
-        </div>
-
-        <h4>Top 5 de WLAN'S</h4><hr>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 1</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="nombrew1">Nombre</label>
-            <input class="form-control" id="nombrew1" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="clientew1">No. Clientes</label>
-            <input class="form-control" id="clientew1" type="text">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 2</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="nombrew2">Nombre</label>
-            <input class="form-control" id="nombrew2" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="clientew2">No. Clientes</label>
-            <input class="form-control" id="clientew2" type="text">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 3</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="nombrew3">Nombre</label>
-            <input class="form-control" id="nombrew3" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="clientew3">No. Clientes</label>
-            <input class="form-control" id="clientew3" type="text">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 4</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="nombrew4">Nombre</label>
-            <input class="form-control" id="nombrew4" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="clientew4">No. Clientes</label>
-            <input class="form-control" id="clientew4" type="text">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-xs-1">
-            <h4>Reg. 5</h4>
-          </div>
-          <div class="col-xs-2">
-            <label for="nombrew5">Nombre</label>
-            <input class="form-control" id="nombrew5" type="text">
-          </div>
-          <div class="col-xs-3">
-            <label for="clientew5">No. Clientes</label>
-            <input class="form-control" id="clientew5" type="text">
-          </div>
-        </div>
+  {!! Form::open(['action' => 'GenerateController@rdata', 'url' => '/insertCaptura', 'method' => 'post', 'id' => 'formcapt']) !!}
+  <div class="panel panel-info">
+      <div class="panel-heading">
+          <h3 class="panel-title">
+              Información requerida</h3>
       </div>
-      <!-- /.box-body -->
-      <div class="box-footer">
-        <button type="submit" class="btn btn-default">Limpiar</button>
-        <button type="submit" class="btn btn-info pull-right">Guardar</button>
-      </div>
-      <!-- /.box-footer -->
-    </form>
+      <ul class="list-group">
+          <div class="list-group-item form-horizontal">
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label for="userxday">Numero Total de usuarios</label>
+                <input class="form-control" name="userxday" id="userxday" type="text">
+              </div>
+              <div class="col-xs-6">
+                <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
+                <input class="form-control" name="gigxday" id="gigxday" type="text">
+              </div>
+
+              <input type="hidden" id="idhotel" name="idhotel">
+              <input type="hidden" id="fecha_nueva" name="fecha_nueva">
+
+            </div>
+          </div>
+
+          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">Top 5 AP'S</a>
+
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 1 - AP </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="mac1" name="mac1" type="text" class="form-control" placeholder="Ingresar MAC">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="modelo1" name="modelo1"type="text" class="form-control" placeholder="Ingresar Modelo">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="cliente1" name="cliente1"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 2 - AP </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="mac2" name="mac2" type="text" class="form-control" placeholder="Ingresar MAC">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="modelo2" name="modelo2"type="text" class="form-control" placeholder="Ingresar Modelo">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="cliente2" name="cliente2"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 3 - AP </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="mac3" name="mac3" type="text" class="form-control" placeholder="Ingresar MAC">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="modelo3" name="modelo3"type="text" class="form-control" placeholder="Ingresar Modelo">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="cliente3" name="cliente3"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 4 - AP </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="mac4" name="mac4" type="text" class="form-control" placeholder="Ingresar MAC">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="modelo4" name="modelo4"type="text" class="form-control" placeholder="Ingresar Modelo">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="cliente4" name="cliente4"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 5 - AP </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="mac5" name="mac5" type="text" class="form-control" placeholder="Ingresar MAC">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="modelo5" name="modelo5"type="text" class="form-control" placeholder="Ingresar Modelo">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="cliente5" name="cliente5"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+              </div>
+            </div>
+          </div>
+
+          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">Top 5 WLAN'S</a>
+
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 1 - WLAN </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="nombrew1" name="nombrew1" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
+                </span>
+                <input id="clientew1" name="clientew1"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 2 - WLAN </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
+                </span>
+                <input id="nombrew2" name="nombrew2" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
+                </span>
+                <input id="clientew2" name="clientew2"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 3 - WLAN </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="nombrew3" name="nombrew3" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="clientew3" name="clientew3"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 4 - WLAN </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="nombrew4" name="nombrew4" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="clientew4" name="clientew4"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <label>Top 5 - WLAN </label>
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="nombrew5" name="nombrew5" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                </span>
+                <input id="clientew5" name="clientew5"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+              </div>
+            </div>
+          </div>
+
+          <div class="list-group-item form-inline">
+            <div class="form-group">
+              <button type="submit" class="btn btn-info pull-right">Guardar</button>
+            </div>
+          </div>
+      </ul>
   </div>
   {!! Form::close() !!}
 </section>
