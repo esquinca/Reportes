@@ -55,6 +55,7 @@ class bytesxdia extends Command
 
         //Para el Transmitted Bytes
         ${"snmp_bytes_transm_a".$i}= explode(': ', ${"snmp_bytes_trans_a".$i} [key(${"snmp_bytes_trans_a".$i})]) ;
+        next(${"snmp_bytes_trans_a".$i}); //Este es para que avance la key en el array
 
         $sql = DB::table('GBXDia')->insertGetId([
           'CantidadBytes' => ${"snmp_bytes_transm_a".$i}[1],
@@ -63,7 +64,6 @@ class bytesxdia extends Command
           'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
         }
         //echo ${"snmp_bytes_transm_a".$i}[1];
-        next(${"snmp_bytes_trans_a".$i}); //Este es para que avance la key en el array
         //echo '-';
       }
       $this->info('Successfull registered bytes!');
