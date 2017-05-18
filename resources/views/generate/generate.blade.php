@@ -71,21 +71,21 @@
               Información requerida</h3>
       </div>
       <ul class="list-group">
-          <div class="list-group-item form-horizontal">
-            <div class="form-group row">
-              <div class="col-xs-6">
+          <div class="list-group-item form-inline">
+              <div class="form-group">
                 <label for="userxday">Numero Total de usuarios</label>
-                <input class="form-control" name="userxday" id="userxday" type="text">
+                <div class="input-group">
+                  <input class="form-control" name="userxday" id="userxday" type="text">
+                </div>
               </div>
-              <div class="col-xs-6">
+              <div class="form-group">
                 <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
-                <input class="form-control" name="gigxday" id="gigxday" type="text">
+                <div class="input-group">
+                  <input class="form-control" name="gigxday" id="gigxday" type="text">
+                </div>
+                <input type="text" id="idhotel" name="idhotel">
+                <input type="text" id="fecha_nueva" name="fecha_nueva">
               </div>
-
-              <input type="hidden" id="idhotel" name="idhotel">
-              <input type="hidden" id="fecha_nueva" name="fecha_nueva">
-
-            </div>
           </div>
 
           <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">Top 5 AP'S</a>
@@ -351,7 +351,7 @@
 
           <div class="list-group-item form-inline">
             <div class="form-group">
-              <button type="submit" class="btn btn-info pull-right">Guardar</button>
+              <button id='subform' type="button" class="btn btn-info pull-right">Guardar</button>
             </div>
           </div>
       </ul>

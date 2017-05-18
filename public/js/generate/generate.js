@@ -104,3 +104,24 @@ $('#generateClear').on('click', function(){
 		$("#select_one").select2("val", "");
 		$('#fecha_nueva2').val('');
 });
+
+$('#subform').on('click', function(){
+	var a0=validarInput('userxday');	var a1=validarInput('gigxday');
+	var a2=validarInput('mac1');	var a3=validarInput('modelo1'); var a4=validarInput('cliente1');
+	var a5=validarInput('mac2');  var a6=validarInput('modelo2'); var a7=validarInput('cliente2');
+	var a8=validarInput('mac3');  var a9=validarInput('modelo3'); var a10=validarInput('cliente3');
+	var a11=validarInput('mac4'); var a12=validarInput('modelo4');var a13=validarInput('cliente4');
+	var a14=validarInput('mac5'); var a15=validarInput('modelo5');var a16=validarInput('cliente5');
+
+	var a17=validarInput('nombrew1'); var a18=validarInput('clientew1');
+
+	if (a0 == true && a1 == true && a2 == true && a3 == true && a4 == true && a5 == true &&
+			a6 == true && a7 == true && a8 == true && a9 == true && a10 == true && a11 == true &&
+			a12 == true && a13 == true && a14 == true && a15 == true && a16 == true && a17 == true && a18 == true){
+			toastr.success('Datos completados. !!', 'Mensaje', {timeOut: 1000});
+			$( "#formcapt" ).submit();
+			}
+	else {
+		toastr.error('Datos Requeridos. !!', 'Mensaje', {timeOut: 1000});
+	}
+});
