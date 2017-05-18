@@ -45,7 +45,7 @@ $('#generateInfo').on('click', function(){
 	if (a0 == false && a1 == false) {
      toastr.error('Datos Requeridos. !!', 'Mensaje', {timeOut: 1000});
   }
-  else {
+  if (a0 == true && a1 == true) {
 
 	  $.ajax({
          type: "POST",

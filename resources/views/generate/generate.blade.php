@@ -83,8 +83,8 @@
                 <div class="input-group">
                   <input class="form-control" name="gigxday" id="gigxday" type="text">
                 </div>
-                <input type="text" id="idhotel" name="idhotel">
-                <input type="text" id="fecha_nueva" name="fecha_nueva">
+                <input type="hidden" id="idhotel" name="idhotel">
+                <input type="hidden" id="fecha_nueva" name="fecha_nueva">
               </div>
           </div>
 
