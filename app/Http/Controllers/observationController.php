@@ -68,6 +68,26 @@ class observationController extends Controller
 
     }
     
+    public function obsdata(Request $request)
+    {
+      $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+
+      $obs = $request->input('comment');
+      $id_hotel = $request->input('idhotel');
+      $fechaActual = date("Y-m-d");
+      $fechaInput = $request->input('fecha_nueva2');
+      $expld = explode('-', $fechaInput);
+      $mes = $expld[0];
+      $year= $expld[1];
+
+      $mesyear = $meses[$mes-1].' '. $year;
+
+      DB::table('Observaciones')->insert([
+        ['Descripcion' => $obs, 'Fecha' => $fechaActual, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+      ]);
+
+      return back();
+    }
 
     /**
      * Show the form for creating a new resource.

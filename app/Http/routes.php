@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth']], function() {
 	 //Generar Observaciones
 	 Route::get('/observation', 'observationController@index');
 	 Route::post('/verifObserv','observationController@verfObMes');
+	 Route::post('/observationdata','observationController@obsdata');
 
 
 });
