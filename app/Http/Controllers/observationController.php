@@ -76,14 +76,14 @@ class observationController extends Controller
       $id_hotel = $request->input('idhotel');
       $fechaActual = date("Y-m-d");
       $fechaInput = $request->input('fecha_nueva2');
-      $expld = explode('-', $fechaInput);
-      $mes = $expld[0];
-      $year= $expld[1];
+      // $expld = explode('-', $fechaInput);
+      // $mes = $expld[0];
+      // $year= $expld[1];
 
-      $mesyear = $meses[$mes-1].' '. $year;
+      //$mesyear = $meses[$mes-1].' '. $year;
 
       DB::table('Observaciones')->insert([
-        ['Descripcion' => $obs, 'Fecha' => $fechaActual, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+        ['Descripcion' => $obs, 'Fecha' => $fechaActual, 'Mes' => $fechaInput, 'hotels_id' => $id_hotel]
       ]);
 
       return back();
