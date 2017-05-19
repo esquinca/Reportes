@@ -27,8 +27,9 @@
                 <!--
                 <li><a href="{{ url('wlan') }}"><i class='fa fa-wifi'></i> <span>{{ trans('message.wlan') }}</span></a></li>
                 -->
-                <li><a href="{{ url('generate') }}"><i class='fa fa-pencil-square-o'></i> <span>{{ trans('message.generatereport') }}</span></a></li>                
-                <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>              
+                <li><a href="{{ url('generate') }}"><i class='fa fa-pencil-square-o'></i> <span>{{ trans('message.generatereport') }}</span></a></li>
+                <li><a href="{{ url('observation') }}"><i class='fa fa-search'></i> <span>{{ trans('message.observation') }}</span></a></li>                
+                <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.page') }}</li>
 

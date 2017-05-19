@@ -47,7 +47,7 @@ class bytesxdia extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        ${"snmp_bytes_trans_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+        ${"snmp_bytes_trans_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.14'); //Transmitted Bytes
         $contar_aps_act= count(${"snmp_bytes_trans_a".$i}); //Cuento el tamaño del array anterior
 
         for ($j=1; $j <= $contar_aps_act; $j++) {

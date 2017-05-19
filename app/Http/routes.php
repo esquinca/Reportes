@@ -67,5 +67,9 @@ Route::group(['middleware' => ['auth']], function() {
 	 //Generar Reportes
 	 Route::post('/typereport','ViewReportsController@typerep');
 	 Route::post('/generar_comp','ViewReportsController@tableShowComp');
+	 //Generar Observaciones
+	 Route::get('/observation', 'observationController@index');
+	 Route::post('/verifObserv','observationController@verfObMes');
+
 
 });

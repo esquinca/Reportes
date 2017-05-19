@@ -355,4 +355,5 @@ return [
     'privIT' => 'IT',
 
     'nick' => 'Nick',
+    'observation' => 'Observaciones',
 ];
