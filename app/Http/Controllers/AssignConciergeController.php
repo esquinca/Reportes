@@ -31,7 +31,7 @@ class AssignConciergeController extends Controller
     }
     public function recargar(Request $request){
       $id= $request->sector;
-      $sql= DB::table('hoteluserreport')->where('IDHotels', '=', $id)->get();
+      $sql= DB::table('HotelUserReport')->where('IDHotels', '=', $id)->get();
       return json_encode($sql);
     }
 
@@ -96,7 +96,7 @@ class AssignConciergeController extends Controller
       $value='1';
       $edita_idhotel= $request->hotel;
       $edita_idconci= $request->concierge;
-      
+
       $sql = DB::table('hotels')->where('id', '=', $edita_idhotel)
       ->update(['user_reportes_id' => $edita_idconci]);
 

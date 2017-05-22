@@ -53,7 +53,7 @@ class ViewReportsController extends Controller
     public function typerep(Request $request)
     {
       $value= $request->numero;
-      $selectnivel= DB::table('NivelReporte')->select('id','nivel')->where('hotels_id', '=', $value)->get();
+      $selectnivel= DB::table('NivelReporte')->select('id','Nivel')->where('hotels_id', '=', $value)->get();
       return json_encode($selectnivel);
 
     }
@@ -81,7 +81,10 @@ class ViewReportsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $numero_hotel= $request->nhotel;
+      $type= $request->tipo;
+      $resultado= DB::table('Fechaprimeracapturareporte')->select('PRIMER_MES')->where('id', '=', $numero_hotel)->where('IDNIVEL', '=', $type)->get();
+      return json_encode($resultado);
     }
 
     /**

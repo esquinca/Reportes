@@ -9,6 +9,7 @@
   @endsection
 
   @push('scripts')
+  <script src="/plugins/moment/moment-with-locales.js"></script>
   <!--DataTables-->
   <link href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
   <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
@@ -533,23 +534,9 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="select_two">Mes: </label>
-                        <select class="form-control select2" id="select_month">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
-                          <option value="" >{{ trans('message.optionOne')}}</option>
-                          <option value="" >{{ trans('message.optionOne')}}</option>
-                          <option value="" >{{ trans('message.optionOne')}}</option>
-                          <option value="" >{{ trans('message.optionOne')}}</option>
-                          <option value="" >{{ trans('message.optionOne')}}</option>
-
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="select_two">Año: </label>
-                        <select class="form-control select2" id="select_month">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
-                          <option value="2017" >2017</option>
-                        </select>
+                        <label for="calendar_fecha">Email address:</label>
+                        <input type="text" class="form-control" id="calendar_fecha">
+                        <input type="text" class="form-control" id="fecha_act">
                       </div>
                       <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> Generar</a>
                     </div>
@@ -566,6 +553,13 @@
         </div>
       </div>
     </section>
+
+
+
+
+
+
+
 
     <section class="invoice">
       <div class="row">

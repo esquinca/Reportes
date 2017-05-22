@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\mostapxdia::class,
         Commands\roguedevices::class,
         Commands\wlanxdia::class,
+        Commands\recbytesxdia::class,
     ];
 
     /**
@@ -34,6 +35,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('estado:server')->daily();
         $schedule->command('usuario:dia')->daily();
+        $schedule->command('rebytes:dia')->daily();
         $schedule->command('bytes:dia')->daily();
         $schedule->command('ap:dia')->daily();
         $schedule->command('wlan:dia')->daily();

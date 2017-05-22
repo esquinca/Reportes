@@ -1,9 +1,17 @@
+$(document).ready(function() {
+  // Instrucciones a ejecutar al terminar la carga
+  $('#calendar_fecha').attr('readonly', true);
+});
+
 $('#select_one').on('change', function(e){
   var id= $(this).val();
-
   var _token = $('input[name="_token"]').val();
+
+  $('#calendar_fecha').val('');
+  $('#calendar_fecha').attr('readonly', true);
+
   if (id != ''){
-      alert('exito');
+      //alert('exito');
       $.ajax({
         type: "POST",
         url: "./typereport",
@@ -13,7 +21,7 @@ $('#select_one').on('change', function(e){
           $('#select_two').append('<option value="" selected>Elije</option>');
 
           $.each(JSON.parse(data),function(index, objdata){
-            $('#select_two').append('<option value="'+objdata.id+'">'+ objdata.nivel +'</option>');
+            $('#select_two').append('<option value="'+objdata.id+'">'+ objdata.Nivel +'</option>');
           });
         },
         error: function (data) {
@@ -22,11 +30,71 @@ $('#select_one').on('change', function(e){
       });
   }
   else {
-      alert('error');
+      //alert('error');
       $('#select_two').empty();
       $('#select_two').append('<option value="" selected>Elije</option>');
   }
 });
+
+$('#select_two').on('change', function(e){
+  var id= $(this).val();
+  var hotel= $('#select_one').val();
+  var _token = $('input[name="_token"]').val();
+
+  if (id != ''){
+    //Para consultar el mes y año del primer registro
+    $.ajax({
+      type: "POST",
+      url: "./consultmes",
+      data: { nhotel:hotel, tipo : id , _token : _token },
+      success: function (data){
+        if (data != '[]') {
+          alert(data);
+        };
+        //alert(data);
+        /*
+        $.each(JSON.parse(data),function(index, objdata){
+          $('#select_two').append('<option value="'+objdata.id+'">'+ objdata.Nivel +'</option>');
+        });
+        */
+      },
+      error: function (data) {
+        console.log('Error:', data);
+      }
+    });
+
+/*
+    //alert('error1');
+    $('#calendar_fecha').val('');
+    $('#calendar_fecha').attr('readonly', false);
+    $('#calendar_fecha').datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        //startDate: '',
+        //startDate:'2017/05/',
+        //endDate: '1y',
+
+        //startDate: '0y',
+        //endDate: '+1y',
+        //startDate: '0m',
+        startDate:'02-2017',
+        endDate: '-1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
+        autoclose: true
+    });
+
+  */
+  }
+  else {
+    //alert('error2');
+    $('#calendar_fecha').val('');
+    $('#calendar_fecha').attr('readonly', true);
+  }
+});
+
+
+
+
 
 $(document).ready(function() {
   //Animated Number
