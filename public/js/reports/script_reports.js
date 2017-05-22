@@ -48,8 +48,9 @@ $('#select_two').on('change', function(e){
       url: "./consultmes",
       data: { nhotel:hotel, tipo : id , _token : _token },
       success: function (data){
-        if (data != '[]') {
+        if (data != '') {
           alert(data);
+
         };
         //alert(data);
         /*

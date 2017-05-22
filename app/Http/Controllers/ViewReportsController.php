@@ -83,8 +83,11 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->nhotel;
       $type= $request->tipo;
-      $resultado= DB::table('Fechaprimeracapturareporte')->select('PRIMER_MES')->where('id', '=', $numero_hotel)->where('IDNIVEL', '=', $type)->get();
-      return json_encode($resultado);
+      $resultado= DB::table('Fechaprimeracapturareporte')->select('PRIMER_MES')->where('id', '=', $numero_hotel)->where('IDNIVEL', '=', $type)->value('PRIMER_MES');
+
+      //$resultado = json_encode($resultado);
+
+      return $resultado;
     }
 
     /**
