@@ -40,6 +40,7 @@ $('#select_two').on('change', function(e){
   var id= $(this).val();
   var hotel= $('#select_one').val();
   var _token = $('input[name="_token"]').val();
+  $('#calendar_fecha').val('');
 
   if (id != ''){
     //Para consultar el mes y año del primer registro
@@ -49,42 +50,25 @@ $('#select_two').on('change', function(e){
       data: { nhotel:hotel, tipo : id , _token : _token },
       success: function (data){
         if (data != '') {
-          alert(data);
+          //alert(data);
+          //$('#fecha_act').val(data);
+          $('#calendar_fecha').val('');
+          $('#calendar_fecha').attr('readonly', false);
+          $('#calendar_fecha').datepicker({
+              format: "mm-yyyy",
+              viewMode: "months",
+              minViewMode: "months",
+              startDate: data,
+              endDate: '-1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
+              autoclose: true
+          });
 
         };
-        //alert(data);
-        /*
-        $.each(JSON.parse(data),function(index, objdata){
-          $('#select_two').append('<option value="'+objdata.id+'">'+ objdata.Nivel +'</option>');
-        });
-        */
       },
       error: function (data) {
         console.log('Error:', data);
       }
     });
-
-/*
-    //alert('error1');
-    $('#calendar_fecha').val('');
-    $('#calendar_fecha').attr('readonly', false);
-    $('#calendar_fecha').datepicker({
-        format: "mm-yyyy",
-        viewMode: "months",
-        minViewMode: "months",
-        //startDate: '',
-        //startDate:'2017/05/',
-        //endDate: '1y',
-
-        //startDate: '0y',
-        //endDate: '+1y',
-        //startDate: '0m',
-        startDate:'02-2017',
-        endDate: '-1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
-        autoclose: true
-    });
-
-  */
   }
   else {
     //alert('error2');
@@ -92,10 +76,6 @@ $('#select_two').on('change', function(e){
     $('#calendar_fecha').attr('readonly', true);
   }
 });
-
-
-
-
 
 $(document).ready(function() {
   //Animated Number

@@ -475,6 +475,9 @@
     };
     (function(){
     		$('#generateInfo').on('click', function() {
+          var hotel= $('#select_one').val();
+          var tipo_rep= $('#select_two').val();
+
     			$('#tabla_comparativa').DataTable().destroy();
     			tablaComparar();
     		});
@@ -534,7 +537,7 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="calendar_fecha">Email address:</label>
+                        <label for="calendar_fecha">Fecha reporte:</label>
                         <input type="text" class="form-control" id="calendar_fecha">
                         <input type="text" class="form-control" id="fecha_act">
                       </div>
