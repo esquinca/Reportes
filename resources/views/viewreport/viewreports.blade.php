@@ -389,11 +389,17 @@
                     datawlangraf2.push(objdata.ClientesWLAN);
                   });
                   //alert(datawlangraf2);
-                  for (var i = 0; i < datawlangraf1.length; i++) {
-                    nuevos_valores.push( "value: i * 8 + "+ datawlangraf2[i] + ", name:'" + datawlangraf1[i] + "'" );
+                  var datass2 = [];
+                  for (var j = 0; j < datawlangraf1.length; j++) {
+                    var datoss = datawlangraf2[j];
+                    var datass = datawlangraf1[j] + " = " + datawlangraf2[j];
+                    var b = {"value": datoss, "name": datass};
+                    nuevos_valores.push(b);
+                    datass2.push(datass);
                     //{value: i * 8  + 1280, name:'I8-'},
                   }
-                  //alert(nuevos_valores);
+
+                  console.log(nuevos_valores);
 
                   var optiongrafusuarios={
                       title : {
@@ -409,7 +415,7 @@
                       legend: {
                           orient : 'vertical',
                           x : 'left',
-                          data: datawlangraf1
+                          data: datass2
                           //data:['Chrome','Firefox','Safari','IE9+','IE8-']
                       },
                       toolbox: {
@@ -425,6 +431,7 @@
                       series : (function (){
                           var series = [];
                           for (var i = 0; i < 30; i++) {
+
                               series.push({
                                   name:'Estatus WLAN',
                                   type:'pie',
@@ -464,19 +471,10 @@
               setTimeout(function (){
                   var _ZR = myChart2.getZrender();
                   var TextShape = require('zrender/shape/Text');
-                  // 补充千层饼
+
                   _ZR.addShape(new TextShape({
                       style : {
-                          x : _ZR.getWidth() / 2,
-                          y : _ZR.getHeight() / 2,
-                          color: '#666',
-                          text : '', //Texto en medio
-                          textAlign : 'center'
-                      }
-                  }));
-                  _ZR.addShape(new TextShape({
-                      style : {
-                          x : _ZR.getWidth() / 2 + 200,
+                          x : _ZR.getWidth() / 2 + 300,
                           y : _ZR.getHeight() / 2,
                           brushType:'fill',
                           color: 'orange',
