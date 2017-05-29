@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/consultshowgrafone','ViewReportsController@show_graf_one');
 	 Route::post('/consultshowgraftwo','ViewReportsController@show_graf_two');
 	 Route::post('/consultshowgrafthree','ViewReportsController@show_graf_three');
+	 Route::post('/consultshowgraffour','ViewReportsController@show_graf_four');
 
 
 });

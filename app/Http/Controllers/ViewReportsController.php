@@ -131,21 +131,38 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
-      $resultados = DB::table('TopSSIDWLAN')->select('NombreWLAN','ClientesWLAN','Fecha')
-      ->where('id', '=' , $numero_hotel)
-      ->where('Fecha', '=' , $date)
-      ->get();
+      $resultados = DB::table('TopSSIDWLAN')->select('NombreWLAN',DB::raw('SUM(ClientesWLAN) as ClientesWLAN') )
+                    ->where('id', '=' , $numero_hotel)
+                    ->where('Fecha', '=' , $date)
+                    ->groupBy('NombreWLAN')
+                    ->orderBy('ClientesWLAN', 'desc')
+                    ->limit(5)
+                    ->get();
       return json_encode($resultados);
     }
     public function show_graf_four(Request $request)
     {
       $numero_hotel= $request->number;
-      $type= $request->type;
       $date= $request->mes;
-      $resultados = DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','TOTALUSER','MaxClientes','RogueDevice')
-                    ->where('id', '=' , $numero_hotel)
-                    ->where('Fecha', '=' , $date)
+      //SELECT Descripcion,MAC,SUM(NumClientes),Fecha,Mes FROM ConsultaMostAP WHERE NFecha = "05-2017" AND id='3' GROUP BY MAC LIMIT 5 
+      $resultados = DB::table('ConsultaMostAP')->select('id', 'Descripcion', 'MAC',  DB::raw('SUM(NumClientes) as NumClientes'), 'NFecha' )
+                    ->where('NFecha', '=', $date)
+                    ->where('id', '=', $numero_hotel)
+                    ->groupBy('MAC')
+                    ->orderBy('NumClientes', 'desc')
+                    ->limit(5)
                     ->get();
+
+                    DB::table('ConsultaMostAP')->select('Descripcion', 'MAC', DB::raw('SUM(NumClientes)  as NumClientes'), 'Mes')
+                    ->where([
+                      ['NFecha', '=', $date],
+                      ['id', '=', $numero_hotel]
+                    ])->groupBy('MAC')
+                    ->limit(5)
+                    ->get();
+
+
+                    DB::table('ConsultaMostAP')->select('Descripcion', 'MAC', DB::raw('SUM(NumClientes)  as NumClientes'), 'Mes')->where([['NFecha', '=', '05-2017'],['id', '=', '3']])->groupBy('MAC')->limit(5)->get();
       return json_encode($resultados);
     }
 

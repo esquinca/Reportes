@@ -399,8 +399,6 @@
                     //{value: i * 8  + 1280, name:'I8-'},
                   }
 
-                  console.log(nuevos_valores);
-
                   var optiongrafusuarios={
                       title : {
                           text: 'Estado',
@@ -457,7 +455,7 @@
                               symbol:'emptyCircle',
                               symbolSize:series[0].radius[0],
                               effect:{show:true,scaleSize:12,color:'rgba(250,225,50,0.8)',shadowBlur:10,period:30},
-                              data:[{x:'50%',y:'55%'}]
+                              data:[{x:'50%',y:'50%'}]
                           };
                           return series;
                       })()
@@ -471,7 +469,15 @@
               setTimeout(function (){
                   var _ZR = myChart2.getZrender();
                   var TextShape = require('zrender/shape/Text');
-
+                  _ZR.addShape(new TextShape({
+                      style : {
+                          x : _ZR.getWidth() / 2,
+                          y : _ZR.getHeight() / 2,
+                          color: '#666',
+                          text : '',
+                          textAlign : 'center'
+                      }
+                  }));
                   _ZR.addShape(new TextShape({
                       style : {
                           x : _ZR.getWidth() / 2 + 300,
@@ -491,6 +497,245 @@
             }
       );
     };
+
+    function grafica_bar(){
+      var hotel= $('#select_one').val();
+      var tipo_rep= $('#select_two').val();
+      var calendario= $('#calendar_fecha').val();
+      var _token = $('input[name="_token"]').val();
+
+      require.config({
+           paths: {
+               echarts: './plugins/echarts/'
+           }
+       });
+       require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/pie',
+                'echarts/chart/line',
+                'echarts/chart/map'
+            ],
+            function (ec) {
+              var myChart3 = ec.init(document.getElementById('maintopssid'));
+              var datawbargraf1 = [];
+              var datawbargraf2 = [];
+              $.ajax({
+                type: "POST",
+                url: "./consultshowgrafthree",
+                data: { number : hotel, mes: calendario,  _token : _token },
+                success: function (data){
+                  $.each(JSON.parse(data),function(index, objdata){
+                    datawbargraf1.push(objdata.NombreWLAN);
+                    datawbargraf2.push(objdata.ClientesWLAN);
+                  });
+                  var optiongrassid= {
+                      title : {
+                          text: 'Representación Grafica',
+                          //subtext: 'Grafica de Barras'
+                      },
+                      tooltip : {
+                          trigger: 'axis'
+                      },
+                      legend: {
+                          show : false,
+                          x: 'right',
+                          y: 'bottom',
+                          data:['TOP']
+                      },
+                      toolbox: {
+                          show : false,
+                          feature : {
+                              mark : {show: true},
+                              dataView : {show: true, readOnly: false},
+                              magicType : {show: true, type: ['line', 'bar']},
+                              restore : {show: true},
+                              saveAsImage : {show: true}
+                          }
+                      },
+                      calculable : true,
+                      xAxis : [
+                          {
+                              type : 'category',
+                              data : datawbargraf1,
+                              axisLabel:{
+                                           //interval:0,
+                                           //rotate:35,
+                                           //margin:2,
+                                           textStyle:{
+                                               color:"#222",
+                                               fontSize : '10'
+                                           }
+                                       },
+                          }
+                      ],
+                      grid: { // 控制图的大小，调整下面这些值就可以，
+                                 x: 50,
+                                 x2: 50,
+                                 y2: 100,// y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+                      },
+                      yAxis : [
+                            {
+                                type : 'value',
+                                axisLabel : {
+                                    //formatter: '{value}%',
+                                    textStyle : {
+                                      fontSize : '9',
+                                      margin:2,
+                                    }
+                                }
+                            }
+                      ],
+                      series : [
+                            {
+                                name:'TOP',
+                                type:'bar',
+                                itemStyle: {
+                                              normal: {
+                                                label : {
+                                                  show: true,
+                                                  position: 'top',
+                                                formatter: '{c}',
+                                                  textStyle: {
+                                                    color: '#000',
+                                                    fontSize : '9'
+
+                                                  }
+                                                },
+                                                color: function(params) {
+                                                  // build a color map as your need.
+                                                  var colorList = [
+                                                  '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                                  '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                                  '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                                  ];
+                                                  return colorList[params.dataIndex]
+                                                }
+                                              }
+                                            },
+                                data: datawbargraf2,
+                                //data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                            },
+                      ]
+                  };
+                  myChart3.setOption(optiongrassid);
+                },
+                error: function (data) {
+                  console.log('Error:', data);
+                }
+              });
+              setTimeout(function (){
+                  window.onresize = function () {
+                    myChart3.resize();
+                  }
+              }, 2000);
+
+            }
+        );
+    }
+
+    function grafica_pie(){
+      var hotel= $('#select_one').val();
+      var tipo_rep= $('#select_two').val();
+      var calendario= $('#calendar_fecha').val();
+      var _token = $('input[name="_token"]').val();
+
+      require.config({
+           paths: {
+               echarts: './plugins/echarts/'
+           }
+       });
+       require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/pie',
+                'echarts/chart/line',
+                'echarts/chart/map'
+            ],
+            function (ec) {
+              var myChart4 = ec.init(document.getElementById('mainaps'));
+              var datapiegraf1 = [];
+              var datapiegraf2 = [];
+              $.ajax({
+                type: "POST",
+                url: "./consultshowgraffour",
+                data: { number : hotel, mes: calendario,  _token : _token },
+                success: function (data){
+                  $.each(JSON.parse(data),function(index, objdata){
+                    datapiegraf1.push(objdata.Descripcion);
+                    datapiegraf2.push(objdata.NumClientes);
+                  });
+                  var optiongrafpie= {
+                        title : {
+                            text: 'Top aps',
+                            subtext: '',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            y : 'top',
+                            data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {
+                                    show: true,
+                                    type: ['pie', 'funnel']
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        series : [
+                          	 {
+                                name:'Estatus',
+                                type:'pie',
+                                radius : [30, 110],
+                                center : ['50%','50%'],
+                                roseType : 'area',
+                                x: '50%',               // for funnel
+                                max: 40,                // for funnel
+                                sort : 'ascending',     // for funnel
+                                data:[
+                                    {value:10, name:'rose1'},
+                                    {value:5, name:'rose2'},
+                                    {value:15, name:'rose3'},
+                                    {value:25, name:'rose4'},
+                                    {value:20, name:'rose5'},
+                                    {value:35, name:'rose6'},
+                                    {value:30, name:'rose7'},
+                                    {value:40, name:'rose8'}
+                                ]
+                            }
+                        ]
+                  };
+                  myChart4.setOption(optiongrafpie);
+                },
+                error: function (data) {
+                  console.log('Error:', data);
+                }
+              });
+              setTimeout(function (){
+                  window.onresize = function () {
+                    myChart4.resize();
+                  }
+              }, 2000);
+
+            }
+        );
+    }
+
     (function(){
     		$('#generateInfo').on('click', function() {
           /*
@@ -501,6 +746,8 @@
           */
           grafica_radar();
           graficas();
+          grafica_bar();
+          grafica_pie();
           //dpsap();
           /*
           $.ajax({
@@ -635,6 +882,60 @@
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
+                  <i class="fa fa-info"></i>
+              </div>
+              <div class="media-body">
+                  <h3>Información</h3>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="animated-number" class="row text-center">
+        <div class="col-sm-2 bloque" >
+          <i class="fa fa-rss fa-2x"></i>
+          <h3 id="total_aps" name="total_aps" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Antenas</strong><br>
+          <strong>totales</strong>
+        </div>
+        <div class="col-sm-2 bloque">
+          <i class="fa fa-upload fa-2x"></i>
+          <h3 id="gb_max_dia" name="gb_max_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Gigabytes Max por</strong><br>
+          <strong>dia</strong>
+        </div>
+        <div class="col-sm-2 bloque">
+          <i class="fa fa-download fa-2x"></i>
+          <h3 id="gb_min_dia" name="gb_min_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Gigabytes Min por</strong><br>
+          <strong>dia</strong>
+        </div>
+        <div class="col-sm-2 bloque">
+          <i class="fa fa-users fa-2x"></i>
+          <h3 id="prom_usuario" name="prom_usuario" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Promedio de usuario</strong><br>
+          <strong>diario</strong>
+        </div>
+        <div class="col-sm-2 bloque">
+          <i class="fa fa-calendar fa-2x"></i>
+          <h3 id="total_usuario" name="total_usuario" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Total de usuarios</strong><br>
+          <strong>mensual</strong>
+        </div>
+
+        <div class="col-sm-2 bloque">
+          <i class="fa fa-tablet fa-2x"></i>
+          <h3 id="rogue_mes" name="rogue_mes" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
+          <strong>Rogue</strong><br>
+          <strong>devices</strong>
+        </div>
+      </div>
+
+
+      <div class="row" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="pull-left">
                   <i class="fa fa-wifi"></i>
               </div>
               <div class="media-body">
@@ -657,6 +958,25 @@
                   <i class="fa fa-users"></i>
               </div>
               <div class="media-body">
+                  <h3>Top 5 SSID</h3>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row margin_div">
+        <div id="graphictopssid" class="col-md-12">
+            <div id="maintopssid" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="pull-left">
+                  <i class="fa fa-users"></i>
+              </div>
+              <div class="media-body">
                   <h3>Numero de clientes conectados por dia</h3>
               </div>
           </div>
@@ -669,144 +989,95 @@
         </div>
       </div>
 
-
-
-    </section>
-
-
-
-
-
-
-
-    <section class="invoice">
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-bookmark-o"> Reporte mensual</i>
-            <small class="pull-right"> Fecha: <?php $now = new DateTime(); echo $now->format('d-m-Y'); ?></small>
-          </h2>
-        </div>
-      </div>
-      <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-          <img style="text-align: center;" src="{{ asset ('../img/logo_sit.png') }}" width="50%" height="50%" class="img-responsive">
-        </div>
-        <div class="col-sm-4 invoice-col">
-          <address style="display: inline-block;">
-            <strong style="display: inline-block;"><h3> Reporte de uso y estadisticas</h3> </strong><br>
-            <strong style="display: inline-block;"><h4> Red wifi huespedes / colaboradores</h4> </strong><br>
-            <strong style="display: inline-block;"><h5> Nombre Hotel</h5> </strong>
-          </address>
-        </div>
-        <div class="col-sm-4 invoice-col">
-          <img style="text-align: center;" src="{{ asset ('../img/logo_sit.png') }}" width="50%" height="50%" class="img-responsive">
+      <div class="row" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="pull-left">
+                  <i class="fa fa-users"></i>
+              </div>
+              <div class="media-body">
+                  <h3>Top AP'S Más Utilizadas</h3>
+              </div>
+          </div>
         </div>
       </div>
 
-      <div class="row text-center">
-        <div id="graphic" class="col-md-12">
-            <div id="main" style="height:400px; width: 50%;float:left; margin-right:0;padding-right:0;border-right-width:0;  "></div>
-            <div id="mainMap" style="height:400px; width: 50%;float:right; margin-left:0;padding-left:0;border-left-width:0; "></div>
-        </div>
-      </div>
 
-      <div id="animated-number" class="row text-center">
-        <div class="col-sm-2 bloque" >
-          <i class="fa fa-rss fa-2x"></i>
-          <h2 id="total_aps" name="total_aps" class="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Antenas</strong><br>
-          <strong>totales</strong>
+      <div class="row margin_div">
+        <div id="graphicaps" class="col-md-6">
+            <div id="mainaps" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-upload fa-2x"></i>
-          <h2 id="gb_max_dia" name="gb_max_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Gigabytes Max por</strong><br>
-          <strong>dia</strong>
-        </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-download fa-2x"></i>
-          <h2 id="gb_min_dia" name="gb_min_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Gigabytes Min por</strong><br>
-          <strong>dia</strong>
-        </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-users fa-2x"></i>
-          <h2 id="prom_usuario" name="prom_usuario" class="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Promedio de usuario</strong><br>
-          <strong>diario</strong>
-        </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-calendar fa-2x"></i>
-          <h2 id="total_usuario" name="total_usuario" ="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Total de usuarios</strong><br>
-          <strong>mensual</strong>
-        </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-tablet fa-2x"></i>
-          <h2 id="rogue_mes" name="rogue_mes" class="timer count-title count-number" data-to="11900" data-speed="1500"></h2>
-          <strong>Rogue</strong><br>
-          <strong>devices</strong>
-        </div>
-      </div>
-
-      <div class="row text-center">
-        <div id="graphicgbytes" class="col-md-12">
-            <div id="maingb" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div id="graphicusers" class="col-md-12">
-            <div id="mainuser2" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div class="col-sm-12">
-          <h4><b>Comparativo Mes Actual vs Mes Anterior</b></h4>
-        </div>
-        <div class="col-sm-4">
-          <table id="tabla_comparativa" name='tabla_comparativa' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
+        <div class="col-md-6">
+          <table id="table_det_aps" name='table_det_aps' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
             <thead >
-              <tr class="bg-primary" style="background: #FF851B; font-size: 11.5px;">
-                <th>MES</th>
+              <tr class="bg-primary" style="background: #0091EB;">
+                <th>Descripción</th>
+                <th>MAC</th>
+                <th>No.Clientes</th>
+                <th>Mes</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="pull-left">
+                  <i class="fa fa-users"></i>
+              </div>
+              <div class="media-body">
+                  <h3>Comparativo Mes Actual vs Mes Anterior</h3>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row margin_div">
+        <div class="col-md-6">
+          <table id="table_det_aps" name='table_det_aps' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
+            <thead >
+              <tr class="bg-primary" style="background: #FF851B;">
+                <th>Mes</th>
                 <th>Prom. USUARIOS POR DIA</th>
                 <th>GIGABYTES POR DÍA</th>
                 <th>ROGUE DEVICES</th>
                 <th>DIF %</th>
               </tr>
             </thead>
-            <tbody style="font-size: 11.5px;">
-              <tr>
-                <td>Abril</td>
-                <td>1934</td>
-                <td>4200</td>
-                <td>7253</td>
-                <td>1%</td>
-	            </tr>
-              <tr>
-                <td>Mayo</td>
-                <td>1949</td>
-                <td>4000</td>
-                <td>7309</td>
-                <td>1%</td>
-	            </tr>
+            <tbody>
             </tbody>
           </table>
         </div>
-        <div class="col-sm-8">
-          <div id="graphicComp" class="col-md-12">
-              <div id="maincomp" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        <div id="graphiccompart" class="col-md-6">
+            <div id="maincompart" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="pull-left">
+                  <i class="fa fa-users"></i>
+              </div>
+              <div class="media-body">
+                  <h3>Observaciones</h3>
+              </div>
           </div>
         </div>
       </div>
-      <div class="row text-center">
-        <h4><b>Observaciones</b></h4>
-        <div id="textObserv" class="col-md-12">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+
+      <div class="row margin_div">
+        <div class="col-md-12">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
         </div>
       </div>
+
 
     </section>
   </section>
