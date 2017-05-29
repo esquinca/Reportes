@@ -73,5 +73,11 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/observationdata','observationController@obsdata');
 	 //Generar vista reportes
 	 Route::post('/consultmes','ViewReportsController@store');
+	 Route::post('/consultcuadros','ViewReportsController@contenido');
+
+	 Route::post('/consultshowgrafone','ViewReportsController@show_graf_one');
+	 Route::post('/consultshowgraftwo','ViewReportsController@show_graf_two');
+	 Route::post('/consultshowgrafthree','ViewReportsController@show_graf_three');
+
 
 });

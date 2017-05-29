@@ -83,23 +83,74 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->nhotel;
       $type= $request->tipo;
-      $resultado= DB::table('Fechaprimeracapturareporte')->select('PRIMER_MES')->where('id', '=', $numero_hotel)->where('IDNIVEL', '=', $type)->value('PRIMER_MES');
+      $resultado= DB::table('NivelesReportePrueba')->select('MIN')->where('IDHOTEL', '=', $numero_hotel)->where('IDREPORTE', '=', $type)->value('MIN');
 
       //$resultado = json_encode($resultado);
 
       return $resultado;
     }
-
+    public function contenido(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $type= $request->type;
+      $date= $request->mes;
+      $resultados = DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','TOTALUSER','MaxClientes','RogueDevice')
+                                ->where('ID', '=' , $numero_hotel)
+                                ->where('MesGB', '=' , $date)
+                                ->get();
+      return json_encode($resultados);
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_graf_one(Request $request)
     {
-        //
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados = DB::table('cant_client_usuario')->select('NumClientes','Dia','Fecha')
+                    ->where('id', '=' , $numero_hotel)
+                    ->where('Fecha', '=' , $date)
+                    ->get();
+      return json_encode($resultados);
     }
+    public function show_graf_two(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados = DB::table('SSIDCliente')->select('id', 'NombreWLAN',  DB::raw('SUM(ClientesWLAN) as ClientesWLAN'), 'Fecha' )
+      ->where('Fecha', '=', $date)
+      ->where('id', '=', $numero_hotel)
+      ->groupBy('NombreWLAN')
+      ->get();
+      return json_encode($resultados);
+    }
+    public function show_graf_three (Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados = DB::table('TopSSIDWLAN')->select('NombreWLAN','ClientesWLAN','Fecha')
+      ->where('id', '=' , $numero_hotel)
+      ->where('Fecha', '=' , $date)
+      ->get();
+      return json_encode($resultados);
+    }
+    public function show_graf_four(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $type= $request->type;
+      $date= $request->mes;
+      $resultados = DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','TOTALUSER','MaxClientes','RogueDevice')
+                    ->where('id', '=' , $numero_hotel)
+                    ->where('Fecha', '=' , $date)
+                    ->get();
+      return json_encode($resultados);
+    }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -59,7 +59,7 @@ $('#select_two').on('change', function(e){
               viewMode: "months",
               minViewMode: "months",
               startDate: data,
-              endDate: '-1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
+              endDate: '+1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
               autoclose: true
           });
 
