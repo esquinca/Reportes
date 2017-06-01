@@ -80,5 +80,10 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/consultshowgrafthree','ViewReportsController@show_graf_three');
 	 Route::post('/consultshowgraffour','ViewReportsController@show_graf_four');
 
+	 Route::post('/consultshowdetaps','ViewReportsController@show_ap_det');
+	 Route::post('/consultshowconcep','ViewReportsController@info_hotel');
+	 Route::post('/consultshowobserv','ViewReportsController@info_observation');
+
+	 Route::post('/consultshowinfo','ViewReportsController@info_cuad');
 
 });

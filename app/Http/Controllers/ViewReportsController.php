@@ -144,30 +144,59 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
-      //SELECT Descripcion,MAC,SUM(NumClientes),Fecha,Mes FROM ConsultaMostAP WHERE NFecha = "05-2017" AND id='3' GROUP BY MAC LIMIT 5 
-      $resultados = DB::table('ConsultaMostAP')->select('id', 'Descripcion', 'MAC',  DB::raw('SUM(NumClientes) as NumClientes'), 'NFecha' )
-                    ->where('NFecha', '=', $date)
+      $resultados = DB::table('ConsultaMostAP')->select('id', 'Descripcion', 'MAC',  DB::raw('SUM(NumClientes) as NumClientes'), 'nfecha' )
+                    ->where('nfecha', '=', $date)
                     ->where('id', '=', $numero_hotel)
                     ->groupBy('MAC')
                     ->orderBy('NumClientes', 'desc')
                     ->limit(5)
                     ->get();
-
-                    DB::table('ConsultaMostAP')->select('Descripcion', 'MAC', DB::raw('SUM(NumClientes)  as NumClientes'), 'Mes')
-                    ->where([
-                      ['NFecha', '=', $date],
-                      ['id', '=', $numero_hotel]
-                    ])->groupBy('MAC')
-                    ->limit(5)
-                    ->get();
-
-
-                    DB::table('ConsultaMostAP')->select('Descripcion', 'MAC', DB::raw('SUM(NumClientes)  as NumClientes'), 'Mes')->where([['NFecha', '=', '05-2017'],['id', '=', '3']])->groupBy('MAC')->limit(5)->get();
       return json_encode($resultados);
     }
 
+    public function show_ap_det(Request $request){
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados = DB::table('ConsultaMostAP')->select('id', 'Descripcion', 'MAC',  DB::raw('SUM(NumClientes) as NumClientes'), 'nfecha' )
+                    ->where('nfecha', '=', $date)
+                    ->where('id', '=', $numero_hotel)
+                    ->groupBy('MAC')
+                    ->orderBy('NumClientes', 'desc')
+                    ->limit(5)
+                    ->get();
+      return json_encode($resultados);
+    }
 
+    public function info_cuad(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','MaxClientes','AVGUSER', 'RogueDevice')
+                  ->where('ID', '=' , $numero_hotel)
+                  ->where('MesUsuario', '=' , 'Mayo 2017')
+                  ->get();
+     return json_encode($resultados);
+    }
 
+    public function info_hotel(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $resultados= DB::table('hotels')->select('Nombre_hotel', 'dirlogo1')
+                  ->where('id', '=' , $numero_hotel)
+                  ->get();
+      return json_encode($resultados);
+    }
+    public function info_observation(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $resultados= DB::table('Observaciones')->select('Descripcion')
+                  ->where('hotels_id', '=' , $numero_hotel)
+                  ->where('Mes', '=', $date)
+                  ->value('Descripcion');
+
+      return $resultados;
+    }
 
     /**
      * Show the form for editing the specified resource.

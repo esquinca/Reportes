@@ -76,108 +76,8 @@
     margin-top: 16px;
   }
   </style>
+
   <script type="text/javascript">
-  (function ($) {
-    $.fn.countTo = function (options) {
-      options = options || {};
-
-        return $(this).each(function () {
-          // set options for current element
-          var settings = $.extend({}, $.fn.countTo.defaults, {
-            from:            $(this).data('from'),
-            to:              $(this).data('to'),
-            speed:           $(this).data('speed'),
-            refreshInterval: $(this).data('refresh-interval'),
-            decimals:        $(this).data('decimals')
-          }, options);
-
-          // how many times to update the value, and how much to increment the value on each update
-          var loops = Math.ceil(settings.speed / settings.refreshInterval),
-            increment = (settings.to - settings.from) / loops;
-
-          // references & variables that will change with each update
-          var self = this,
-            $self = $(this),
-            loopCount = 0,
-            value = settings.from,
-            data = $self.data('countTo') || {};
-
-          $self.data('countTo', data);
-
-          // if an existing interval can be found, clear it first
-          if (data.interval) {
-            clearInterval(data.interval);
-          }
-          data.interval = setInterval(updateTimer, settings.refreshInterval);
-
-          // initialize the element with the starting value
-          render(value);
-
-          function updateTimer() {
-            value += increment;
-            loopCount++;
-
-            render(value);
-
-            if (typeof(settings.onUpdate) == 'function') {
-              settings.onUpdate.call(self, value);
-            }
-
-            if (loopCount >= loops) {
-              // remove the interval
-              $self.removeData('countTo');
-              clearInterval(data.interval);
-              value = settings.to;
-
-              if (typeof(settings.onComplete) == 'function') {
-                settings.onComplete.call(self, value);
-              }
-            }
-          }
-
-          function render(value) {
-            var formattedValue = settings.formatter.call(self, value, settings);
-            $self.html(formattedValue);
-          }
-        });
-      };
-
-      $.fn.countTo.defaults = {
-        from: 0,               // the number the element should start at
-        to: 0,                 // the number the element should end at
-        speed: 1000,           // how long it should take to count between the target numbers
-        refreshInterval: 100,  // how often the element should be updated
-        decimals: 0,           // the number of decimal places to show
-        formatter: formatter,  // handler for formatting the value before rendering
-        onUpdate: null,        // callback method for every time the element is updated
-        onComplete: null       // callback method for when the element finishes updating
-      };
-
-      function formatter(value, settings) {
-        return value.toFixed(settings.decimals);
-      }
-    }(jQuery));
-
-    jQuery(function ($) {
-      // custom formatting example
-      $('.count-number').data('countToOptions', {
-      formatter: function (value, options) {
-        return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
-      }
-      });
-
-      // start all the timers
-      $('.timer').each(count);
-
-      function count(options) {
-      var $this = $(this);
-      options = $.extend({}, options || {}, $this.data('countToOptions') || {});
-      $this.countTo(options);
-      }
-  });
-
-
-
     function tablaComparar(){
       var id= $('#select_one').val();
       var _token = $('input[name="_token"]').val();
@@ -257,9 +157,36 @@
 
     };
 
+    function infohotel(){
+      var hotel= $('#select_one').val();
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        type: "POST",
+        url: "./consultshowconcep",
+        data: { number : hotel,  _token : _token },
+        success: function (data){
+          $.each(JSON.parse(data),function(index, objdataTable){
+            $("#name_hotel").text(objdataTable.Nombre_hotel);
+
+            /*Comparo isEmptyObject con el array no esta vacio me devuelve false*/
+            if (jQuery.isEmptyObject(objdataTable.dirlogo1) == false) {
+              $("#client_hotel").attr("src","../img/hoteles/"+objdataTable.dirlogo1);
+						}
+            /*Comparo isEmptyObject con el array si esta vacio me devuelve true*/
+						if (jQuery.isEmptyObject(objdataTable.dirlogo1) != false) {
+              $("#client_hotel").attr("src","../img/hoteles/Sin_imagen.png");
+						}
+
+          });
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+    }
+
     function graficas(){
       var hotel= $('#select_one').val();
-      var tipo_rep= $('#select_two').val();
       var calendario= $('#calendar_fecha').val();
       var _token = $('input[name="_token"]').val();
 
@@ -357,7 +284,6 @@
 
     function grafica_radar(){
       var hotel= $('#select_one').val();
-      var tipo_rep= $('#select_two').val();
       var calendario= $('#calendar_fecha').val();
       var _token = $('input[name="_token"]').val();
 
@@ -500,7 +426,6 @@
 
     function grafica_bar(){
       var hotel= $('#select_one').val();
-      var tipo_rep= $('#select_two').val();
       var calendario= $('#calendar_fecha').val();
       var _token = $('input[name="_token"]').val();
 
@@ -637,7 +562,6 @@
 
     function grafica_pie(){
       var hotel= $('#select_one').val();
-      var tipo_rep= $('#select_two').val();
       var calendario= $('#calendar_fecha').val();
       var _token = $('input[name="_token"]').val();
 
@@ -658,6 +582,7 @@
               var myChart4 = ec.init(document.getElementById('mainaps'));
               var datapiegraf1 = [];
               var datapiegraf2 = [];
+              var cadenaspiep = [];
               $.ajax({
                 type: "POST",
                 url: "./consultshowgraffour",
@@ -667,6 +592,15 @@
                     datapiegraf1.push(objdata.Descripcion);
                     datapiegraf2.push(objdata.NumClientes);
                   });
+                  var uniontitulos = [];
+                  for (var j = 0; j < datapiegraf1.length; j++) {
+                    var arraydatanamep = datapiegraf1[j] + '=' + datapiegraf2[j];
+                    var arraydatavaluep= datapiegraf2[j];
+                    var concatenarp= {"value": arraydatavaluep, "name": arraydatanamep};
+                    cadenaspiep.push(concatenarp);
+                    uniontitulos.push(arraydatanamep);
+                    //{value:10, name:'rose1'},
+                  }
                   var optiongrafpie= {
                         title : {
                             text: 'Top aps',
@@ -681,10 +615,11 @@
                             orient : 'vertical',
                             x : 'left',
                             y : 'top',
-                            data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+                            //data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+                            data: uniontitulos
                         },
                         toolbox: {
-                            show : true,
+                            show : false,
                             feature : {
                                 mark : {show: true},
                                 dataView : {show: true, readOnly: false},
@@ -702,11 +637,13 @@
                                 name:'Estatus',
                                 type:'pie',
                                 radius : [30, 110],
-                                center : ['50%','50%'],
+                                center : ['60%','50%'],
                                 roseType : 'area',
                                 x: '50%',               // for funnel
                                 max: 40,                // for funnel
                                 sort : 'ascending',     // for funnel
+                                data: cadenaspiep
+                                /*
                                 data:[
                                     {value:10, name:'rose1'},
                                     {value:5, name:'rose2'},
@@ -717,6 +654,7 @@
                                     {value:30, name:'rose7'},
                                     {value:40, name:'rose8'}
                                 ]
+                                */
                             }
                         ]
                   };
@@ -736,44 +674,318 @@
         );
     }
 
-    (function(){
-    		$('#generateInfo').on('click', function() {
-          /*
-          var hotel= $('#select_one').val();
-          var tipo_rep= $('#select_two').val();
-          var calendario= $('#calendar_fecha').val();
-          var _token = $('input[name="_token"]').val();
-          */
-          grafica_radar();
-          graficas();
-          grafica_bar();
-          grafica_pie();
-          //dpsap();
-          /*
-          $.ajax({
-            type: "POST",
-            url: "./consultcuadros",
-            data: { number : hotel, type: tipo_rep, mes: calendario,  _token : _token },
-            success: function (data){
-              $.each(JSON.parse(data),function(index, objdata){
-                $('#total_aps').attr("data-to", objdata.AP);
-                $('#gb_max_dia').attr("data-to", objdata.MaxGBv);
-                $('#gb_min_dia').attr("data-to", objdata.MinGBv);
-                $('#prom_usuario').attr("data-to", objdata.TOTALUSER);
-                $('#total_usuario').attr("data-to", objdata.MaxClientes);
-                $('#rogue_mes').attr("data-to", objdata.RogueDevice);
-              });
-            },
-            error: function (data) {
-              console.log('Error:', data);
-            }
+    var configTableAps={
+          "order": [[ 2, "asc" ]],
+          paging: false,
+      		//"pagingType": "simple",
+      	  Filter: false,
+      		searching: false,
+          //"aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+      		//ordering: false,
+          //"pageLength": 5,
+          bInfo: false,
+          language:{
+                  "sProcessing":     "Procesando...",
+                  "sLengthMenu":     "Mostrar _MENU_ registros",
+                  "sZeroRecords":    "No se encontraron resultados",
+                  "sEmptyTable":     "Ningún dato disponible",
+                  "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix":    "",
+                  "sSearch":         "Buscar:",
+                  "sUrl":            "",
+                  "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+          }
+    }
+
+    function table_graf_pie(){
+      var hotel= $('#select_one').val();
+      var calendario= $('#calendar_fecha').val();
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        type: "POST",
+        url: "./consultshowdetaps",
+        data: { number : hotel, mes: calendario,  _token : _token },
+        success: function (data){
+          $('#table_det_aps').DataTable().destroy();
+          var TablaDetallesAps= $('#table_det_aps').dataTable(configTableAps);
+          TablaDetallesAps.fnClearTable();
+          $.each(JSON.parse(data),function(index, objdataTable){
+            TablaDetallesAps.fnAddData([
+              objdataTable.Descripcion,
+              objdataTable.MAC,
+              objdataTable.NumClientes
+            ]);
           });
 
-    			$('#tabla_comparativa').DataTable().destroy();
-    			tablaComparar();
-          */
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+    }
+
+    function info_cuadros(){
+      var hotel= $('#select_one').val();
+      var calendario= $('#calendar_fecha').val();
+      var _token = $('input[name="_token"]').val();
+
+      $("#total_aps").attr("data-to", '');
+      $("#gb_max_dia").attr("data-to", '');
+      $("#gb_min_dia").attr("data-to", '');
+      $("#prom_usuario").attr("data-to", '');
+      $("#total_usuario").attr("data-to", '');
+      $("#rogue_mes").attr("data-to", '');
+
+      $.ajax({
+        type: "POST",
+        url: "./consultshowinfo",
+        data: { number : hotel, mes: calendario,  _token : _token },
+        success: function (data){
+          $.each(JSON.parse(data),function(index, objdata){
+            $("#total_aps").attr("data-to", objdata.AP);
+            $("#gb_max_dia").attr("data-to", objdata.MaxGBv);
+            $("#gb_min_dia").attr("data-to", objdata.MinGBv);
+            $("#prom_usuario").attr("data-to", objdata.AVGUSER);
+            $("#total_usuario").attr("data-to", objdata.MaxClientes);
+            $("#rogue_mes").attr("data-to", objdata.RogueDevice);
+            $('.timer').each(count); // Ejecutar el contador despues de recibir valores
+          });
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+
+    }
+    ///No mover funcion de ingremento de contador/////////////////////////////////////////////////////////
+    var CountTo = function (element, options) {
+      this.$element = $(element);
+      this.options  = $.extend({}, CountTo.DEFAULTS, this.dataOptions(), options);
+      this.init();
+    };
+
+    CountTo.DEFAULTS = {
+      from: 0,               // the number the element should start at
+      to: 0,                 // the number the element should end at
+      speed: 1000,           // how long it should take to count between the target numbers
+      refreshInterval: 100,  // how often the element should be updated
+      decimals: 0,           // the number of decimal places to show
+      formatter: formatter,  // handler for formatting the value before rendering
+      onUpdate: null,        // callback method for every time the element is updated
+      onComplete: null       // callback method for when the element finishes updating
+    };
+
+    CountTo.prototype.init = function () {
+      this.value     = this.options.from;
+      this.loops     = Math.ceil(this.options.speed / this.options.refreshInterval);
+      this.loopCount = 0;
+      this.increment = (this.options.to - this.options.from) / this.loops;
+    };
+
+    CountTo.prototype.dataOptions = function () {
+      var options = {
+        from:            this.$element.data('from'),
+        to:              this.$element.data('to'),
+        speed:           this.$element.data('speed'),
+        refreshInterval: this.$element.data('refresh-interval'),
+        decimals:        this.$element.data('decimals')
+      };
+
+      var keys = Object.keys(options);
+
+      for (var i in keys) {
+        var key = keys[i];
+
+        if (typeof(options[key]) === 'undefined') {
+          delete options[key];
+        }
+      }
+
+      return options;
+    };
+
+    CountTo.prototype.update = function () {
+      this.value += this.increment;
+      this.loopCount++;
+
+      this.render();
+
+      if (typeof(this.options.onUpdate) == 'function') {
+        this.options.onUpdate.call(this.$element, this.value);
+      }
+
+      if (this.loopCount >= this.loops) {
+        clearInterval(this.interval);
+        this.value = this.options.to;
+
+        if (typeof(this.options.onComplete) == 'function') {
+          this.options.onComplete.call(this.$element, this.value);
+        }
+      }
+    };
+
+    CountTo.prototype.render = function () {
+      var formattedValue = this.options.formatter.call(this.$element, this.value, this.options);
+      this.$element.text(formattedValue);
+    };
+
+    CountTo.prototype.restart = function () {
+      this.stop();
+      this.init();
+      this.start();
+    };
+
+    CountTo.prototype.start = function () {
+      this.stop();
+      this.render();
+      this.interval = setInterval(this.update.bind(this), this.options.refreshInterval);
+    };
+
+    CountTo.prototype.stop = function () {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+    };
+
+    CountTo.prototype.toggle = function () {
+      if (this.interval) {
+        this.stop();
+      } else {
+        this.start();
+      }
+    };
+
+    function formatter(value, options) {
+      return value.toFixed(options.decimals);
+    }
+
+    $.fn.countTo = function (option) {
+      return this.each(function () {
+        var $this   = $(this);
+        var data    = $this.data('countTo');
+        var init    = !data || typeof(option) === 'object';
+        var options = typeof(option) === 'object' ? option : {};
+        var method  = typeof(option) === 'string' ? option : 'start';
+
+        if (init) {
+          if (data) data.stop();
+          $this.data('countTo', data = new CountTo(this, options));
+        }
+
+        data[method].call(data);
+      });
+    };
+    ///Asignacion del contador a los campos////////////////////////////////////////////////////////////
+    function count(options) {
+      var $this = $(this);
+      options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+      $this.countTo(options);
+    }
+
+    jQuery(function ($) {
+      $('#total_aps').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+      $('#gb_max_dia').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+      $('#gb_min_dia').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+      $('#prom_usuario').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+      $('#total_usuario').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+      $('#rogue_mes').data('countToOptions', {
+        formatter: function (value, options) {
+          return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+        }
+      });
+    });
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    function info_observation(){
+      var hotel= $('#select_one').val();
+      var calendario= $('#calendar_fecha').val();
+      var _token = $('input[name="_token"]').val();
+      $("#coment_itc").text('');
+      $.ajax({
+        type: "POST",
+        url: "./consultshowobserv",
+        data: { number : hotel, mes: calendario,  _token : _token },
+        success: function (data){
+          if (data != '') {
+            //Existe observacion
+            $("#coment_itc").text(data);
+          }
+          if (data == '') {
+            var texto_cont_one= 'Actualmente el numero total de antenas es de ' + $("#total_aps").attr("data-to");
+            var texto_cont_two= ', con un total de usuarios mensuales de ' +  $("#total_usuario").attr("data-to");
+            var texto_cont_three= ', de los cuales la cantidad de rogue device es de ' + $("#rogue_mes").attr("data-to") + '. ';
+            var texto_cont_four=  'La cantidad de Gigabyte maximo presentado en este mes es de ' + $("#gb_max_dia").attr("data-to")  + '.';
+            var texto_aleat = texto_cont_one + texto_cont_two + texto_cont_three + texto_cont_four;
+            $("#coment_itc").text(texto_aleat);
+            //No existe observacion
+          }
+
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+    }
+
+
+    (function(){
+    		$('#generateInfo').on('click', function() {
+            var hal= $('#select_two').val();
+            //console.log(hal);
+            if (hal === '1') {
+              $("#basico").show();
+              infohotel();
+              info_cuadros();
+              grafica_radar();
+              graficas();
+              grafica_bar();
+              grafica_pie();
+              table_graf_pie();
+              info_observation();
+            }
+            else if (hal === '2') {
+              alert('2');
+            }
+            else if (hal === '3') {
+              alert('3');
+            }
+            else if (hal === '4') {
+              alert('4');
+            }
     		});
     })();
 
@@ -784,8 +996,6 @@
     float: left;
     border: 3px solid #09347A;
     padding-top: 40px;
-    width: auto;
-    height: auto;
     margin: 10px;
     padding-bottom: 40px;
   }
@@ -826,7 +1036,7 @@
                       </div>
                       <div class="form-group">
                         <label for="select_two">Tipo: </label>
-                        <select class="form-control select2" id="select_two">
+                        <select class="form-control select2" id="select_two" name="select_two">
                           <option value="" selected>{{ trans('message.optionOne')}}</option>
                         </select>
                       </div>
@@ -850,7 +1060,7 @@
       </div>
     </section>
 
-    <section class="invoice">
+    <section id="basico" name="basico" class="invoice">
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
@@ -866,13 +1076,18 @@
             <div class="col-md-4">
                 <img src="{{ asset ('../img/logo_sit.png') }}" width="160px" height="80px" style="display:flex; margin:0 auto;" class="img-responsive">
             </div>
-            <div class="col-md-4">
-              <i class="fa fa-bookmark-o"> Reporte de uso y estadisticas</i><br>
-              <small class="pull-center"> Red wifi huéspedes / colaboradores</small><br>
-              <small class="pull-center">d</small>
+            <div class="col-md-4 text-center">
+              <!--
+              <i class="fa fa-bookmark-o" style="display:display-inline "> </i><h4 style="font-weight: bold; display:display-inline"> Reporte de uso y estadisticas</h4> <br>
+              <small> Red wifi huéspedes / colaboradores</small><br>
+              <small id="name_hotel" name="name_hotel">d</small>
+              -->
+              <h1 style="font-size: 22px;"><i class="fa fa-bookmark-o"></i> Reporte de uso y estadisticas</h1>
+              <p style="margin: 0;">Red wifi huéspedes / colaboradores</p>
+              <p id="name_hotel" name="name_hotel" style="margin: 0;"></p>
             </div>
             <div class="col-md-4">
-                <img src="{{ asset ('../img/logo_sit.png') }}" width="160px" height="80px" style="display:flex; margin:0 auto;" class="img-responsive">
+                <img id='client_hotel' name='client_hotel' src="{{ asset ('../img/logo_sit.png') }}" width="160px" height="80px" style="display:flex; margin:0 auto;" class="img-responsive">
             </div>
           </div>
         </div>
@@ -891,46 +1106,54 @@
         </div>
       </div>
 
-      <div id="animated-number" class="row text-center">
-        <div class="col-sm-2 bloque" >
-          <i class="fa fa-rss fa-2x"></i>
-          <h3 id="total_aps" name="total_aps" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Antenas</strong><br>
-          <strong>totales</strong>
+      <div class="row margin_div text-center">
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-rss fa-2x"></i>
+            <h3 id="total_aps" name="total_aps" class="timer" data-to="11900" data-speed="10500"></h3>
+            <strong>Antenas</strong><br>
+            <strong>totales</strong>
+          </div>
         </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-upload fa-2x"></i>
-          <h3 id="gb_max_dia" name="gb_max_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Gigabytes Max por</strong><br>
-          <strong>dia</strong>
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-upload fa-2x"></i>
+            <h3 id="gb_max_dia" name="gb_max_dia" class="timer" data-to="" data-speed="5000"></h3>
+            <strong>GB Max por</strong><br>
+            <strong>dia</strong>
+          </div>
         </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-download fa-2x"></i>
-          <h3 id="gb_min_dia" name="gb_min_dia" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Gigabytes Min por</strong><br>
-          <strong>dia</strong>
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-download fa-2x"></i>
+            <h3 id="gb_min_dia" name="gb_min_dia" class="timer" data-to="" data-speed="5000"></h3>
+            <strong>GB Min por</strong><br>
+            <strong>dia</strong>
+          </div>
         </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-users fa-2x"></i>
-          <h3 id="prom_usuario" name="prom_usuario" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Promedio de usuario</strong><br>
-          <strong>diario</strong>
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-users fa-2x"></i>
+            <h3 id="prom_usuario" name="prom_usuario" class="timer" data-to="" data-speed="5000"></h3>
+            <strong>Prom de usuario</strong><br>
+          </div>
         </div>
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-calendar fa-2x"></i>
-          <h3 id="total_usuario" name="total_usuario" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Total de usuarios</strong><br>
-          <strong>mensual</strong>
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-calendar fa-2x"></i>
+            <h3 id="total_usuario" name="total_usuario" class="timer" data-to="" data-speed="5000"></h3>
+            <strong>Num. usuarios mensual</strong>
+          </div>
         </div>
-
-        <div class="col-sm-2 bloque">
-          <i class="fa fa-tablet fa-2x"></i>
-          <h3 id="rogue_mes" name="rogue_mes" class="timer count-title count-number" data-to="11900" data-speed="1500"></h3>
-          <strong>Rogue</strong><br>
-          <strong>devices</strong>
+        <div class="col-sm-2">
+          <div class="col-sm-12 bloque">
+            <i class="fa fa-tablet fa-2x"></i>
+            <h3 id="rogue_mes" name="rogue_mes" class="timer" data-to="" data-speed="10500"></h3>
+            <strong>Rogue</strong><br>
+            <strong>devices</strong>
+          </div>
         </div>
       </div>
-
 
       <div class="row" style="margin-top: 16px;">
         <div class="col-md-12">
@@ -1014,7 +1237,6 @@
                 <th>Descripción</th>
                 <th>MAC</th>
                 <th>No.Clientes</th>
-                <th>Mes</th>
               </tr>
             </thead>
             <tbody>
@@ -1038,7 +1260,7 @@
 
       <div class="row margin_div">
         <div class="col-md-6">
-          <table id="table_det_aps" name='table_det_aps' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
+          <table id="ddsdfsd" name='dsdfsd' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
             <thead >
               <tr class="bg-primary" style="background: #FF851B;">
                 <th>Mes</th>
@@ -1072,9 +1294,7 @@
 
       <div class="row margin_div">
         <div class="col-md-12">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p id='coment_itc' name='coment_itc'></p>
         </div>
       </div>
 

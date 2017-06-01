@@ -1,6 +1,8 @@
 $(document).ready(function() {
   // Instrucciones a ejecutar al terminar la carga
+  $(".select2").select2();
   $('#calendar_fecha').attr('readonly', true);
+  $("#basico").hide();
 });
 
 $('#select_one').on('change', function(e){
