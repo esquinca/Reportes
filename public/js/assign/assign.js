@@ -45,7 +45,7 @@ function table(){
            TableHotel.fnAddData([
              status.Nombre_hotel,
              status.Encargado,
-             '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.IDHotels+'" class="btn btn-danger btn-xs btn-block" role="button" data-target="#EditarServicioSx"><span class="fa fa-pencil-square-o" style="margin-right: 4px;"></span>Editar</a>',
+             '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.IDHotels+'" class="btn btn-default btn-xs btn-block" role="button" data-target="#EditarServicioSx"><span class="fa fa-pencil-square-o" style="margin-right: 4px;"></span>Editar</a>',
            ]);
          });
 
