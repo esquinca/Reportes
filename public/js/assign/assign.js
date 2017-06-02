@@ -36,7 +36,7 @@ function table(){
   var _token = $('input[name="_tokenb"]').val();
   $.ajax({
        type: "POST",
-       url: '/usershow',
+       url: '/usershowd',
        data: {_token : _token},
        success: function (data) {
          TableHotel.fnClearTable();

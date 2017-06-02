@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function() {
 	 });
 	 //Asignar Concierge.
 	 Route::get('/assign',  'AssignConciergeController@index');
-	 Route::post('/usershow','AssignConciergeController@show');
+	 Route::post('/usershowd','AssignConciergeController@show');
 	 Route::post('/config_asig_car_edit','AssignConciergeController@recargar');
 	 Route::post('/config_hotel','AssignConciergeController@update');
 

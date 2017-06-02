@@ -64,6 +64,9 @@ class AssignConciergeController extends Controller
      */
      public function show (Request $request)
      {
+       /*
+          $resultado = DB::table('HotelUserReport')->select('CorreosZD')
+          */
          $resultado= DB::table('HotelUserReport')->select(
            'Nombre_hotel',
            'IDHotels',
