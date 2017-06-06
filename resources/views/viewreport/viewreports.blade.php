@@ -756,12 +756,16 @@
         success: function (data){
           $.each(JSON.parse(data),function(index, objdata){
             $("#total_aps").attr("data-to", objdata.AP);
-            $("#gb_max_dia").attr("data-to", objdata.MaxGBv);
-            $("#gb_min_dia").attr("data-to", objdata.MinGBv);
+            $("#gb_max_dia").attr("data-to", objdata.MaxGBV0);
+            $("#gb_min_dia").attr("data-to", objdata.MinGBV0);
             $("#prom_usuario").attr("data-to", objdata.AVGUSER);
             $("#total_usuario").attr("data-to", objdata.MaxClientes);
             $("#rogue_mes").attr("data-to", objdata.RogueDevice);
             $('.timer').each(count); // Ejecutar el contador despues de recibir valores
+
+            $("#gbmaxid").html(objdata.MaxGBV1 + " Max por");
+            $("#gbminid").html(objdata.MinGBV1 + " Min por");
+
           });
         },
         error: function (data) {
@@ -1119,16 +1123,16 @@
           <div class="col-sm-12 bloque">
             <i class="fa fa-upload fa-2x"></i>
             <h3 id="gb_max_dia" name="gb_max_dia" class="timer" data-to="" data-speed="5000"></h3>
-            <strong>GB Max por</strong><br>
-            <strong>dia</strong>
+            <strong id="gbmaxid">GB Max por</strong><br>
+            <strong>mes</strong>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-download fa-2x"></i>
             <h3 id="gb_min_dia" name="gb_min_dia" class="timer" data-to="" data-speed="5000"></h3>
-            <strong>GB Min por</strong><br>
-            <strong>dia</strong>
+            <strong id="gbminid">GB Min por</strong><br>
+            <strong>mes</strong>
           </div>
         </div>
         <div class="col-sm-2">

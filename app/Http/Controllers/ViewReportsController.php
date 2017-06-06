@@ -171,7 +171,7 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
-      $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','MaxClientes','AVGUSER', 'RogueDevice')
+      $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MaxGBV0','MaxGBV1','MinGBv','MinGBV0','MinGBV1','MaxClientes','AVGUSER', 'RogueDevice')
                   ->where('ID', '=' , $numero_hotel)
                   ->where('MesUsuario', '=' , 'Mayo 2017')
                   ->get();
