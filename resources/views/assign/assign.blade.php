@@ -39,9 +39,11 @@
               <div class="row">
                 <div class="col-xs-12">
                     {!! Form::open(['action' => 'AssignConciergeController@update', 'url' => '/config_hotel', 'method' => 'post', 'id' => 'formrewrite', 'class' => 'form-horizontal' ]) !!}
-                        <input id='id_recibido' name='id_recibido' type="text" class="form-control" placeholder="">
+                        <input id='id_recibido' name='id_recibido' type="hidden" class="form-control" placeholder="">
+
                         <div class="form-group">
                           <label for="inputhotel" class="col-sm-4 control-label">{{ trans('message.hotel')}}</label>
+
                           <div class="col-sm-8">
                             <input type="text" class="form-control" id="inputhotel" name="inputhotel" maxlength="60" title="" readonly/>
                           </div>

@@ -73,6 +73,7 @@ function enviar(e){
   var valor= e.getAttribute('value');
   var _token = $('input[name="_token"]').val();
   $('#id_recibido').val(valor);
+
   $('#modal-editUser').modal('show');
 
   $.ajax({
@@ -81,9 +82,11 @@ function enviar(e){
        data: { sector : valor, _token : _token},
        success: function (data) {
          var datos = JSON.parse(data);
-         console.log(data);
+
          //$('#id_recibido').val(datos[0].IDHotels);
+         
          $('#inputhotel').val(datos[0].Nombre_hotel);
+         
          $("#selectEditItconcierge").find('option:selected').removeAttr("selected");
          $("#selectEditItconcierge option[value='"+datos[0].userreporteID+"']").prop('selected', true);
 
@@ -100,6 +103,8 @@ $('#update_user_assign').on('click', function(){
   var _token = $('input[name="_token"]').val();
   var id= $('#id_recibido').val();
   var it= $('#selectEditItconcierge').val();
+  
+
   if (a0 == false) {
      toastr.error('Datos Requeridos. !!', 'Error', {timeOut: 1000});
   }

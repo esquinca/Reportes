@@ -32,7 +32,7 @@ class AssignConciergeController extends Controller
     }
     public function recargar(Request $request){
       $id= $request->sector;
-      $sql= DB::table('alonso')->select('hotelID','Nombre_hotel', 'userreporteID')->where('hotelID', '=', $id)->get();
+      $sql= DB::table('alonso')->select('hotelID','Nombre_hotel', 'userreporteID', 'itconciergeID')->where('hotelID', '=', $id)->get();
       return json_encode($sql);
     }
 
@@ -99,12 +99,29 @@ class AssignConciergeController extends Controller
     {
       $value='1';
       $edita_idhotel= $request->hotel;
-      $edita_idconci= $request->concierge;
+      $edita_iduserconci= $request->concierge;
+      
+      $emailuser = $this->getCorreo($edita_iduserconci);
+      $edita_idconcierge = $this->getIdCon($emailuser);
 
       $sql = DB::table('hotels')->where('id', '=', $edita_idhotel)
-      ->update(['user_reportes_id' => $edita_idconci]);
+      ->update(['user_reportes_id' => $edita_iduserconci, 'itconcierges_id' => $edita_idconcierge]);
 
       return $value;
+    }
+
+    public function getCorreo($value)
+    {
+      $resultado= DB::table('listarusuariosreportes')->select('email')->where('IDUsuario', '=', $value)->value('IDUsuario');
+
+      return $resultado;
+    }
+
+    public function getIdCon($value)
+    {
+      $resultado= DB::table('itconcierges')->select('id')->where('email', '=', $value)->value('id');
+
+      return $resultado;
     }
 
     /**
