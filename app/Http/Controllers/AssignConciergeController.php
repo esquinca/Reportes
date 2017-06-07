@@ -25,13 +25,14 @@ class AssignConciergeController extends Controller
      */
     public function index()
     {
-      $selectDataUser = DB::table('ListarUserReportes')->orderBy('id', 'asc')->get();
+      //$selectDataUser = DB::table('ListarUserReportes')->orderBy('id', 'asc')->get();
+      $selectDataUser= DB::table('listarusuariosreportes')->select('IDUsuario','Encargado')->orderBy('IDUsuario', 'asc')->get();
       return view('assign.assign', compact('selectDataUser'));
       //return view('assign.assign');
     }
     public function recargar(Request $request){
       $id= $request->sector;
-      $sql= DB::table('HotelUserReport')->where('IDHotels', '=', $id)->get();
+      $sql= DB::table('alonso')->select('hotelID','Nombre_hotel', 'userreporteID')->where('hotelID', '=', $id)->get();
       return json_encode($sql);
     }
 
@@ -67,12 +68,12 @@ class AssignConciergeController extends Controller
        /*
           $resultado = DB::table('HotelUserReport')->select('CorreosZD')
           */
-         $resultado= DB::table('HotelUserReport')->select(
+         $resultado= DB::table('alonso')->select(
            'Nombre_hotel',
-           'IDHotels',
-           'IDUsuario',
+           'hotelID',
+           'userreporteID',
            'Encargado'
-          )->orderBy('IDHotels', 'asc')->get();
+          )->orderBy('hotelID', 'asc')->get();
          return json_encode($resultado);
      }
 

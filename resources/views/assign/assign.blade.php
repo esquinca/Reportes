@@ -39,7 +39,7 @@
               <div class="row">
                 <div class="col-xs-12">
                     {!! Form::open(['action' => 'AssignConciergeController@update', 'url' => '/config_hotel', 'method' => 'post', 'id' => 'formrewrite', 'class' => 'form-horizontal' ]) !!}
-                        <input id='id_recibido' name='id_recibido' type="hidden" class="form-control" placeholder="">
+                        <input id='id_recibido' name='id_recibido' type="text" class="form-control" placeholder="">
                         <div class="form-group">
                           <label for="inputhotel" class="col-sm-4 control-label">{{ trans('message.hotel')}}</label>
                           <div class="col-sm-8">
@@ -52,7 +52,7 @@
                             <select id="selectEditItconcierge" name="selectEditItconcierge"  class="form-control" required>
         				                <option value="">{{ trans('message.selectopt') }}</option>
                                 @foreach ($selectDataUser as $userreport)
-                                <option value="{{ $userreport->id }}"> {{ $userreport->nombrecomp }} </option>
+                                <option value="{{ $userreport->IDUsuario }}"> {{ $userreport->Encargado }} </option>
                                 @endforeach
         				            </select>
                           </div>

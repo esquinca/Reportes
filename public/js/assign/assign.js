@@ -45,7 +45,7 @@ function table(){
            TableHotel.fnAddData([
              status.Nombre_hotel,
              status.Encargado,
-             '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.IDHotels+'" class="btn btn-default btn-xs btn-block" role="button" data-target="#EditarServicioSx"><span class="fa fa-pencil-square-o" style="margin-right: 4px;"></span>Editar</a>',
+             '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.hotelID+'" class="btn btn-default btn-xs btn-block" role="button" data-target="#EditarServicioSx"><span class="fa fa-pencil-square-o" style="margin-right: 4px;"></span>Editar</a>',
            ]);
          });
 
@@ -85,7 +85,7 @@ function enviar(e){
          //$('#id_recibido').val(datos[0].IDHotels);
          $('#inputhotel').val(datos[0].Nombre_hotel);
          $("#selectEditItconcierge").find('option:selected').removeAttr("selected");
-         $("#selectEditItconcierge option[value='"+datos[0].IDUsuario+"']").prop('selected', true);
+         $("#selectEditItconcierge option[value='"+datos[0].userreporteID+"']").prop('selected', true);
 
          $('#modal-editItconcierge').modal('show');
        },
