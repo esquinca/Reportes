@@ -85,5 +85,7 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/consultshowobserv','ViewReportsController@info_observation');
 
 	 Route::post('/consultshowinfo','ViewReportsController@info_cuad');
+	 //configuracion clientes
+	 Route::get('/assigncl', 'assignclientController@index');
 
 });

@@ -24,11 +24,12 @@
                 <li class="header">{{ trans('message.navigation') }}</li>
                 <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
                 <li><a href="{{ url('assign') }}"><i class='fa fa-chain-broken'></i> <span>{{ trans('message.assign') }} {{ trans('message.concierge') }}</span></a></li>
+                <li><a href="{{ url('assigncl') }}"><i class='fa fa-users'></i> <span>{{ trans('message.assign') }} {{ trans('message.cliente') }}</span></a></li>
                 <!--
                 <li><a href="{{ url('wlan') }}"><i class='fa fa-wifi'></i> <span>{{ trans('message.wlan') }}</span></a></li>
                 -->
                 <li><a href="{{ url('generate') }}"><i class='fa fa-pencil-square-o'></i> <span>{{ trans('message.generatereport') }}</span></a></li>
-                <li><a href="{{ url('observation') }}"><i class='fa fa-search'></i> <span>{{ trans('message.observation') }}</span></a></li>                
+                <li><a href="{{ url('observation') }}"><i class='fa fa-search'></i> <span>{{ trans('message.observation') }}</span></a></li>
                 <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.page') }}</li>

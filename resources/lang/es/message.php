@@ -356,4 +356,5 @@ return [
 
     'nick' => 'Nick',
     'observation' => 'Observaciones',
+    'asigclient' => 'Asignar Cliente'
 ];
