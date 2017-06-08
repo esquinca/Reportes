@@ -23,7 +23,7 @@ class assignclientController extends Controller
         $correo = Auth::user()->email;
         $priv = Auth::user()->Privilegio;
 
-        $selectDatahotel = DB::table('listarhoteles')->select('idh','Nombre_hotel')->orderBy('idh', 'asc')->get();
+        $selectDatahotel = DB::table('listarhoteles')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
         $selectDataCliente = DB::table('listarclientesreportes')->select('idc', 'cliente')->orderBy('idc', 'asc')->get();
 
         return view('assignclient.assignclient', compact('selectDatahotel', 'selectDataCliente'));
