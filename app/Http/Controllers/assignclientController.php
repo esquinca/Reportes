@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use DB;
+
+use Auth;
+
 class assignclientController extends Controller
 {
     /**
@@ -15,7 +19,15 @@ class assignclientController extends Controller
      */
     public function index()
     {
-        return view('assignclient.assignclient');
+        $ID = Auth::user()->id;
+        $correo = Auth::user()->email;
+        $priv = Auth::user()->Privilegio;
+
+        $selectDatahotel = DB::table('listarhoteles')->select('idh','Nombre_hotel')->orderBy('idh', 'asc')->get();
+        $selectDataCliente = DB::table('listarclientesreportes')->select('idc', 'cliente')->orderBy('idc', 'asc')->get();
+
+        return view('assignclient.assignclient', compact('selectDatahotel', 'selectDataCliente'));
+        //return view('assignclient.assignclient');    
     }
 
     /**

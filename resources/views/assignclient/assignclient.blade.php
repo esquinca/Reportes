@@ -37,6 +37,9 @@
                   <label for="select_one">Seleccione el Hotel: </label>
                   <select class="form-control select2" id="select_one">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
+                    @foreach ($selectDatahotel as $info)
+                    <option value="{{ $info->idh }}"> {{ $info->Nombre_hotel }} </option>
+                    @endforeach
                   </select>
                 </div>
 
@@ -44,6 +47,9 @@
                   <label for="select_one">Seleccione el cliente: </label>
                   <select class="form-control select2" id="select_two">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
+                    @foreach ($selectDataCliente as $infoC)
+                    <option value="{{ $infoC->idc }}"> {{ $infoC->cliente }} </option>
+                    @endforeach
                   </select>
                 </div>
 
