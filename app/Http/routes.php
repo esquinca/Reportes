@@ -91,5 +91,6 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/assignclshow', 'assignclientController@show');
 	 Route::post('/assignclold', 'assignclientController@store');
 	 Route::post('/assignclupdate', 'assignclientController@update');
+	 Route::post('/assigncldelete', 'assignclientController@delete');
 
 });

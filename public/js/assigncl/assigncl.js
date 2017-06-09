@@ -18,7 +18,7 @@ $('#capInfo').on('click', function(){
   var valorselone= $('#select_one').val();
   var valorseltwo= $('#select_two').val();
   var _token = $('input[name="_token"]').val();
-  
+
   if (a0 == false && a1 == false) {
      toastr.error('Datos Requeridos. !!', 'Mensaje', {timeOut: 1000});
   }
@@ -30,10 +30,13 @@ $('#capInfo').on('click', function(){
          success: function (data) {
            console.log('Error:', data);
            if (data == '0') {
-             toastr.success('No registrado. !!', 'Mensaje', {timeOut: 1000});
+             toastr.error('Ya esta asignado a dicho hotel. !!', 'Mensaje', {timeOut: 1000});
            }
            if (data == '1') {
-             toastr.error('Registrado. !!', 'Mensaje', {timeOut: 1000});
+             toastr.success('Registrado. !!', 'Mensaje', {timeOut: 1000});
+             var fds= $('#tableclient').dataTable();
+             fds.fnDestroy();
+             table();
            }
          },
          error: function (data) {
@@ -133,6 +136,39 @@ function enviar(e){
    })
 }
 
+//Boton actualizar modal de editar.
+$('#update_client_assign').on('click', function(){
+  var a0=validarSelect('selectEditClient');
+  var _token = $('input[name="_token"]').val();
+  var id= $('#id_recibido').val();
+  var idclien= $('#selectEditClient').val();
+
+
+  if (a0 == false) {
+     toastr.error('Datos Requeridos. !!', 'Error', {timeOut: 1000});
+  }
+  else {
+    $.ajax({
+         type: "POST",
+         url: './assignclupdate',
+         data: { idreg: id, idcl : idclien, _token : _token},
+         success: function (data) {
+           if (data == 1) {
+             $('#modal-edithotcl').modal('toggle');
+             var fds= $('#tableclient').dataTable();
+             fds.fnDestroy();
+             table();
+             toastr.success('Actualizado!!', 'Mensaje', {timeOut: 1000});
+           }
+         },
+         error: function (data) {
+           alert('Error:', data);
+         }
+     });
+  }
+});
+
+
 //Enviar dato a la modal de eliminar.
 function enviardos(e){
   var valor= e.getAttribute('value');
@@ -140,3 +176,27 @@ function enviardos(e){
   $('#recibidoconf').val(valor);
   $('#modal-delhotcl').modal('show');
 }
+
+//Boton actualizar modal de delete.
+$('#delete_client_data').on('click', function(){
+  var _token = $('input[name="_token"]').val();
+  var id= $('#id_recibido').val();
+
+    $.ajax({
+         type: "POST",
+         url: './assigncldelete',
+         data: { idreg: id, _token : _token},
+         success: function (data) {
+           if (data == 1) {
+             $('#modal-delhotcl').modal('toggle');
+             var fds= $('#tableclient').dataTable();
+             fds.fnDestroy();
+             table();
+             toastr.success('Eliminado!!', 'Mensaje', {timeOut: 1000});
+           }
+         },
+         error: function (data) {
+           alert('Error:', data);
+         }
+     });
+});

@@ -116,7 +116,7 @@ $('#update_user_assign').on('click', function(){
          success: function (data) {
            if (data == 1) {
              $('#modal-editItconcierge').modal('toggle');
-             var fds= $('#tableHotel').dataTable();
+             var fds= $('#tableclient').dataTable();
              fds.fnDestroy();
              table();
              toastr.success('Actualizado!!', 'Mensaje', {timeOut: 1000});

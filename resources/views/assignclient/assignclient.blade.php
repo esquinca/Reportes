@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn bg-navy" id='update_user_assign'><i class="fa fa-pencil-square-o" style="margin-right: 4px;"></i>{{ trans('message.actualizar') }}</button>
+          <button type="button" class="btn bg-navy" id='update_client_assign'><i class="fa fa-pencil-square-o" style="margin-right: 4px;"></i>{{ trans('message.actualizar') }}</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
         </div>
       </div>
