@@ -89,6 +89,14 @@ class ViewReportsController extends Controller
 
       return $resultado;
     }
+
+    public function nvreport(Request $request)
+    {
+      $numero_rep= $request->number;
+      $resultado= DB::table('NivelReporte')->select('Nivel')->where('id', '=', $numero_rep)->value('Nivel');
+      return $resultado;
+    }
+
     public function contenido(Request $request)
     {
       $numero_hotel= $request->number;

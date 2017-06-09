@@ -969,7 +969,40 @@
     (function(){
     		$('#generateInfo').on('click', function() {
             var hal= $('#select_two').val();
-            //console.log(hal);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+              type: "POST",
+              url: "./consultnivelreport",
+              data: { number : hal, _token : _token },
+              success: function (data){
+                console.log(data);
+                if (data == 'Basico') {
+                  $("#basico").show();
+                  infohotel();
+                  info_cuadros();
+                  grafica_radar();
+                  graficas();
+                  grafica_bar();
+                  grafica_pie();
+                  table_graf_pie();
+                  info_observation();
+                }
+                if (data == 'Intermedio') {}
+                if (data == 'Completo') {}
+                if (data == 'Avanzado') {}
+
+              },
+              error: function (data) {
+                console.log('Error:', data);
+              }
+            });
+
+
+
+
+
+
+            /*
             if (hal === '1') {
               $("#basico").show();
               infohotel();
@@ -990,6 +1023,7 @@
             else if (hal === '4') {
               alert('4');
             }
+            */
     		});
     })();
 

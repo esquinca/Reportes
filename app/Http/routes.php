@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
 	 //Generar vista reportes
 	 Route::post('/consultmes','ViewReportsController@store');
 	 Route::post('/consultcuadros','ViewReportsController@contenido');
+	 Route::post('/consultnivelreport','ViewReportsController@nvreport');
 
 	 Route::post('/consultshowgrafone','ViewReportsController@show_graf_one');
 	 Route::post('/consultshowgraftwo','ViewReportsController@show_graf_two');
