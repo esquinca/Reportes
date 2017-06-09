@@ -17,7 +17,8 @@ $('#capInfo').on('click', function(){
   var a1=validarSelect('select_two');
   var valorselone= $('#select_one').val();
   var valorseltwo= $('#select_two').val();
-
+  var _token = $('input[name="_token"]').val();
+  
   if (a0 == false && a1 == false) {
      toastr.error('Datos Requeridos. !!', 'Mensaje', {timeOut: 1000});
   }
