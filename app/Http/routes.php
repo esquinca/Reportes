@@ -87,5 +87,9 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/consultshowinfo','ViewReportsController@info_cuad');
 	 //configuracion clientes
 	 Route::get('/assigncl', 'assignclientController@index');
+	 Route::post('/assignclreg', 'assignclientController@create');
+	 Route::post('/assignclshow', 'assignclientController@show');
+	 Route::post('/assignclold', 'assignclientController@store');
+	 Route::post('/assignclupdate', 'assignclientController@update');
 
 });

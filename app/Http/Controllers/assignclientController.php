@@ -27,7 +27,7 @@ class assignclientController extends Controller
         $selectDataCliente = DB::table('listarclientesreportes')->select('idc', 'cliente')->orderBy('idc', 'asc')->get();
 
         return view('assignclient.assignclient', compact('selectDatahotel', 'selectDataCliente'));
-        //return view('assignclient.assignclient');    
+        //return view('assignclient.assignclient');
     }
 
     /**
@@ -35,7 +35,7 @@ class assignclientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -48,7 +48,9 @@ class assignclientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $id= $request->scv;
+      $sql= DB::table('rel_clientes_hotel_rep')->select('id_hotels', 'id_clientes')->where('id', '=', $id)->get();
+      return json_encode($sql);
     }
 
     /**
@@ -57,9 +59,10 @@ class assignclientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+      $resultado= DB::table('rel_clientes_hotel_rep')->orderBy('id', 'asc')->get();
+      return json_encode($resultado);
     }
 
     /**
@@ -80,7 +83,7 @@ class assignclientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

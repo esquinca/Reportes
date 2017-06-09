@@ -13,6 +13,85 @@
 
   @endpush
   @section('main-content')
+  <!--Modal editar-->
+  <div class="modal modal-default fade" id="modal-edithotcl" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-id-card-o" style="margin-right: 4px;"></i>{{ trans('message.asigclient') }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                    {!! Form::open(['action' => 'assignclientController@update', 'url' => '/assignclupdate', 'method' => 'post', 'id' => 'formclupdate', 'class' => 'form-horizontal' ]) !!}
+                        <input id='id_recibido' name='id_recibido' type="text" class="form-control" placeholder="">
+
+                        <div class="form-group">
+                          <label for="inputhotel" class="col-sm-4 control-label">{{ trans('message.hotel')}}</label>
+
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputhotel" name="inputhotel" maxlength="60" title="" readonly/>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="selectEditClient" class="col-sm-4 control-label">{{ trans('message.cliente') }}<span style="color: red;">*</span></label>
+                          <div class="col-sm-8">
+                            <select id="selectEditClient" name="selectEditClient"  class="form-control" required>
+                                <option value="">{{ trans('message.selectopt') }}</option>
+                                @foreach ($selectDataCliente as $infoC)
+                                <option value="{{ $infoC->idc }}"> {{ $infoC->cliente }} </option>
+                                @endforeach
+                            </select>
+                          </div>
+                        </div>
+                    {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-navy" id='update_user_assign'><i class="fa fa-pencil-square-o" style="margin-right: 4px;"></i>{{ trans('message.actualizar') }}</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal eliminar -->
+  <div class="modal modal-default fade" id="modal-delhotcl" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-bookmark" style="margin-right: 4px;"></i>{{ trans('message.confirmacion') }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <input id='recibidoconf' name='recibidoconf' type="text" class="form-control" placeholder="">
+                  <h4 style="font-weight: bold;">{{ trans('message.preguntaconf') }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id='delete_client_data'><i class="fa fa-trash" style="margin-right: 4px;"></i>{{ trans('message.eliminar') }}</button>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <section class="content">
     <!-- SELECT2 EXAMPLE -->
     <div class="box box-primary">
@@ -74,13 +153,13 @@
         <table id="tableclient" name='tableclient' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
           <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>
           <thead >
-            <tr class="bg-primary" style="background: #3D4A5D;">
+            <tr class="bg-primary" style="background: #337AB7;">
               <th>{{ trans('message.hotel') }}</th>
               <th>{{ trans('message.cliente') }}</th>
               <th  style="width:100px; ">{{ trans('message.operation') }}</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="background: #ffff;">
           </tbody>
         </table>
       </div>
