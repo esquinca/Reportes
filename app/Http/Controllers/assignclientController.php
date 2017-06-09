@@ -37,7 +37,31 @@ class assignclientController extends Controller
      */
     public function create(Request $request)
     {
-        //
+
+        $id_hotel = $request->idh;
+        $id_cliente = $request->idc;
+
+        if ($this->checkReg($id_hotel, $id_cliente)) {
+            $sql = DB::table('rel_clientes_hotel_rep')->insert(
+                ['id_hotels' => $id_hotel, 'id_clientes' => $id_cliente]
+            );
+            return "1";
+        }else{
+            return "0";
+        }
+        return "0";
+    }
+
+    public function checkReg($value, $value2)
+    {
+        $sql = DB::table('rel_clientes_hotel_rep')->select('id_hotels', 'id_clientes')->where([['id_hotels', '=', $value],['id_clientes', '=', $value2]])->count();
+
+        if ($sql == 0) {
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+        return FALSE;
     }
 
     /**
@@ -85,7 +109,8 @@ class assignclientController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $id_hotel = $request->idh;
+        $id_cliente = $request->idc;
     }
 
     /**
