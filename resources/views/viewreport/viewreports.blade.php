@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT')
+@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT' || Auth::user()->Privilegio == 'Cliente')
   @section('htmlheader_title')
       {{ trans('message.viewreport') }}
   @endsection
@@ -1032,10 +1032,17 @@
                       <div class="form-group">
                         <label for="select_one">Seleccione el Hotel: </label>
                         <select class="form-control select2" id="select_one">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
-                          @foreach ($selectDatahotel as $info)
-                          <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
-                          @endforeach
+                          @if(Auth::user()->Privilegio == 'Cliente')
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id_hotels }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
+                          @else
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
+                          @endif
                         </select>
                       </div>
                       <div class="form-group">

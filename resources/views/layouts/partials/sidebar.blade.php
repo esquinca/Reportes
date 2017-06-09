@@ -64,7 +64,7 @@
             <ul class="sidebar-menu">
                 <li class="header">{{ trans('message.navigation') }}</li>
                 <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
-                <li><a href="{{ url('viewreport') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
+                <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.page') }}</li>
 

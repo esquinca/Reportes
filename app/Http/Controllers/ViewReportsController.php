@@ -24,10 +24,10 @@ class ViewReportsController extends Controller
       $priv = Auth::user()->Privilegio;
 
       if($priv == 'Cliente'){
-          $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+          $exitecliente= DB::table('relacionclientes')->where('email', $correo)->count();
           if ($exitecliente != 0) {
               /*SI existe*/
-              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+              $selectDatahotel = DB::table('relacionclientes')->select('id_hotels','Nombre_hotel')->where('email', '=', $correo)->orderBy('id', 'asc')->get();
               return view('viewreport.viewreports', compact('selectDatahotel'));
           }
       }
