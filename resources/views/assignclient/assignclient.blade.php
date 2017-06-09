@@ -27,7 +27,7 @@
               <div class="row">
                 <div class="col-xs-12">
                     {!! Form::open(['action' => 'assignclientController@update', 'url' => '/assignclupdate', 'method' => 'post', 'id' => 'formclupdate', 'class' => 'form-horizontal' ]) !!}
-                        <input id='id_recibido' name='id_recibido' type="text" class="form-control" placeholder="">
+                        <input id='id_recibido' name='id_recibido' type="hidden" class="form-control" placeholder="">
 
                         <div class="form-group">
                           <label for="inputhotel" class="col-sm-4 control-label">{{ trans('message.hotel')}}</label>
@@ -73,7 +73,7 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-12">
-                  <input id='recibidoconf' name='recibidoconf' type="text" class="form-control" placeholder="">
+                  <input id='recibidoconf' name='recibidoconf' type="hidden" class="form-control" placeholder="">
                   <h4 style="font-weight: bold;">{{ trans('message.preguntaconf') }}</h4>
                 </div>
               </div>

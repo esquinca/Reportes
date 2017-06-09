@@ -109,8 +109,12 @@ class assignclientController extends Controller
      */
     public function update(Request $request)
     {
-        $id_hotel = $request->idh;
-        $id_cliente = $request->idc;
+        $id_registro = $request->idreg;
+        $id_cliente = $request->idcl;
+
+        $sql = DB::table('rel_clientes_hotel_rep')->where('id', $id_registro)->update(['id_clientes' => $id_cliente]);
+
+        return $sql;
     }
 
     /**
@@ -119,8 +123,12 @@ class assignclientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->idreg;
+
+        $sql = DB::table('rel_clientes_hotel_rep')->where('id', $id)->delete();
+
+        return $sql;
     }
 }

@@ -28,7 +28,7 @@ $('#capInfo').on('click', function(){
          url: './assignclreg',
          data: { idh : valorselone, idc: valorseltwo, _token : _token },
          success: function (data) {
-           console.log('Error:', data);
+           //console.log('Error:', data);
            if (data == '0') {
              toastr.error('Ya esta asignado a dicho hotel. !!', 'Mensaje', {timeOut: 1000});
            }
@@ -153,6 +153,7 @@ $('#update_client_assign').on('click', function(){
          url: './assignclupdate',
          data: { idreg: id, idcl : idclien, _token : _token},
          success: function (data) {
+         //console.log(data);
            if (data == 1) {
              $('#modal-edithotcl').modal('toggle');
              var fds= $('#tableclient').dataTable();
@@ -180,7 +181,7 @@ function enviardos(e){
 //Boton actualizar modal de delete.
 $('#delete_client_data').on('click', function(){
   var _token = $('input[name="_token"]').val();
-  var id= $('#id_recibido').val();
+  var id= $('#recibidoconf').val();
 
     $.ajax({
          type: "POST",
