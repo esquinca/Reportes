@@ -98,8 +98,8 @@ function table(){
          $.each(JSON.parse(data), function(index, status){
            var tokenOrig= $('#_tokenb').val();
            TableHotelClient.fnAddData([
-             status.id_hotels,
-             status.id_clientes,
+             status.Nombre_hotel,
+             status.NombreComp,
              '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.id+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-pencil-square-o"></span></a> <a href="javascript:void(0);" onclick="enviardos(this)" value="'+status.id+'" class="btn btn-danger btn-sm" role="button" data-target="#modal-delhotcl"><span class="fa fa-trash"></span></a>',
            ]);
          });
@@ -123,7 +123,7 @@ function enviar(e){
        data: { scv : valor, _token : _token},
        success: function (data) {
          var datos = JSON.parse(data);
-         $('#inputhotel').val(datos[0].id_hotels);
+         $('#inputhotel').val(datos[0].Nombre_hotel);
 
          $("#selectEditClient").find('option:selected').removeAttr("selected");
          $("#selectEditClient option[value='"+datos[0].id_clientes+"']").prop('selected', true);

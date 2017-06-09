@@ -73,7 +73,7 @@ class assignclientController extends Controller
     public function store(Request $request)
     {
       $id= $request->scv;
-      $sql= DB::table('rel_clientes_hotel_rep')->select('id_hotels', 'id_clientes')->where('id', '=', $id)->get();
+      $sql= DB::table('relacionclientes')->select('id_hotels', 'id_clientes', 'Nombre_hotel')->where('id', '=', $id)->get();
       return json_encode($sql);
     }
 
@@ -85,7 +85,7 @@ class assignclientController extends Controller
      */
     public function show(Request $request)
     {
-      $resultado= DB::table('rel_clientes_hotel_rep')->orderBy('id', 'asc')->get();
+      $resultado= DB::table('relacionclientes')->orderBy('id', 'asc')->get();
       return json_encode($resultado);
     }
 
