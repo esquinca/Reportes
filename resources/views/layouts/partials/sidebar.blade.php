@@ -36,7 +36,7 @@
 
                 <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
                 <li><a href="{{ url('config_one') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settings') }}</span></a></li>
-                <li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>
+                <!--<li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>-->
 
             </ul>
             <!-- /.sidebar-menu -->
@@ -54,7 +54,7 @@
                 <li class="header">{{ trans('message.page') }}</li>
 
                 <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
-                <li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>
+                <!--<li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>-->
             </ul>
             <!-- /.sidebar-menu -->
             @endif
@@ -69,7 +69,7 @@
                 <li class="header">{{ trans('message.page') }}</li>
 
                 <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
-                <li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>
+                <!--<li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>-->
             </ul>
             <!-- /.sidebar-menu -->
             @endif

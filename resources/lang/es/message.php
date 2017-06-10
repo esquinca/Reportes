@@ -356,5 +356,50 @@ return [
 
     'nick' => 'Nick',
     'observation' => 'Observaciones',
-    'asigclient' => 'Asignar Cliente'
+    'asigclient' => 'Asignar Cliente',
+
+    'selecthotel'    => 'Seleccione el hotel',
+    'selectclient'    => 'Seleccione el cliente',
+    'capturar' => 'Capturar',
+    'requerido'=> 'Requerido',
+    'nrequerido'=> 'No requerido',
+    'ntuser' => 'Numero Total de usuarios',
+    'ntuser24' => 'Numero de Gigabytes transmitidos 24hrs',
+    'inforeq' => 'Información requerida',
+    'topcinco' => 'Top 5 AP&acute;S',
+    'ingmac' => 'Ingresar MAC',
+    'ingmod' => 'Ingresar Modelo',
+    'ingnclien' => 'Ingresar No.Clientes',
+    'topcincow' => 'Top 5 WLAN&acute;S',
+    'ingnombw' => 'Ingresar nombre de WLAN',
+    'ingnumcw' => 'Ingresar num. de clientes',
+    'maxcarsiete' => 'Maximo 7 caracteres',
+    'comment' => 'Comentarios',
+    'tipo' => 'Tipo',
+    'generar' => 'Generar',
+    'titulorepbasic' => 'Reporte de uso y estadisticas',
+    'subtitulorepbasic' => 'Red wifi huéspedes / colaboradores',
+
+    'cuadro_unoa' => 'Antenas',
+    'cuadro_unob' => 'totales',
+
+    'cuadro_dosa' => 'GB Max por',
+    'cuadro_dosb' => 'mes',
+
+    'cuadro_tresa' => 'GB Min por',
+    'cuadro_tresb' => 'mes',
+
+    'cuadro_cuatro' => 'Prom de usuario',
+    'cuadro_cinco' => 'Num. usuarios mensual',
+
+    'cuadro_seisa' => 'Rogue',
+    'cuadro_seisb' => 'devices',
+
+    'titlewlanrgbas' => 'Numero de clientes conectados a c/u WLAN',
+    'titleclienxdiargbas' => 'Numero de clientes conectados por dia',
+    'titletopaprgbas' => 'Top AP&acute;S Más Utilizadas',
+    'dirmac' => 'MAC',
+    'nclientd' => 'No.Clientes',
+    'comparativoantvsact' => 'Comparativo Mes Actual vs Mes Anterior'
+
 ];

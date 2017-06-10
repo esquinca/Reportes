@@ -113,7 +113,7 @@
             <form class="form-inline">
               <div>
                 <div class="form-group">
-                  <label for="select_one">Seleccione el Hotel: </label>
+                  <label for="select_one">{{ trans('message.selecthotel')}}: </label>
                   <select class="form-control select2" id="select_one">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
                     @foreach ($selectDatahotel as $info)
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="select_one">Seleccione el cliente: </label>
+                  <label for="select_one">{{ trans('message.selectclient')}}: </label>
                   <select class="form-control select2" id="select_two">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
                     @foreach ($selectDataCliente as $infoC)
@@ -132,8 +132,8 @@
                   </select>
                 </div>
 
-                <a id="capInfo" class="btn btn-primary"><i class="fa fa-bookmark-o"></i> Capturar</a>
-                <a id="capClear" class="btn btn-danger"><i class="fa fa-ban"></i> Cancelar</a>
+                <a id="capInfo" class="btn btn-primary"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                <a id="capClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
 
               </div>
             </form>

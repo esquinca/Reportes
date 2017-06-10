@@ -36,7 +36,7 @@
           <form class="form-inline">
             <div>
               <div class="form-group">
-                <label for="select_one">Seleccione el Hotel: </label>
+                <label for="select_one">{{ trans('message.selecthotel')}}: </label>
                 <select class="form-control select2" id="select_one">
                   <option value="" selected>{{ trans('message.optionOne')}}</option>
                   @foreach ($selectDatahotel as $info)
@@ -46,20 +46,20 @@
               </div>
 
               <div class="form-group">
-                <label for="fecha_nueva2">Fecha: </label>
-                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva2" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+                <label for="fecha_nueva2">{{ trans('message.fecha')}}:</label>
+                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva2" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
               </div>
 
-              <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> Generar</a>
-              <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> Cancelar</a>
+              <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+              <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
 
             </div>
           </form>
         </div>
         <div class="col-sm-12">
           <b><span>Simbologia</span><b><br>
-          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"> Requerido</span></button>
-          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"> No requerido</span></button>
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"> {{ trans('message.requerido')}}</span></button>
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"> {{ trans('message.nrequerido')}}</span></button>
 
         </div>
       </div>
@@ -73,19 +73,18 @@
   {!! Form::open(['action' => 'GenerateController@rdata', 'url' => '/insertCaptura', 'method' => 'post', 'id' => 'formcapt']) !!}
   <div class="panel panel-info">
       <div class="panel-heading">
-          <h3 class="panel-title">
-              Información requerida</h3>
+          <h3 class="panel-title">{{ trans('message.inforeq')}}</h3>
       </div>
       <ul class="list-group">
           <div class="list-group-item form-inline">
               <div class="form-group">
-                <label for="userxday">Numero Total de usuarios</label>
+                <label for="userxday">{{ trans('message.ntuser')}}</label>
                 <div class="input-group">
                   <input class="form-control" name="userxday" id="userxday" type="text">
                 </div>
               </div>
               <div class="form-group">
-                <label for="gigxday">Numero de Gigabytes transmitidos 24hrs</label>
+                <label for="gigxday">{{ trans('message.ntuser24')}}</label>
                 <div class="input-group">
                   <input class="form-control" name="gigxday" id="gigxday" type="text">
                 </div>
@@ -94,7 +93,7 @@
               </div>
           </div>
 
-          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">Top 5 AP'S</a>
+          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">{{ trans('message.topcinco')}}</a>
 
           <div class="list-group-item form-inline">
             <div class="form-group">
@@ -104,7 +103,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="mac1" name="mac1" type="text" class="form-control" placeholder="Ingresar MAC">
+                <input id="mac1" name="mac1" type="text" class="form-control" placeholder="{{ trans('message.ingmac')}}">
               </div>
             </div>
             <div class="form-group">
@@ -113,7 +112,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="modelo1" name="modelo1"type="text" class="form-control" placeholder="Ingresar Modelo">
+                <input id="modelo1" name="modelo1"type="text" class="form-control" placeholder="{{ trans('message.ingmod')}}">
               </div>
             </div>
             <div class="form-group">
@@ -122,7 +121,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="cliente1" name="cliente1"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+                <input id="cliente1" name="cliente1"type="text" class="form-control" placeholder="{{ trans('message.ingnclien')}}">
               </div>
             </div>
           </div>
@@ -134,7 +133,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="mac2" name="mac2" type="text" class="form-control" placeholder="Ingresar MAC">
+                <input id="mac2" name="mac2" type="text" class="form-control" placeholder="{{ trans('message.ingmac')}}">
               </div>
             </div>
             <div class="form-group">
@@ -143,7 +142,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="modelo2" name="modelo2"type="text" class="form-control" placeholder="Ingresar Modelo">
+                <input id="modelo2" name="modelo2"type="text" class="form-control" placeholder="{{ trans('message.ingmod')}}">
               </div>
             </div>
             <div class="form-group">
@@ -152,7 +151,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="cliente2" name="cliente2"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+                <input id="cliente2" name="cliente2"type="text" class="form-control" placeholder="{{ trans('message.ingnclien')}}">
               </div>
             </div>
           </div>
@@ -164,7 +163,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="mac3" name="mac3" type="text" class="form-control" placeholder="Ingresar MAC">
+                <input id="mac3" name="mac3" type="text" class="form-control" placeholder="{{ trans('message.ingmac')}}">
               </div>
             </div>
             <div class="form-group">
@@ -173,7 +172,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="modelo3" name="modelo3"type="text" class="form-control" placeholder="Ingresar Modelo">
+                <input id="modelo3" name="modelo3"type="text" class="form-control" placeholder="{{ trans('message.ingmod')}}">
               </div>
             </div>
             <div class="form-group">
@@ -182,7 +181,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="cliente3" name="cliente3"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+                <input id="cliente3" name="cliente3"type="text" class="form-control" placeholder="{{ trans('message.ingnclien')}}">
               </div>
             </div>
           </div>
@@ -194,7 +193,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="mac4" name="mac4" type="text" class="form-control" placeholder="Ingresar MAC">
+                <input id="mac4" name="mac4" type="text" class="form-control" placeholder="{{ trans('message.ingmac')}}">
               </div>
             </div>
             <div class="form-group">
@@ -203,7 +202,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="modelo4" name="modelo4"type="text" class="form-control" placeholder="Ingresar Modelo">
+                <input id="modelo4" name="modelo4"type="text" class="form-control" placeholder="{{ trans('message.ingmod')}}">
               </div>
             </div>
             <div class="form-group">
@@ -212,7 +211,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="cliente4" name="cliente4"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+                <input id="cliente4" name="cliente4"type="text" class="form-control" placeholder="{{ trans('message.ingnclien')}}">
               </div>
             </div>
           </div>
@@ -224,7 +223,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="mac5" name="mac5" type="text" class="form-control" placeholder="Ingresar MAC">
+                <input id="mac5" name="mac5" type="text" class="form-control" placeholder="{{ trans('message.ingmac')}}">
               </div>
             </div>
             <div class="form-group">
@@ -233,7 +232,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="modelo5" name="modelo5"type="text" class="form-control" placeholder="Ingresar Modelo">
+                <input id="modelo5" name="modelo5"type="text" class="form-control" placeholder="{{ trans('message.ingmod')}}">
               </div>
             </div>
             <div class="form-group">
@@ -242,12 +241,12 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="cliente5" name="cliente5"type="text" class="form-control" placeholder="Ingresar No.Clientes">
+                <input id="cliente5" name="cliente5"type="text" class="form-control" placeholder="{{ trans('message.ingnclien')}}">
               </div>
             </div>
           </div>
 
-          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">Top 5 WLAN'S</a>
+          <a href="javascript:void(0)" class="list-group-item " style="color: rgb(49, 112, 143); background-color: #D9EDF7;">{{ trans('message.topcincow')}}</a>
 
           <div class="list-group-item form-inline">
             <div class="form-group">
@@ -257,7 +256,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="nombrew1" name="nombrew1" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+                <input id="nombrew1" name="nombrew1" type="text" class="form-control" placeholder="{{ trans('message.ingnombw')}}">
               </div>
             </div>
             <div class="form-group">
@@ -266,7 +265,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"></span></button>
                 </span>
-                <input id="clientew1" name="clientew1"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+                <input id="clientew1" name="clientew1"type="text" class="form-control" placeholder="{{ trans('message.ingnumcw')}}">
               </div>
             </div>
           </div>
@@ -278,7 +277,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
                 </span>
-                <input id="nombrew2" name="nombrew2" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+                <input id="nombrew2" name="nombrew2" type="text" class="form-control" placeholder="{{ trans('message.ingnombw')}}">
               </div>
             </div>
             <div class="form-group">
@@ -287,7 +286,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus" ></span></button>
                 </span>
-                <input id="clientew2" name="clientew2"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+                <input id="clientew2" name="clientew2"type="text" class="form-control" placeholder="{{ trans('message.ingnumcw')}}">
               </div>
             </div>
           </div>
@@ -299,7 +298,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="nombrew3" name="nombrew3" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+                <input id="nombrew3" name="nombrew3" type="text" class="form-control" placeholder="{{ trans('message.ingnombw')}}">
               </div>
             </div>
             <div class="form-group">
@@ -308,7 +307,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="clientew3" name="clientew3"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+                <input id="clientew3" name="clientew3"type="text" class="form-control" placeholder="{{ trans('message.ingnumcw')}}">
               </div>
             </div>
           </div>
@@ -320,7 +319,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="nombrew4" name="nombrew4" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+                <input id="nombrew4" name="nombrew4" type="text" class="form-control" placeholder="{{ trans('message.ingnombw')}}">
               </div>
             </div>
             <div class="form-group">
@@ -329,7 +328,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="clientew4" name="clientew4"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+                <input id="clientew4" name="clientew4"type="text" class="form-control" placeholder="{{ trans('message.ingnumcw')}}">
               </div>
             </div>
           </div>
@@ -341,7 +340,7 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="nombrew5" name="nombrew5" type="text" class="form-control" placeholder="Ingresar nombre de WLAN">
+                <input id="nombrew5" name="nombrew5" type="text" class="form-control" placeholder="{{ trans('message.ingnombw')}}">
               </div>
             </div>
             <div class="form-group">
@@ -350,14 +349,14 @@
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
-                <input id="clientew5" name="clientew5"type="text" class="form-control" placeholder="Ingresar num. de clientes">
+                <input id="clientew5" name="clientew5"type="text" class="form-control" placeholder="{{ trans('message.ingnumcw')}}">
               </div>
             </div>
           </div>
 
           <div class="list-group-item form-inline">
             <div class="form-group">
-              <button id='subform' type="button" class="btn btn-info pull-right">Guardar</button>
+              <button id='subform' type="button" class="btn btn-info pull-right">{{ trans('message.guardar')}}</button>
             </div>
           </div>
       </ul>

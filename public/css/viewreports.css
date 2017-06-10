@@ -1,0 +1,65 @@
+.bloque{
+  color: #F15D24;
+  float: left;
+  border: 3px solid #09347A;
+  padding-top: 40px;
+  margin: 10px;
+  padding-bottom: 40px;
+}
+.info-box-content{
+  margin-left: 70px;
+}
+.info-box-icon{
+  height: 70px;
+  width: 70px;
+  line-height: 70px;
+}
+.info-box {
+  min-height:70px;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+.media.service-box {
+  margin: 5px 0;
+}
+.media.service-box .pull-left {
+  margin-right: 20px;
+}
+.media.service-box .pull-left > i {
+  font-size: 24px;
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  width: 64px;
+  border-radius: 100%;
+  color: #09347A; /*Cambias el color de los fa icons*/
+  box-shadow: inset 0 0 0 1px #d7d7d7;
+  -webkit-box-shadow: inset 0 0 0 1px #d7d7d7;
+  transition: background-color 400ms, background-color 400ms;
+  position: relative;
+}
+.media.service-box .pull-left > i:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  margin-top: -10px;
+  right: -10px;
+  border: 4px solid #fff;
+  border-radius: 20px;
+  background: #FD602D; /*Cambias el color de los circulos junto a los fa icons*/
+}
+.media.service-box:hover .pull-left > i { /*Cambias el fondo de los circulos de los fa icons*/
+  /*
+  background-image: -moz-linear-gradient(90deg, #fd602d 0%, #fd602d 100%);
+  background-image: -webkit-linear-gradient(90deg, #fd602d 0%, #fd602d 100%);
+  background-image: -ms-linear-gradient(90deg, #fd602d 0%, #fd602d 100%);
+  color: #fff;
+  */
+  box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.8);
+  -webkit-box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.8);
+}
+.margin_div{
+  /*box-shadow: 0px 1px 4px -1PX #27727B;*/
+  margin-top: 16px;
+}

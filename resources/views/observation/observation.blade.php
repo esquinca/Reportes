@@ -34,7 +34,7 @@
             <form class="form-inline">
               <div>
                 <div class="form-group">
-                  <label for="select_one">Seleccione el Hotel: </label>
+                  <label for="select_one">{{ trans('message.selecthotel')}}: </label>
                   <select class="form-control select2" id="select_one">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
                     @foreach ($selectDatahotel as $info)
@@ -44,12 +44,12 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="fecha_nueva">Fecha: </label>
-                  <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="10" title='Máximo 60 Caracteres' title='Formato: dd-mm-yyyy Ejemplo: 02-01-2017' pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
+                  <label for="fecha_nueva">{{ trans('message.fecha')}}: </label>
+                  <input type="text" class="form-control" id="fecha_nueva" name="fecha_nueva" placeholder=" " maxlength="7" title="{{ trans('message.maxcarsiete')}}">
                 </div>
 
-                <a id="generateInfo" class="btn btn-primary"><i class="fa fa-bookmark-o"></i> Capturar</a>
-                <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> Cancelar</a>
+                <a id="generateInfo" class="btn btn-primary"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
 
               </div>
             </form>
@@ -66,20 +66,19 @@
     {!! Form::open(['action' => 'observationController@obsdata', 'url' => '/observationdata', 'method' => 'post', 'id' => 'fobservation']) !!}
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">
-                Información requerida</h3>
+            <h3 class="panel-title">{{ trans('message.inforeq')}}</h3>
         </div>
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-               <label for="comment">Comment:</label>
+               <label for="comment">{{ trans('message.comment')}}:</label>
                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                <input type="hidden" id="idhotel" name="idhotel">
                <input type="hidden" id="fecha_nueva2" name="fecha_nueva2">
               </div>
               <div class="form-group">
-                <button id='subform' type="button" class="btn btn-success pull-left">Guardar</button>
+                <button id='subform' type="button" class="btn btn-success pull-left">{{ trans('message.guardar')}}</button>
               </div>
             </div>
           </div>
