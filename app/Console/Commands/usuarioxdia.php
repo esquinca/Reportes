@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use SNMP;
+
 class usuarioxdia extends Command
 {
     /**
@@ -48,14 +50,23 @@ class usuarioxdia extends Command
         //echo $zoneDirect_sql[$i]->ip; //Ejemplo para ir obteniendo las posiciones una por una.
 
         //Datos para llenar la tabla UsuariosXDia
-        ${"snmp_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta');// Number of authorized client devices
-        ${"snmp_a".$i}= array_shift(${"snmp_a".$i});
-        ${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
+        //${"snmp_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', 'RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta');// Number of authorized client devices
+        //${"snmp_a".$i}= array_shift(${"snmp_a".$i});
+        //${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
         //echo ${"snmp_a".$i}[1];// Number of authorized client devices sin tanto caracter
 
+        $session = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_a".$i}= $session->walk("RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta");
+        ${"snmp_a".$i}= array_shift(${"snmp_a".$i});
+        ${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
+        echo ${"snmp_a".$i}[1];// Number of authorized client devices sin tanto caracter
+        //print_r($sysdescr);
+        $session->close();
+
         //SQL USUARIOS POR DIA
-        $sql = DB::table('UsuariosXDia')->insertGetId(['NumClientes' => ${"snmp_a".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
+        //$sql = DB::table('UsuariosXDia')->insertGetId(['NumClientes' => ${"snmp_a".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
       }
+
       $this->info('Successfull registered users!');
     }
 }
