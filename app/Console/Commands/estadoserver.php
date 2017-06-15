@@ -54,14 +54,14 @@ class estadoserver extends Command
             ->where('ip', '=', $host)
             ->update(['status' => 1]);
 
-          $nombrehotel = $hostcorreo[0]->Nombre_hotel; 
-          $nombreit = $hostcorreo[0]->nombre_itc; 
-          $correoit = $hostcorreo[0]->Correo; 
- 
-          $data = [ 
-            'ip' => $host, 
-            'hotel' => $nombrehotel, 
-            'nombre' => $nombreit 
+          $nombrehotel = $hostcorreo[0]->Nombre_hotel;
+          $nombreit = $hostcorreo[0]->nombre_itc;
+          $correoit = $hostcorreo[0]->Correo;
+
+          $data = [
+            'ip' => $host,
+            'hotel' => $nombrehotel,
+            'nombre' => $nombreit
           ];
 
           $this->enviarC($correoit, $nombreit, $data);
@@ -77,11 +77,11 @@ class estadoserver extends Command
       $this->info('Updated ip address states successfully!');
     }
 
-    public function enviarC($correo, $nombre, $datos) 
-    { 
-      Mail::send('email', $datos, function ($message) use ($correo, $nombre) { 
-          //$message->from('contactoweb@sitwifi.com', 'ContactoSitwifiWeb'); 
-          $message->to($correo, $nombre)->subject('Reportes Diarios - Acceso denegado'); 
-      }); 
+    public function enviarC($correo, $nombre, $datos)
+    {
+      Mail::send('email', $datos, function ($message) use ($correo, $nombre) {
+          //$message->from('contactoweb@sitwifi.com', 'ContactoSitwifiWeb');
+          $message->to($correo, $nombre)->subject('Reportes Diarios - Acceso denegado');
+      });
     }
 }

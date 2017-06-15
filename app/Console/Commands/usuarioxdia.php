@@ -59,12 +59,12 @@ class usuarioxdia extends Command
         ${"snmp_a".$i}= $session->walk("RUCKUS-ZD-SYSTEM-MIB::ruckusZDSystemStatsNumSta");
         ${"snmp_a".$i}= array_shift(${"snmp_a".$i});
         ${"snmp_a".$i}= explode(': ', ${"snmp_a".$i});
-        echo ${"snmp_a".$i}[1];// Number of authorized client devices sin tanto caracter
+        //echo ${"snmp_a".$i}[1];// Number of authorized client devices sin tanto caracter
         //print_r($sysdescr);
         $session->close();
 
         //SQL USUARIOS POR DIA
-        //$sql = DB::table('UsuariosXDia')->insertGetId(['NumClientes' => ${"snmp_a".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
+        $sql = DB::table('UsuariosXDia')->insertGetId(['NumClientes' => ${"snmp_a".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
       }
 
       $this->info('Successfull registered users!');

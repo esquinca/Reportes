@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use SNMP;
+
 class mostapxdia extends Command
 {
     /**
@@ -47,9 +49,18 @@ class mostapxdia extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        ${"snmp_aps_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4'); //Model name
-        ${"snmp_aps_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.15');//Total number of authenticated terminal which is using currently on this AP
-        ${"snmp_aps_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.1'); //MAC address
+        $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_aps_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4'); //Model name
+
+        $sessionB = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_aps_b".$i}= $sessionB->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.15');//Total number of authenticated terminal which is using currently on this AP
+
+        $sessionC = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_aps_c".$i}= $sessionC->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.1'); //MAC address
+
+        //${"snmp_aps_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4'); //Model name
+        //${"snmp_aps_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.15');//Total number of authenticated terminal which is using currently on this AP
+        //${"snmp_aps_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.1'); //MAC address
 
         $contar_aps_act= count(${"snmp_aps_a".$i}); //Cuento el tamaño del array anterior
         $contar_aps_act2= count(${"snmp_aps_b".$i}); //Cuento el tamaño del array anterior
@@ -87,6 +98,9 @@ class mostapxdia extends Command
         'Mes' => $fmeses,
         'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
         }
+        $sessionA->close();
+        $sessionB->close();
+        $sessionC->close();
         //echo '///////////';
       }
         $this->info('Successfull registered aps!');

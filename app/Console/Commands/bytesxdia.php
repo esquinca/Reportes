@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use SNMP;
+
 class bytesxdia extends Command
 {
     /**
@@ -47,7 +49,11 @@ class bytesxdia extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        ${"snmp_bytes_trans_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+
+        $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_bytes_trans_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+
+        //${"snmp_bytes_trans_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
         $contar_aps_act= count(${"snmp_bytes_trans_a".$i}); //Cuento el tamaño del array anterior
 
         for ($j=1; $j <= $contar_aps_act; $j++) {
@@ -64,9 +70,8 @@ class bytesxdia extends Command
           'Fecha' => date('Y-m-d'),
           'Mes' => $fmeses,
           'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
-
-
         }
+        $sessionA->close();
         //echo '///////////';
       }
       //return $contar_ip;

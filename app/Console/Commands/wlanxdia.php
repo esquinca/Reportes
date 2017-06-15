@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use SNMP;
+
 class wlanxdia extends Command
 {
     /**
@@ -47,8 +49,14 @@ class wlanxdia extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        ${"snmp_wlan_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.1'); //Name of WLANS
-        ${"snmp_wlan_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.12'); //Number of client devices
+        $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_wlan_a".$i}= $sessionA->walk("1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.1");//Name of WLANS
+
+        $sessionB = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_wlan_b".$i}= $sessionB->walk("1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.12");//Number of client devices
+
+        //${"snmp_wlan_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.1'); //Name of WLANS
+        //${"snmp_wlan_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.12'); //Number of client devices
 
         $contar_wlan_act= count(${"snmp_wlan_a".$i}); //Cuento el tamaño del array anterior
 
@@ -60,8 +68,10 @@ class wlanxdia extends Command
             ${"snmp_wlan_ab".$i}= explode(': ', ${"snmp_wlan_b".$i}[key(${"snmp_wlan_b".$i})]);
             next(${"snmp_wlan_b".$i}); //Este es para que avance la key en el array
 
-          $sql = DB::table('WLAN')->insertGetId(['NombreWLAN' => ${"snmp_wlan_aa".$i}[1], 'ClientesWLAN' => ${"snmp_wlan_ab".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
+            $sql = DB::table('WLAN')->insertGetId(['NombreWLAN' => ${"snmp_wlan_aa".$i}[1], 'ClientesWLAN' => ${"snmp_wlan_ab".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
         }
+        $sessionA->close();
+        $sessionB->close();
 
       }
       $this->info('Successfull registered wlan!');

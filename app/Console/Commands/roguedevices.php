@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use SNMP;
+
 class roguedevices extends Command
 {
     /**
@@ -46,17 +48,30 @@ class roguedevices extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        ${"snmp_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+        //${"snmp_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+
+        $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+
         $contar_reg= count(${"snmp_a".$i}); //Cuento el tamaño del array anterior
 
-        $cadena_a='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1.';//OID Mac Address
-        $cadena_b='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4.';//OID Radio Channel
-        $cadena_c='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3.';//OID Radio Type
-        $cadena_d='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2.';//OID SSID
+        //$cadena_a='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1.';//OID Mac Address
+        //$cadena_b='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4.';//OID Radio Channel
+        //$cadena_c='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3.';//OID Radio Type
+        //$cadena_d='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2.';//OID SSID
 
-        ${"snmp_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
-        ${"snmp_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
-        ${"snmp_d".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
+        $sessionB = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_b".$i}= $sessionB->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
+
+        $sessionC = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_c".$i}= $sessionC->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
+
+        $sessionD = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+        ${"snmp_d".$i}= $sessionD->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
+
+        //${"snmp_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
+        //${"snmp_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
+        //${"snmp_d".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
 
         DB::beginTransaction();
 
@@ -97,6 +112,10 @@ class roguedevices extends Command
             next(${"snmp_c".$i}); //Este es para que avance la key en el array
             next(${"snmp_d".$i}); //Este es para que avance la key en el array
         }
+        $sessionA->close();
+        $sessionB->close();
+        $sessionC->close();
+        $sessionD->close();
 
         DB::commit();
 
