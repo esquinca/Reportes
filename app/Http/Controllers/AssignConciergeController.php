@@ -16,6 +16,8 @@ use DB;
 
 use Auth;
 
+use SNMP;
+
 class AssignConciergeController extends Controller
 {
     /**
@@ -122,6 +124,24 @@ class AssignConciergeController extends Controller
       $resultado= DB::table('itconcierges')->select('id')->where('email', '=', $value)->value('id');
 
       return $resultado;
+    }
+
+    public function rutaestadoserver()
+    {
+      $boolean = 0;
+      //187.157.151.52
+      //201.161.132.22
+      //187.252.50.79
+      $session = new SNMP(SNMP::VERSION_2C, '187.157.151.52', "public");
+      try {
+        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2");
+      } catch (\Exception $e) {
+        $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
+        var_dump($boolean);
+      }
+      echo $boolean;  
+      
+      $session->close();
     }
 
     /**

@@ -94,4 +94,6 @@ Route::group(['middleware' => ['auth']], function() {
 	 Route::post('/assignclupdate', 'assignclientController@update');
 	 Route::post('/assigncldelete', 'assignclientController@destroy');
 
+	 Route::get('/putohehe', 'AssignConciergeController@rutaestadoserver');
+
 });

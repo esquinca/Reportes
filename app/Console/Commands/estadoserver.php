@@ -8,6 +8,8 @@ use DB;
 
 use Mail;
 
+use SNMP;
+
 class estadoserver extends Command
 {
     /**
@@ -43,38 +45,53 @@ class estadoserver extends Command
     {
       $zoneDirect_sql= DB::table('zonedirect_ip')->select('ip','id_hotel')->get(); //Retorna un array stdClass Object
       $contar_ip= count($zoneDirect_sql); //Cuento el tamaño del array anterior
+      $boolean = 0;
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
         $host=$zoneDirect_sql[$i]->ip;
         $hostcorreo = DB::table('CorreosZD')->select('Nombre_hotel', 'Correo', 'nombre_itc')->where('ip' , '=', $host)->get();
-        exec("ping -c 1 " . $host, $output, $result);
-        if ($result == 0){
+        $nombrehotel = $hostcorreo[0]->Nombre_hotel;
+        $nombreit = $hostcorreo[0]->nombre_itc;
+        $correoit = $hostcorreo[0]->Correo;
+
+        $data = [
+          'ip' => $host,
+          'hotel' => $nombrehotel,
+          'nombre' => $nombreit
+        ];
+        //exec("ping -c 1 " . $host, $output, $result);
+        $boolean = $this->trySNMP($host);
+
+        if ($boolean === 0){
           //echo "Ping successful!";
           $sql_a= DB::table('zonedirect_ip')
             ->where('ip', '=', $host)
             ->update(['status' => 1]);
-
-          $nombrehotel = $hostcorreo[0]->Nombre_hotel;
-          $nombreit = $hostcorreo[0]->nombre_itc;
-          $correoit = $hostcorreo[0]->Correo;
-
-          $data = [
-            'ip' => $host,
-            'hotel' => $nombrehotel,
-            'nombre' => $nombreit
-          ];
-
-          $this->enviarC($correoit, $nombreit, $data);
-
         }
         else {
           //echo "Ping unsuccessful!";
           $sql_b= DB::table('zonedirect_ip')
             ->where('ip', '=', $host)
             ->update(['status' => 0]);
+
+          //$this->enviarC($correoit, $nombreit, $data);
         }
       }
       $this->info('Updated ip address states successfully!');
+    }
+
+    public function trySNMP($ip)
+    {
+      $boolean = 0;
+      $session = new SNMP(SNMP::VERSION_2C, $ip, "public");
+      try {
+        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2");
+      } catch (\Exception $e) {
+        $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
+        return $boolean;
+      }
+      $session->close();
+      return $boolean;
     }
 
     public function enviarC($correo, $nombre, $datos)
