@@ -59,7 +59,7 @@ class wlanxdia extends Command
         //${"snmp_wlan_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.1.1.1.12'); //Number of client devices
 
         $contar_wlan_act= count(${"snmp_wlan_a".$i}); //Cuento el tamaño del array anterior
-
+        DB::beginTransaction();
         for ($j=1; $j <= $contar_wlan_act; $j++) {
 
             ${"snmp_wlan_aa".$i}= explode(': ', ${"snmp_wlan_a".$i}[key(${"snmp_wlan_a".$i})]);
@@ -70,6 +70,7 @@ class wlanxdia extends Command
 
             $sql = DB::table('WLAN')->insertGetId(['NombreWLAN' => ${"snmp_wlan_aa".$i}[1], 'ClientesWLAN' => ${"snmp_wlan_ab".$i}[1], 'Fecha' => date('Y-m-d'), 'Mes' => $fmeses, 'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
         }
+        DB::commit();
         $sessionA->close();
         $sessionB->close();
 

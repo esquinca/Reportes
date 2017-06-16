@@ -68,7 +68,7 @@ class mostapxdia extends Command
         //echo $contar_aps_act;
         //echo '//';
         //echo $contar_aps_act2;
-
+        DB::beginTransaction();
         for ($j=1; $j <= $contar_aps_act; $j++) {
         //echo key(${"snmp_aps_a".$i});
 
@@ -98,6 +98,7 @@ class mostapxdia extends Command
         'Mes' => $fmeses,
         'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
         }
+        DB::commit();
         $sessionA->close();
         $sessionB->close();
         $sessionC->close();
