@@ -74,7 +74,7 @@ class estadoserver extends Command
             ->where('ip', '=', $host)
             ->update(['status' => 0]);
 
-          //$this->enviarC($correoit, $nombreit, $data);
+          $this->enviarC($correoit, $nombreit, $data);
         }
       }
       $this->info('Updated ip address states successfully!');
