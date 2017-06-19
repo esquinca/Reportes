@@ -34,7 +34,7 @@
                                   color: #74787E;
                                   line-height: 1.5em;
                                   font-size: 12px;
-                                  text-align: left;">La siguiente IP: <strong><?php echo $ip; ?></strong> no ha sido alcanzada!</p>
+                                  text-align: left;">La siguiente IP: <strong><?php echo $ip; ?></strong></p>
 
 
                         <p style="margin-top: 0;
@@ -49,7 +49,7 @@
                                   line-height: 1.5em;
                                   text-align: left;
                                   font-size: 12px;
-                                  text-align: left;"><strong>Favor de revisar el motivo de la no conexion y de capturar sus datos pertenecientes la fecha <?php echo date('l jS \de F Y h:i:s A'); ?></strong></p>
+                                  text-align: left;"><strong><?php echo $mensaje; ?> <?php echo date('l jS \de F Y h:i:s A'); ?></strong></p>
 
                       </td>
                   </tr>

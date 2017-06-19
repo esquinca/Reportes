@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use Mail;
+
 use SNMP;
 
 class roguedevices extends Command
@@ -39,6 +41,25 @@ class roguedevices extends Command
      *
      * @return mixed
      */
+    public function trySNMP($ip)
+    {
+       $boolean = 0;
+       $session = new SNMP(SNMP::VERSION_2C, $ip, "public");
+       try {
+         $res = $session->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+       } catch (\Exception $e) {
+         $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
+         return $boolean;
+       }
+       $session->close();
+       return $boolean;
+    }
+    public function enviarC($correo, $nombre, $datos)
+    {
+      Mail::send('emailMensajes', $datos, function ($message) use ($correo, $nombre) {
+          $message->to($correo, $nombre)->subject('Reportes Diarios - Problema Detectado');
+      });
+    }
     public function handle()
     {
       $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
@@ -48,77 +69,72 @@ class roguedevices extends Command
 
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
-        //${"snmp_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+        $host=$zoneDirect_sql[$i]->ip;
+        $boolean = $this->trySNMP($host);
+        if ($boolean === 0){
+          //echo "successful!";
 
-        $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
-        ${"snmp_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
+          //Peticiones snmp
+          $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+          ${"snmp_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1'); //Rogue device's MAC Address.
 
-        $contar_reg= count(${"snmp_a".$i}); //Cuento el tamaño del array anterior
+          $contar_reg= count(${"snmp_a".$i}); //Cuento el tamaño del array anterior
 
-        //$cadena_a='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.1.';//OID Mac Address
-        //$cadena_b='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4.';//OID Radio Channel
-        //$cadena_c='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3.';//OID Radio Type
-        //$cadena_d='iso.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2.';//OID SSID
+          $sessionB = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+          ${"snmp_b".$i}= $sessionB->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
 
-        $sessionB = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
-        ${"snmp_b".$i}= $sessionB->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
+          $sessionC = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+          ${"snmp_c".$i}= $sessionC->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
 
-        $sessionC = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
-        ${"snmp_c".$i}= $sessionC->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
+          $sessionD = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
+          ${"snmp_d".$i}= $sessionD->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
 
-        $sessionD = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
-        ${"snmp_d".$i}= $sessionD->walk('1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
+          DB::beginTransaction();
 
-        //${"snmp_b".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.4'); //Radio channel.
-        //${"snmp_c".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.3'); //Radio type.
-        //${"snmp_d".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2'); //SSID.
+          for ($a=0; $a < $contar_reg; $a++) {
+            //Para obtener la mac
+            ${"snmp_aa".$i}= explode(': ', ${"snmp_a".$i}[key(${"snmp_a".$i})]);
+            //Para obtener el radio channel
+            ${"snmp_ab".$i}= explode(': ', ${"snmp_b".$i}[key(${"snmp_b".$i})]);
+            //Para obtener el radio type
+            ${"snmp_ac".$i}= explode(': ', ${"snmp_c".$i}[key(${"snmp_c".$i})]);
 
-        DB::beginTransaction();
+            $sql = DB::table('RogueDevices')->insertGetId([
+              'MACRogue' => ${"snmp_aa".$i}[1],
+              'ChannelRogue' => ${"snmp_ab".$i}[1],
+              'TypeRogue' => ${"snmp_ac".$i}[1],
+              'SSIDRogue' => ${"snmp_d".$i}[key(${"snmp_d".$i})],
+              'Mes' => $fmeses,
+              'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
 
-        for ($a=0; $a < $contar_reg; $a++) {
 
-        /*
-          Esto es igual a las keys
-          $ex = $cadena_a . $a;//Concatenamos el oid de Mac Address
-          $eya =$cadena_b . $a;//Concatenamos el oid de Radio Channel
-          $eyb =$cadena_c . $a;//Concatenamos el oid de Radio Type
-          $eyc =$cadena_d . $a;//Concatenamos el oid de SSID
+              next(${"snmp_a".$i}); //Este es para que avance la key en el array
+              next(${"snmp_b".$i}); //Este es para que avance la key en el array
+              next(${"snmp_c".$i}); //Este es para que avance la key en el array
+              next(${"snmp_d".$i}); //Este es para que avance la key en el array
+          }
+          $sessionA->close();
+          $sessionB->close();
+          $sessionC->close();
+          $sessionD->close();
 
-          Osea esto xD
-          [key(${"snmp_a".$i})]
-          [key(${"snmp_b".$i})]
-          [key(${"snmp_c".$i})]
-          [key(${"snmp_d".$i})]
-
-        */
-
-          //Para obtener la mac
-          ${"snmp_aa".$i}= explode(': ', ${"snmp_a".$i}[key(${"snmp_a".$i})]);
-          //Para obtener el radio channel
-          ${"snmp_ab".$i}= explode(': ', ${"snmp_b".$i}[key(${"snmp_b".$i})]);
-          //Para obtener el radio type
-          ${"snmp_ac".$i}= explode(': ', ${"snmp_c".$i}[key(${"snmp_c".$i})]);
-
-          $sql = DB::table('RogueDevices')->insertGetId([
-            'MACRogue' => ${"snmp_aa".$i}[1],
-            'ChannelRogue' => ${"snmp_ab".$i}[1],
-            'TypeRogue' => ${"snmp_ac".$i}[1],
-            'SSIDRogue' => ${"snmp_d".$i}[key(${"snmp_d".$i})],
-            'Mes' => $fmeses,
-            'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
-
-            next(${"snmp_a".$i}); //Este es para que avance la key en el array
-            next(${"snmp_b".$i}); //Este es para que avance la key en el array
-            next(${"snmp_c".$i}); //Este es para que avance la key en el array
-            next(${"snmp_d".$i}); //Este es para que avance la key en el array
+          DB::commit();
         }
-        $sessionA->close();
-        $sessionB->close();
-        $sessionC->close();
-        $sessionD->close();
-
-        DB::commit();
-
+        else {
+          //Datos para el correo
+          $hostcorreo = DB::table('CorreosZD')->select('Nombre_hotel', 'Correo', 'nombre_itc')->where('ip' , '=', $host)->get();
+          $nombrehotel = $hostcorreo[0]->Nombre_hotel;
+          $nombreit = $hostcorreo[0]->nombre_itc;
+          $correoit = $hostcorreo[0]->Correo;
+          $data = [
+            'ip' => $host,
+            'hotel' => $nombrehotel,
+            'nombre' => $nombreit,
+            'mensaje' => 'Favor de capturar los rogue devices de manera manual en el sistema de reportes. En caso que no tenga rogue devices, omita este mensaje. Los datos a capturar son pertenecientes al mes de '
+          ];
+          $this->enviarC($correoit, $nombreit, $data);
+        //  echo $host;
+        }
       }
         $this->info('Successfull registered rogue devices!');
     }

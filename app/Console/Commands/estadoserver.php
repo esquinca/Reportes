@@ -74,7 +74,7 @@ class estadoserver extends Command
             ->where('ip', '=', $host)
             ->update(['status' => 0]);
 
-          $this->enviarC($correoit, $nombreit, $data);
+          //$this->enviarC($correoit, $nombreit, $data);
         }
       }
       $this->info('Updated ip address states successfully!');
@@ -85,7 +85,8 @@ class estadoserver extends Command
       $boolean = 0;
       $session = new SNMP(SNMP::VERSION_2C, $ip, "public");
       try {
-        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2");
+        //$res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2");
+        $res = $session->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4'); //Model name
       } catch (\Exception $e) {
         $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
         return $boolean;
