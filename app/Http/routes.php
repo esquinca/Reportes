@@ -96,4 +96,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	 Route::get('/putohehe', 'AssignConciergeController@rutaestadoserver');
 
+	 //Captura individual
+	 Route::get('/individual', 'IndividualController@index');
+
 });

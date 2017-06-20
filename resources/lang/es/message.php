@@ -400,6 +400,10 @@ return [
     'titletopaprgbas' => 'Top AP&acute;S Más Utilizadas',
     'dirmac' => 'MAC',
     'nclientd' => 'No.Clientes',
-    'comparativoantvsact' => 'Comparativo Mes Actual vs Mes Anterior'
+    'comparativoantvsact' => 'Comparativo Mes Actual vs Mes Anterior',
+
+    'captureindiv' => 'Captura individual',
+    'gbtrans' => 'GB Transmitidos',
+    'nusuario' => 'No.Usuarios'
 
 ];

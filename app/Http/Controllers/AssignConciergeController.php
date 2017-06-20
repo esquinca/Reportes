@@ -102,7 +102,7 @@ class AssignConciergeController extends Controller
       $value='1';
       $edita_idhotel= $request->hotel;
       $edita_iduserconci= $request->concierge;
-      
+
       $emailuser = $this->getCorreo($edita_iduserconci);
       $edita_idconcierge = $this->getIdCon($emailuser);
 
@@ -139,8 +139,8 @@ class AssignConciergeController extends Controller
         $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
         var_dump($boolean);
       }
-      echo $boolean;  
-      
+      echo $boolean;
+
       $session->close();
     }
 

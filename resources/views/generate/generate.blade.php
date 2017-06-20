@@ -67,6 +67,7 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
+      <strong>Nota:</strong> Este apartado solo se utiliza cuando no se captura ninguna informacion de su hotel asignado.
     </div>
   </div>
 
