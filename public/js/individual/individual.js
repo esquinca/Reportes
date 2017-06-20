@@ -53,7 +53,7 @@ $('#generateGbInfo').on('click', function(){
 	  $.ajax({
          type: "POST",
          url: './transgb',
-         data: { ident : id_hotel_one, date: cap_date, vgb: cap_date, _token : _token },
+         data: { ident : id_hotel_one, date: cap_date, vgb: cap_value, _token : _token },
          success: function (data) {
 					 console.log('Error:', data);
 					 if (data == '0') {

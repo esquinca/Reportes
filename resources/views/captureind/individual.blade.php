@@ -41,7 +41,9 @@
                         <label for="select_one">{{ trans('message.selecthotel')}}: </label>
                         <select class="form-control select2" id="select_one">
                           <option value="" selected>{{ trans('message.optionOne')}}</option>
-                            <option value="1" >{fdfd</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
                         </select>
                       </div>
                       <div class="form-group">
@@ -85,7 +87,9 @@
                         <label for="select_two">{{ trans('message.selecthotel')}}: </label>
                         <select class="form-control select2" id="select_two">
                           <option value="" selected>{{ trans('message.optionOne')}}</option>
-
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
                         </select>
                       </div>
                       <div class="form-group">
@@ -130,6 +134,9 @@
                           <label for="select_three">{{ trans('message.selecthotel')}}: </label>
                           <select class="form-control select2" id="select_three">
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
                           </select>
                         </div>
                         <div class="form-group">
@@ -325,6 +332,9 @@
                         <label for="select_four">{{ trans('message.selecthotel')}}: </label>
                         <select class="form-control select2" id="select_four">
                           <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
                         </select>
                       </div>
                       <div class="form-group">
