@@ -35,23 +35,30 @@
            {{ csrf_field() }}
           <form class="form-inline">
             <div>
+
               <div class="form-group">
-                <label for="select_one">{{ trans('message.selecthotel')}}: </label>
-                <select class="form-control select2" id="select_one">
-                  <option value="" selected>{{ trans('message.optionOne')}}</option>
-                  @foreach ($selectDatahotel as $info)
-                  <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
-                  @endforeach
-                </select>
+                <label for="select_one" class="control-label">{{ trans('message.selecthotel')}}: </label>
+                <div class="">
+                  <select class="form-control select2" id="select_one">
+                    <option value="" selected>{{ trans('message.optionOne')}}</option>
+                    @foreach ($selectDatahotel as $info)
+                    <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="fecha_nueva2">{{ trans('message.fecha')}}:</label>
-                <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva2" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                <label for="fecha_nueva2"  class="control-label">{{ trans('message.fecha')}}: </label>
+                <div class="">
+                  <input type="text" class="form-control" id="fecha_nueva2" name="fecha_nueva2" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                </div>
               </div>
 
-              <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
-              <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+              <div class="form-group">
+                <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                <a id="generateClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+              </div>
 
             </div>
           </form>
