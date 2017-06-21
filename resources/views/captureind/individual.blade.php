@@ -118,7 +118,7 @@
                       <div class="form-group">
                         <label for="val_user"  class="control-label">{{ trans('message.nusuario')}}: </label>
                         <div class="">
-                          <input type="text" class="form-control" id="val_user" name="val_user" placeholder=" " maxlength="10" title="{{ trans('message.nusuario')}}">
+                          <input type="number" class="form-control" id="val_user" name="val_user" placeholder=" " maxlength="10" title="{{ trans('message.nusuario')}}">
                         </div>
                       </div>
 

@@ -55,11 +55,12 @@ $('#generateGbInfo').on('click', function(){
          url: './transgb',
          data: { ident : id_hotel_one, date: cap_date, vgb: cap_value, _token : _token },
          success: function (data) {
-					 console.log('Error:', data);
+					 //console.log('v:', data);
 					 if (data == '0') {
+						 toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
 					 }
 					 if (data == '1') {
-						 toastr.error('Dia capturado.!!', 'Mensaje', {timeOut: 1000});
+						 toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
            }
          },
          error: function (data) {
@@ -90,12 +91,12 @@ $('#generateUserInfo').on('click', function(){
          url: './transuser',
          data: { ident : id_hotel_two, date: cap_date_two, vur: cap_value_two, _token : _token },
          success: function (data) {
-					 console.log('Error:', data);
+					 //console.log('v:', data);
 					 if (data == '0') {
-
+						 toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
 					 }
 					 if (data == '1') {
-						 toastr.error('Dia capturado. !!', 'Mensaje', {timeOut: 1000});
+						 toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
            }
          },
          error: function (data) {
@@ -154,13 +155,13 @@ $('#generateapsInfo').on('click', function(){
                  _token : _token
                },
          success: function (data) {
-					 console.log('Error:', data);
+					 //console.log('Error:', data);
 					 if (data == '0') {
-
+						toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+					}
+					if (data == '1') {
+						toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
 					 }
-					 if (data == '1') {
-						 toastr.error('Dia capturado. !!', 'Mensaje', {timeOut: 1000});
-           }
          },
          error: function (data) {
            console.log('Error:', data);
@@ -203,13 +204,13 @@ $('#generatewlanInfo').on('click', function(){
                  _token : _token
                },
          success: function (data) {
-					 console.log('Error:', data);
+					 console.log('v:', data);
 					 if (data == '0') {
-
+						toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+					}
+					if (data == '1') {
+						toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
 					 }
-					 if (data == '1') {
-						 toastr.error('Dia capturado. !!', 'Mensaje', {timeOut: 1000});
-           }
          },
          error: function (data) {
            console.log('Error:', data);

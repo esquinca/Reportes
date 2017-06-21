@@ -66,80 +66,128 @@ class IndividualController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storegb(Request $request)
-    {
+     public function vdata($id, $date, $tabla )
+     {
+       $sql = DB::table($tabla)->where('Fecha', '=', $date)->where('hotels_id', '=', $id)->count();
+       $capt_r_sql = 0;
 
+       if($sql == 0){
+         //no hay registros
+         $capt_r_sql = 0;
+       }
+       if($sql != 0){
+         //si hay
+         $capt_r_sql = 1;
+       }
+       return $capt_r_sql;
+     }
+      public function storegb(Request $request)
+      {
         $id_hotel = $request->get('ident');
         $fechaInput = $request->input('date');
-        $giga = $request->input('vgb');
-        $bytes = ((($giga * 1024) * 1024) * 1024);
 
-        $mesyear = $this->returnDate($fechaInput);
+        $validacionRegistro= $this -> vdata($id_hotel, $fechaInput, 'GBXDia');
 
-        $result = DB::table('GBXDia')->insert([
+        if($validacionRegistro == 1){
+          return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
+        }
+        if($validacionRegistro == 0){
+
+          $giga = $request->input('vgb');
+
+          $bytes = ((($giga * 1024) * 1024) * 1024);
+
+          $mesyear = $this->returnDate($fechaInput);
+
+          $result = DB::table('GBXDia')->insert([
             ['CantidadBytes' => $bytes, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-        ]);
-        $resultS = (string)$result;
+          ]);
 
-        return $resultS;
-    }
+          return $validacionRegistro;//no hay registro mando 0
+        }
+        /* $resultS = (string)$result; return $resultS; */
+      }
 
     public function storeuser(Request $request)
     {
         $id_hotel = $request->get('ident');
         $fecha = $request->input('date');
-        $userxdia = $request->input('vur');
 
-        $mesyear = $this->returnDate($fecha);
+        $validacionRegistro= $this -> vdata($id_hotel, $fecha, 'UsuariosXDia');
 
-        $result = DB::table('UsuariosXDia')->insert([
+        if($validacionRegistro == 1){
+          return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
+        }
+        if($validacionRegistro == 0){
+
+          $userxdia = $request->input('vur');
+
+          $mesyear = $this->returnDate($fecha);
+
+          $result = DB::table('UsuariosXDia')->insert([
             ['NumClientes' => $userxdia, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-        ]);
+          ]);
+          return $validacionRegistro;//no hay registro mando 0
+        }
 
-        $resultS = (string)$result; 
-
-        return $resultS;
+        /* $resultS = (string)$result; return $resultS; */
     }
-    
+
     public function storeaps(Request $request)
     {
         $id_hotel = $request->get('ident');
         $fecha = $request->input('date');
-        $mesyear = $this->returnDate($fecha);
 
-        $mac1 = $request->input('af1_1');
-        $modelo1 = $request->input('af1_2');
-        $cliente1 = $request->input('af1_3');
-        $mac2 = $request->input('af2_1');
-        $modelo2 = $request->input('af2_2');
-        $cliente2 = $request->input('af2_3');
-        $mac3 = $request->input('af3_1');
-        $modelo3 = $request->input('af3_2');
-        $cliente3 = $request->input('af3_3');
-        $mac4 = $request->input('af4_1');
-        $modelo4 = $request->input('af4_2');
-        $cliente4 = $request->input('af4_3');
-        $mac5 = $request->input('af5_1');
-        $modelo5 = $request->input('af5_2');
-        $cliente5 = $request->input('af5_3');
+        $validacionRegistro= $this -> vdata($id_hotel, $fecha, 'MostAP');
 
-        $result = DB::table('MostAP')->insert([
+        if($validacionRegistro == 1){
+          return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
+        }
+        if($validacionRegistro == 0){
+          $mesyear = $this->returnDate($fecha);
+
+          $mac1 = $request->input('af1_1');
+          $modelo1 = $request->input('af1_2');
+          $cliente1 = $request->input('af1_3');
+          $mac2 = $request->input('af2_1');
+          $modelo2 = $request->input('af2_2');
+          $cliente2 = $request->input('af2_3');
+          $mac3 = $request->input('af3_1');
+          $modelo3 = $request->input('af3_2');
+          $cliente3 = $request->input('af3_3');
+          $mac4 = $request->input('af4_1');
+          $modelo4 = $request->input('af4_2');
+          $cliente4 = $request->input('af4_3');
+          $mac5 = $request->input('af5_1');
+          $modelo5 = $request->input('af5_2');
+          $cliente5 = $request->input('af5_3');
+
+          $result = DB::table('MostAP')->insert([
             ['Fecha' => $fecha, 'MAC' => $mac1, 'NumClientes' => $cliente1, 'Modelo' => $modelo1, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
             ['Fecha' => $fecha, 'MAC' => $mac2, 'NumClientes' => $cliente2, 'Modelo' => $modelo2, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
             ['Fecha' => $fecha, 'MAC' => $mac3, 'NumClientes' => $cliente3, 'Modelo' => $modelo3, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
             ['Fecha' => $fecha, 'MAC' => $mac4, 'NumClientes' => $cliente4, 'Modelo' => $modelo4, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
             ['Fecha' => $fecha, 'MAC' => $mac5, 'NumClientes' => $cliente5, 'Modelo' => $modelo5, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-        ]);
+          ]);
 
-        $resultS = (string)$result; 
-
-        return $resultS;
+          return $validacionRegistro;//no hay registro mando 0
+        }
+        /*  $resultS = (string)$result;  return $resultS;  */
     }
 
     public function storewlan(Request $request)
     {
         $id_hotel = $request->get('ident');
         $fecha = $request->input('date');
+        $validacionRegistro= $this -> vdata($id_hotel, $fecha, 'WLAN');
+
+        if($validacionRegistro == 1){
+          return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
+        }
+        if($validacionRegistro == 0){
+          return $validacionRegistro;//no hay registro mando 0
+        }
+        /*
         $mesyear = $this->returnDate($fecha);
 
         $nombre1 = $request->input('bf1_1');
@@ -161,23 +209,23 @@ class IndividualController extends Controller
             $result = DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
             ]);
-            $resultS = (string)$result; 
+            $resultS = (string)$result;
             return $resultS;
         }elseif ($request->input('nombrew3') == '' && $request->input('clientew3') == '') {
             $result = DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
             ]);
-            $resultS = (string)$result; 
-            return $resultS;            
+            $resultS = (string)$result;
+            return $resultS;
         }elseif ($request->input('nombrew4') == '' && $request->input('clientew4') == '') {
             $result = DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
             ]);
-            $resultS = (string)$result; 
-            return $resultS;           
+            $resultS = (string)$result;
+            return $resultS;
         }elseif ($request->input('nombrew5') == '' && $request->input('clientew5') == '') {
             $result = DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
@@ -185,8 +233,8 @@ class IndividualController extends Controller
                 ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
             ]);
-            $resultS = (string)$result; 
-            return $resultS;            
+            $resultS = (string)$result;
+            return $resultS;
         }else{
             $result = DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
@@ -195,11 +243,12 @@ class IndividualController extends Controller
                 ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre5, 'ClientesWLAN' => $clientew5, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
             ]);
-            $resultS = (string)$result; 
-            return $resultS;      
+            $resultS = (string)$result;
+            return $resultS;
         }
-
         return $result = 0;
+        */
+
     }
 
     public function returnDate($date)
@@ -259,21 +308,5 @@ class IndividualController extends Controller
         //
     }
 
-    public function vdata(Request $request)
-    {
-      $id_hotel = $request->ident;
-      $fechar = $request->fechae;
 
-      $sql = DB::table('HotelesRegistradosZD')->where('Fecha', '=', $fechar)->where('hotels_id', '=', $id_hotel)->count();
-      $capt_r_sql = 0;
-      //$capt_r_sql= DB::table('HotelesRegistradosZD')->where('Fecha', '=', '$fechar')->where('hotels_id', '=', '$id_hot')->get(); //Retorna un array stdClass Object
-      //$count_reg= count($capt_r_sql); //Cuento el tamaño del array anterior
-      if($sql == 0){
-        $capt_r_sql = 0;
-      }
-      if($sql != 0){
-        $capt_r_sql = 1;
-      }
-      return $capt_r_sql;
-    }
 }
