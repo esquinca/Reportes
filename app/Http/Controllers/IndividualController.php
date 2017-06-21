@@ -185,70 +185,50 @@ class IndividualController extends Controller
           return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
         }
         if($validacionRegistro == 0){
-          return $validacionRegistro;//no hay registro mando 0
-        }
-        /*
-        $mesyear = $this->returnDate($fecha);
+        
+            $mesyear = $this->returnDate($fecha);
 
-        $nombre1 = $request->input('bf1_1');
-        $clientew1 = $request->input('bf1_2');
+            $nombre1 = $request->input('bf1_1');
+            $clientew1 = $request->input('bf1_2');
 
-        $nombre2 = $request->input('bf2_1');
-        $clientew2 = $request->input('bf2_2');
+            $nombre2 = $request->input('bf2_1');
+            $clientew2 = $request->input('bf2_2');
 
-        $nombre3 = $request->input('bf3_1');
-        $clientew3 = $request->input('bf3_2');
+            $nombre3 = $request->input('bf3_1');
+            $clientew3 = $request->input('bf3_2');
 
-        $nombre4 = $request->input('bf4_1');
-        $clientew4 = $request->input('bf4_2');
+            $nombre4 = $request->input('bf4_1');
+            $clientew4 = $request->input('bf4_2');
 
-        $nombre5 = $request->input('bf5_1');
-        $clientew5 = $request->input('bf5_2');
+            $nombre5 = $request->input('bf5_1');
+            $clientew5 = $request->input('bf5_2');
 
-        if ($request->input('nombrew2') == '' && $request->input('clientew2') == '') {
-            $result = DB::table('WLAN')->insert([
+            DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);
-            $resultS = (string)$result;
-            return $resultS;
-        }elseif ($request->input('nombrew3') == '' && $request->input('clientew3') == '') {
-            $result = DB::table('WLAN')->insert([
-                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);
-            $resultS = (string)$result;
-            return $resultS;
-        }elseif ($request->input('nombrew4') == '' && $request->input('clientew4') == '') {
-            $result = DB::table('WLAN')->insert([
-                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);
-            $resultS = (string)$result;
-            return $resultS;
-        }elseif ($request->input('nombrew5') == '' && $request->input('clientew5') == '') {
-            $result = DB::table('WLAN')->insert([
-                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);
-            $resultS = (string)$result;
-            return $resultS;
-        }else{
-            $result = DB::table('WLAN')->insert([
-                ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
-                ['NombreWLAN' => $nombre5, 'ClientesWLAN' => $clientew5, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);
-            $resultS = (string)$result;
-            return $resultS;
-        }
-        return $result = 0;
-        */
+            ]);         
 
+            if (!empty($nombre2)  && !empty($clientew2) ) {
+                $result = DB::table('WLAN')->insert([
+                    ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+                ]); 
+            }
+            if (!empty($nombre3) && !empty($clientew3) ) {
+                $result = DB::table('WLAN')->insert([
+                    ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+                ]);
+            }
+            if (!empty($nombre4) && !empty($clientew4) ) {
+                $result = DB::table('WLAN')->insert([
+                    ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+                ]);
+            }
+            if (!empty($nombre5) && !empty($clientew5) ) {
+                $result = DB::table('WLAN')->insert([
+                    ['NombreWLAN' => $nombre5, 'ClientesWLAN' => $clientew5, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+                ]);
+            }
+            return $validacionRegistro;//no hay registro mando 0
+        }
     }
 
     public function returnDate($date)
