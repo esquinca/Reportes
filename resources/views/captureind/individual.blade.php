@@ -37,25 +37,38 @@
                   {{ csrf_field() }}
                   <form id="form_gb" name="form_gb" class="form-inline">
                     <div>
+
                       <div class="form-group">
-                        <label for="select_one">{{ trans('message.selecthotel')}}: </label>
-                        <select class="form-control select2" id="select_one">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
+                        <label for="select_one"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <div class="">
+                          <select class="form-control select2" id="select_one">
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
-                        </select>
+                          </select>
+                        </div>
                       </div>
+
                       <div class="form-group">
-                        <label for="fecha_ngb">{{ trans('message.fecha')}}:</label>
-                        <input type="text" class="form-control" id="fecha_ngb" name="fecha_ngb" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        <label for="fecha_ngb"  class="control-label">{{ trans('message.fecha')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="fecha_ngb" name="fecha_ngb" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        </div>
                       </div>
+
                       <div class="form-group">
-                        <label for="valorgb_trans">{{ trans('message.gbtrans')}}:</label>
-                        <input type="text" class="form-control" id="valorgb_trans" name="valorgb_trans" placeholder=" " maxlength="10" title="{{ trans('message.gbtrans')}}">
+                        <label for="valorgb_trans"  class="control-label">{{ trans('message.gbtrans')}}: </label>
+                        <div class="">
+                          <input type="number" class="form-control" id="valorgb_trans" name="valorgb_trans" placeholder=" " maxlength="10" title="{{ trans('message.gbtrans')}}">
+                        </div>
                       </div>
-                      <a id="generateGbInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
-                      <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+
+                      <div class="form-group">
+                        <a id="generateGbInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                      </div>
+
                     </div>
                   </form>
                 </div>
@@ -84,24 +97,37 @@
                   <form id="form_user" name="form_user" class="form-inline">
                     <div>
                       <div class="form-group">
-                        <label for="select_two">{{ trans('message.selecthotel')}}: </label>
-                        <select class="form-control select2" id="select_two">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
+                        <label for="select_two"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <div class="">
+                          <select class="form-control select2" id="select_two">
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
-                        </select>
+                          </select>
+                        </div>
                       </div>
+
                       <div class="form-group">
-                        <label for="fecha_nuser">{{ trans('message.fecha')}}:</label>
-                        <input type="text" class="form-control" id="fecha_nuser" name="fecha_nuser" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        <label for="fecha_nuser"  class="control-label">{{ trans('message.fecha')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="fecha_nuser" name="fecha_nuser" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        </div>
                       </div>
+
                       <div class="form-group">
-                        <label for="val_user">{{ trans('message.nusuario')}}:</label>
-                        <input type="text" class="form-control" id="val_user" name="val_user" placeholder=" " maxlength="10" title="{{ trans('message.nusuario')}}">
+                        <label for="val_user"  class="control-label">{{ trans('message.nusuario')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="val_user" name="val_user" placeholder=" " maxlength="10" title="{{ trans('message.nusuario')}}">
+                        </div>
                       </div>
-                      <a id="generateUserInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
-                      <a id="generateUserClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+
+
+                      <div class="form-group">
+                        <a id="generateUserInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateUserClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                      </div>
+
                     </div>
                   </form>
                 </div>
@@ -131,17 +157,21 @@
                     <ul class="list-group">
                       <div class="list-group-item form-inline removebord">
                         <div class="form-group">
-                          <label for="select_three">{{ trans('message.selecthotel')}}: </label>
-                          <select class="form-control select2" id="select_three">
-                            <option value="" selected>{{ trans('message.optionOne')}}</option>
-                            @foreach ($selectDatahotel as $info)
-                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
-                            @endforeach
-                          </select>
+                          <label for="select_three"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                          <div class="">
+                            <select class="form-control select2" id="select_three">
+                              <option value="" selected>{{ trans('message.optionOne')}}</option>
+                              @foreach ($selectDatahotel as $info)
+                              <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                              @endforeach
+                            </select>
+                          </div>
                         </div>
                         <div class="form-group">
-                          <label for="fecha_aps">{{ trans('message.fecha')}}:</label>
-                          <input type="text" class="form-control" id="fecha_aps" name="fecha_aps" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                          <label for="fecha_aps"  class="control-label">{{ trans('message.fecha')}}: </label>
+                          <div class="">
+                            <input type="text" class="form-control" id="fecha_aps" name="fecha_aps" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                          </div>
                         </div>
                       </div>
 
@@ -329,18 +359,24 @@
                   <ul class="list-group">
                     <div class="list-group-item form-inline removebord">
                       <div class="form-group">
-                        <label for="select_four">{{ trans('message.selecthotel')}}: </label>
-                        <select class="form-control select2" id="select_four">
-                          <option value="" selected>{{ trans('message.optionOne')}}</option>
+                        <label for="select_four"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <div class="">
+                          <select class="form-control select2" id="select_four">
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
-                        </select>
+                          </select>
+                        </div>
                       </div>
+
                       <div class="form-group">
-                        <label for="fecha_nwlan">{{ trans('message.fecha')}}:</label>
-                        <input type="text" class="form-control" id="fecha_nwlan" name="fecha_nwlan" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        <label for="fecha_nwlan"  class="control-label">{{ trans('message.fecha')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="fecha_nwlan" name="fecha_nwlan" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        </div>
                       </div>
+
                     </div>
 
                     <div class="list-group-item form-inline">
