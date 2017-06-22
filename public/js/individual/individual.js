@@ -58,6 +58,7 @@ $('#generateGbInfo').on('click', function(){
 					 //console.log('v:', data);
 					 if (data == '0') {
 						 toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+						 limp_one();
 					 }
 					 if (data == '1') {
 						 toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
@@ -94,6 +95,7 @@ $('#generateUserInfo').on('click', function(){
 					 //console.log('v:', data);
 					 if (data == '0') {
 						 toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+						 limp_two();
 					 }
 					 if (data == '1') {
 						 toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
@@ -158,6 +160,7 @@ $('#generateapsInfo').on('click', function(){
 					 //console.log('Error:', data);
 					 if (data == '0') {
 						toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+						limp_three();
 					}
 					if (data == '1') {
 						toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
@@ -207,6 +210,7 @@ $('#generatewlanInfo').on('click', function(){
 					 console.log('v:', data);
 					 if (data == '0') {
 						toastr.success('Dia capturado con exito.!!', 'Mensaje', {timeOut: 1000});
+						limp_four();
 					}
 					if (data == '1') {
 						toastr.error('Este dia si estaba registrado. !!', 'Mensaje', {timeOut: 1000});
@@ -221,6 +225,47 @@ $('#generatewlanInfo').on('click', function(){
 });
 
 
-$('#generateGbClear').on('click', function(){
 
+$('#generateGbClear').on('click', function(){
+limp_one();
 });
+$('#generateUserClear').on('click', function(){
+limp_two();
+});
+
+$('#generateapsClear').on('click', function(){
+limp_three();
+});
+
+$('#generatewlanClear').on('click', function(){
+limp_four();
+});
+
+function limp_one(){
+	$('#form_gb')[0].reset();
+	$("#select_one").select2("val", "");
+	$("#form_gb div.form-group").attr("class","form-group has-default");
+	$('#fecha_ngb').val('').datepicker('update');
+
+}
+
+function limp_two(){
+	$('#form_user')[0].reset();
+	$("#select_two").select2("val", "");
+	$("#form_user div.form-group").attr("class","form-group has-default");
+	$('#fecha_nuser').val('').datepicker('update');
+}
+
+function limp_three(){
+	$('#form_aps')[0].reset();
+	$("#select_three").select2("val", "");
+	$("#form_aps div.form-group").attr("class","form-group has-default");
+	$('#fecha_aps').val('').datepicker('update');
+}
+
+function limp_four(){
+	$('#form_wlan')[0].reset();
+	$("#select_four").select2("val", "");
+	$("#form_wlan div.form-group").attr("class","form-group has-default");
+	$('#fecha_nwlan').val('').datepicker('update');
+}
