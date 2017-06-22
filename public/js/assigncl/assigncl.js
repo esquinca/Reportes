@@ -37,6 +37,7 @@ $('#capInfo').on('click', function(){
              var fds= $('#tableclient').dataTable();
              fds.fnDestroy();
              table();
+             resetdiv();
            }
          },
          error: function (data) {
@@ -45,10 +46,14 @@ $('#capInfo').on('click', function(){
      });
   }
 });
-
-$('#capClear').on('click', function(){
+function resetdiv(){
   $("#select_one").select2("val", "");
   $("#select_two").select2("val", "");
+  $('#select_one').parent().parent().attr("class", "form-group has-default");
+  $('#select_two').parent().parent().attr("class", "form-group has-default");
+}
+$('#capClear').on('click', function(){
+  resetdiv();
 });
 
 $(function() {

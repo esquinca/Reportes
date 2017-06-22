@@ -90,8 +90,16 @@ $('#generateInfo').on('click', function(){
   }
 });
 $('#generateClear').on('click', function(){
-		$("#fobservation")[0].reset();
-		$("#fobservation").hide();
-		$("#select_one").select2("val", "");
-		$('#fecha_nueva').val('');
+		resetdiv();
 });
+function resetdiv(){
+	$("#fobservation")[0].reset();
+	$("#fobservation").hide();
+
+  $("#select_one").select2("val", "");
+  $('#select_one').parent().parent().attr("class", "form-group has-default");
+	$('#fecha_nueva').parent().parent().attr("class", "form-group has-default");
+	$('#fecha_nueva').val('');
+	$('#fecha_nueva').val('').datepicker('update');
+
+}

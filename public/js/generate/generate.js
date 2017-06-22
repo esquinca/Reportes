@@ -88,6 +88,7 @@ $('#generateInfo').on('click', function(){
 						 $('#nombrew3').val(''); $('#clientew3').val('');
 						 $('#nombrew4').val(''); $('#clientew4').val('');
 						 $('#nombrew5').val(''); $('#clientew5').val('');
+						 resetdiv();
 					 }
          },
          error: function (data) {
@@ -99,12 +100,19 @@ $('#generateInfo').on('click', function(){
 });
 
 $('#generateClear').on('click', function(){
-		$("#formcapt")[0].reset();
-		$("#formcapt").hide();
-		$("#select_one").select2("val", "");
-		$('#fecha_nueva2').val('');
+		resetdiv();
 });
+function resetdiv(){
+	$("#formcapt")[0].reset();
+	$("#formcapt").hide();
 
+  $("#select_one").select2("val", "");
+  $('#select_one').parent().parent().attr("class", "form-group has-default");
+	$('#fecha_nueva2').parent().parent().attr("class", "form-group has-default");
+	$('#fecha_nueva2').val('');
+	$('#fecha_nueva2').val('').datepicker('update');
+
+}
 $('#subform').on('click', function(){
 	var a0=validarInput('userxday');	var a1=validarInput('gigxday');
 	var a2=validarInput('mac1');	var a3=validarInput('modelo1'); var a4=validarInput('cliente1');
