@@ -12,7 +12,8 @@
         "laravel/socialite": "2.0.20",
         "intervention/image": "^2.3",
         "stevebauman/location": "^2.0",
-        "laravelcollective/html": "^5.2.0"
+        "laravelcollective/html": "^5.2.0",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

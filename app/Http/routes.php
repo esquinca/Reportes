@@ -102,4 +102,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/transuser', 'IndividualController@storeuser');
 	Route::post('/transaps', 'IndividualController@storeaps');
 	Route::post('/transwlan', 'IndividualController@storewlan');
+	//importar
+	Route::get('/import', 'ImportController@index');
+	Route::post('/uploaddoc', 'ImportController@subir');
 });

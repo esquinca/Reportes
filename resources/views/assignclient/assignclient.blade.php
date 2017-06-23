@@ -140,7 +140,7 @@
                   <a id="capInfo" class="btn btn-primary"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
                   <a id="capClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                 </div>
-                
+
               </div>
             </form>
           </div>

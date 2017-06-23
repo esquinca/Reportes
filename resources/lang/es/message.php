@@ -404,6 +404,8 @@ return [
 
     'captureindiv' => 'Captura individual',
     'gbtrans' => 'GB Transmitidos',
-    'nusuario' => 'No.Usuarios'
+    'nusuario' => 'No.Usuarios',
+    'importar'=> 'Importar',
+    'importarfile'=>'Subir documento',
 
 ];
