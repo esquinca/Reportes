@@ -23,12 +23,18 @@ class ImportController extends Controller
     {
       return view('importardoc.import');
     }
-    
+
     public function subir(Request $request)
     {
-        //
+      $archivo = $request->file('documento');
+      Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
+        $hoja->each(function($fila){
+          $hotel= $fila->nombre;
+          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+          echo $selectid;
+        });
+      });
     }
-
 
     /**
      * Show the form for creating a new resource.
