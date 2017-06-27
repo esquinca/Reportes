@@ -41,6 +41,7 @@
 
             <!--</form>-->
             {!! Form::close() !!}
+            <br><button type="btn" class="btn bg-orange" id='download_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Descargar Plantilla</button>
           </div>
         </div>
 

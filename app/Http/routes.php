@@ -104,5 +104,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/transwlan', 'IndividualController@storewlan');
 	//importar
 	Route::get('/import', 'ImportController@index');
-	Route::post('/uploaddoc', 'ImportController@subir');
+	//Route::post('/uploaddoc', 'ImportController@subir');
+	//Route::post('/uploaddoc', 'ImportController@create');
+		Route::post('/uploaddoc', 'ImportController@subir2');
 });

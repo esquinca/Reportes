@@ -35,6 +35,159 @@ class ImportController extends Controller
         });
       });
     }
+    public function returnDate($date)
+    {
+        $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+
+        $numMes = date ("m", strtotime($date));
+        $year = date ("Y", strtotime($date));
+
+        $mesyear = $meses[$numMes-1].' '. $year;
+
+        return $mesyear;
+    }
+    public function subir2(Request $request)
+    {
+      $archivo = $request->file('documento');
+      Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
+        $hoja->each(function($fila){
+          $hotel= $fila->nombre_hotel;
+
+          $fechaSin= $fila->fecha;
+          $fechaC =  explode(' ', $fechaSin);
+          $fechaSalida= $fechaC[0];
+
+          $nclient= $fila->no_usuario;
+
+          $gb= $fila->cantidad_gb_24hrs;
+          $bytes = ((($gb * 1024) * 1024) * 1024);
+
+          $mesyear = $this->returnDate($fechaSalida);
+
+          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+
+          // echo $bytes;
+          // echo "<br>";
+          // echo $fechaSalida;
+          // echo "<br>";
+          // echo $mesyear = $this->returnDate($fechaSalida);
+          // echo "<br>";
+          // echo $selectid;
+          // echo "<br>";
+
+          $resultGB = DB::table('GBXDia')->insert([
+            ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid]
+          ]);
+
+          $resultUS = DB::table('UsuariosXDia')->insert([
+            ['NumClientes' => $nclient, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid]
+          ]);
+
+        });
+      });
+
+      Excel::selectSheetsByIndex(1)->load($archivo, function($hoja){
+        $hoja->each(function($fila){
+          $hotel= $fila->nombre_hotel;
+          $aps_mac= $fila->ap_mac;
+          $aps_nclient= $fila->ap_noclientes;
+          $aps_model= $fila->ap_modelo;
+
+          $aps_fecha= $fila->ap_fecha;
+          $fecha_apc =  explode(' ', $aps_fecha);
+          $fechaSalidaAP= $fecha_apc[0];
+
+          $mesyear = $this->returnDate($fechaSalidaAP);
+
+          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+
+          $result_ap = DB::table('MostAP')->insert([
+            ['Fecha' => $fechaSalidaAP, 'MAC' => $aps_mac, 'NumClientes' => $aps_nclient, 'Modelo' => $aps_model, 'Mes' => $mesyear, 'hotels_id' => $selectid]
+          ]);
+
+          // echo "Informacion de AP<br>";
+          // $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+          // echo $selectid;
+          // echo "<br>";
+          // echo $fechaSalidaAP;
+          // echo "<br>";
+          // echo $aps_mac;
+          // echo "<br>";
+          // echo $aps_nclient;
+          // echo "<br>";
+          // echo $aps_model;
+          // echo "<br>";
+          // echo $mesyear;
+        });
+      });
+
+      Excel::selectSheetsByIndex(2)->load($archivo, function($hoja){
+        $hoja->each(function($fila){
+          $hotel= $fila->nombre_hotel;
+          $mac= $fila->rogue_mac;
+          $canal= $fila->rogue_canal;
+          $ssid= $fila->rogue_ssid;
+          $fecha= $fila->rogue_mes;
+
+          $result_rg = DB::table('RogueDevices')->insertGetId([
+            'MACRogue' => $mac,
+            'ChannelRogue' => $canal,
+            'TypeRogue' => "1",
+            'SSIDRogue' => $ssid,
+            'Mes' => $fecha,
+            'hotels_id' => $hotel]);
+
+          // echo "Informacion de rogue<br>";
+          // $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+          // echo $selectid;
+          // echo "<br>";
+          // echo $mac;
+          // echo "<br>";
+          // echo $canal;
+          // echo "<br>";
+          // echo $ssid;
+          // echo "<br>";
+          // echo $fecha;
+          // echo "<br>";
+        });
+      });
+
+      Excel::selectSheetsByIndex(3)->load($archivo, function($hoja){
+        $hoja->each(function($fila){
+          $hotel= $fila->nombre_hotel;
+          $nombre= $fila->wlan_nombre;
+          $nclient= $fila->wlan_noclientes;
+
+          $fecha= $fila->wlan_fecha;
+          $fecha_wlan =  explode(' ', $fecha);
+          $fechaSalidawl= $fecha_wlan[0];
+
+          $mesyear = $this->returnDate($fechaSalidawl);
+
+          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+
+          $sql = DB::table('WLAN')->insertGetId([
+            'NombreWLAN' => $nombre,
+            'ClientesWLAN' => $nclient,
+            'Fecha' => $fechaSalidawl,
+            'Mes' => $mesyear,
+            'hotels_id' => $selectid]);
+
+          // echo "Informacion de wlan<br>";
+          // echo $nombre;
+          // echo "<br>";
+          // echo $nclient;
+          // echo "<br>";
+          // echo $fechaSalidawl;
+          // echo "<br>";
+          // echo $mesyear;
+          // echo "<br>";
+          // echo $selectid;
+          // echo "<br>";
+        });
+      });
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -43,7 +196,23 @@ class ImportController extends Controller
      */
     public function create()
     {
-        //
+      Excel::create( 'File Name', function($excel) {
+
+      $excel->sheet('Sheet Name', function($sheet) {
+
+			$head = array(
+				'Title 1',
+				'Title 2',
+				'Title 3',
+				'Title 4'
+			);
+
+			$data = array($head);
+			$sheet->fromArray($data, null, 'A1', false, false);
+    });
+
+
+      })->export('xlsx');
     }
 
     /**
