@@ -33,15 +33,15 @@
               {!! Form::open(['action' => 'ImportController@subir', 'url' => '/uploaddoc', 'method' => 'post', 'id' => 'formexcel', 'class' => 'form-inline', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                   <label class="btn btn-default btn-file">
-                        Seleccione el Archivo: <input type="file" id="documento" name="documento" style="display: none;">
+                        Seleccione el Archivo: <input type="file" id="documento" name="documento" style="display: none;" onchange="control(this)" required>
                   </label>
                 </div>
 
-                <button type="submit" class="btn bg-navy" id='update_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Subir</button>
+                <button type="button" class="btn bg-navy" id='update_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Subir</button>
 
             <!--</form>-->
             {!! Form::close() !!}
-            <br><button type="btn" class="btn bg-orange" id='download_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Descargar Plantilla</button>
+            <br><button type="button" class="btn bg-orange" id='download_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Descargar Plantilla</button>
           </div>
         </div>
 
