@@ -53,6 +53,7 @@ class ImportController extends Controller
     public function subir2(Request $request)
     {
       $archivo = $request->file('documento');
+      DB::beginTransaction();
       Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
         $hoja->each(function($fila){
           $hotel= $fila->nombre_hotel;
@@ -68,6 +69,7 @@ class ImportController extends Controller
 
           $mesyear = $this->returnDate($fechaSalida);
 
+          
           $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
 
           // echo $bytes;
@@ -88,6 +90,7 @@ class ImportController extends Controller
           ]);
 
         });
+
       });
 
       Excel::selectSheetsByIndex(1)->load($archivo, function($hoja){
@@ -190,7 +193,7 @@ class ImportController extends Controller
           // echo "<br>";
         });
       });
-
+      DB::commit();
       notificationMsg('success', 'Registrados con exito. !!');
       return Redirect::back();
     }
