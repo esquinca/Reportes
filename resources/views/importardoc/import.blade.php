@@ -41,7 +41,12 @@
 
             <!--</form>-->
             {!! Form::close() !!}
-            <br><button type="button" class="btn bg-orange" id='download_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Descargar Plantilla</button>
+            <br>
+            <!--<button type="button" class="btn bg-orange" id='download_file'><i class="fa fa-upload" style="margin-right: 4px;"></i>Descargar Plantilla</button>-->
+
+            <a href="./excel/plantilla.xlsx" download="plantilla.xlsx" class="btn bg-orange"><span class="glyphicon glyphicon-cloud-download"></span> Descargar Plantilla</a>
+
+
           </div>
         </div>
 
