@@ -661,7 +661,7 @@ function info_cuadros(){
   var hotel= $('#select_one').val();
   var calendario= $('#calendar_fecha').val();
   var _token = $('input[name="_token"]').val();
-
+  //alert(calendario);
   $("#total_aps").attr("data-to", '');
   $("#gb_max_dia").attr("data-to", '');
   $("#gb_min_dia").attr("data-to", '');
@@ -675,6 +675,7 @@ function info_cuadros(){
     data: { number : hotel, mes: calendario,  _token : _token },
     success: function (data){
       $.each(JSON.parse(data),function(index, objdata){
+        //console.log(objdata);
         $("#total_aps").attr("data-to", objdata.AP);
         $("#gb_max_dia").attr("data-to", objdata.MaxGBV0);
         $("#gb_min_dia").attr("data-to", objdata.MinGBV0);
@@ -923,6 +924,13 @@ function validarInput(campo) {
            toastr.error('Datos Requeridos. !!', 'Mensaje', {timeOut: 1000});
         }
         if (a0 == true && a1 == true && a2 == true) {
+          $("#total_aps").text('');
+          $("#gb_max_dia").text('');
+          $("#gb_min_dia").text('');
+          $("#prom_usuario").text('');
+          $("#total_usuario").text('');
+          $("#rogue_mes").text('');
+
           $.ajax({
             type: "POST",
             url: "./consultnivelreport",

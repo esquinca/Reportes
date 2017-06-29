@@ -174,15 +174,25 @@ class ViewReportsController extends Controller
                     ->get();
       return json_encode($resultados);
     }
-
+    public function returnDate($date)
+    {
+        $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+        $fechaC =  explode('-', $date);
+        $fechaMes= $fechaC[0];
+        $fechayear= $fechaC[1];
+        $mesyear = $meses[$fechaMes-1].' '. $fechayear;
+        return $mesyear;
+    }
     public function info_cuad(Request $request)
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
+      $fechan= $this->returnDate($date);
       $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MaxGBV0','MaxGBV1','MinGBv','MinGBV0','MinGBV1','MaxClientes','AVGUSER', 'RogueDevice')
                   ->where('ID', '=' , $numero_hotel)
-                  ->where('MesUsuario', '=' , 'Mayo 2017')
+                  ->where('MesUsuario', '=' , $fechan)
                   ->get();
+     //return $fechan;
      return json_encode($resultados);
     }
 
