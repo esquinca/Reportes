@@ -247,6 +247,7 @@ function grafica_radar(){
 
               var optiongrafusuarios={
                   title : {
+                     show : false,
                       text: 'Estado',
                       subtext: 'WLAN',
                       x:'right',
@@ -259,6 +260,7 @@ function grafica_radar(){
                   legend: {
                       orient : 'vertical',
                       x : 'left',
+                       y : 'bottom',
                       data: datass2
                       //data:['Chrome','Firefox','Safari','IE9+','IE8-']
                   },
@@ -281,9 +283,9 @@ function grafica_radar(){
                               type:'pie',
                               itemStyle : {normal : {
                                   label : {show : i > 28},
-                                  labelLine : {show : i > 28, length:20}
+                                  labelLine : {show : i > 28, length:10}
                               }},
-                              radius : [i * 4 + 40, i * 4 + 43],
+                              radius : [i * 4 + 12, i * 4 + 15],
                               data: nuevos_valores
                               /*
                               data: [
@@ -330,7 +332,7 @@ function grafica_radar(){
                       y : _ZR.getHeight() / 2,
                       brushType:'fill',
                       color: 'orange',
-                      text : 'Representación',
+                      text : '',
                       textAlign : 'left',
                       textFont:'normal 20px 微软雅黑'
                   }
@@ -472,7 +474,7 @@ function grafica_bar(){
           });
           setTimeout(function (){
               window.onresize = function () {
-                myChart3.resize();
+              //  myChart3.resize();
               }
           }, 2000);
 
@@ -523,6 +525,7 @@ function grafica_pie(){
               }
               var optiongrafpie= {
                     title : {
+                        show: false,
                         text: 'Top aps',
                         subtext: '',
                         x:'center'
@@ -961,4 +964,58 @@ function validarInput(campo) {
 
 
     });
+
+    $('#generatePdf').on('click', function() {
+      //$("body").addClass('sidebar-collapse'); //Comprimir siderbar
+      //$('.seleccion').hide();
+
+      // Le añado las clases
+      $('#oficina_lg').parent().addClass('col-xs-3');
+      $('#name_hotel').parent().addClass('col-xs-6');
+      $('#client_hotel').parent().addClass('col-xs-3');
+
+      //Le añado clases a los cuadros
+      $('#total_aps').parent().parent().addClass('col-xs-2');
+      $('#gb_max_dia').parent().parent().addClass('col-xs-2');
+      $('#gb_min_dia').parent().parent().addClass('col-xs-2');
+      $('#prom_usuario').parent().parent().addClass('col-xs-2');
+      $('#total_usuario').parent().parent().addClass('col-xs-2');
+      $('#rogue_mes').parent().parent().addClass('col-xs-2');
+
+      $('#total_aps').css("font-size", "10px");
+      $('#gb_max_dia').css("font-size", "10px");
+      $('#gb_min_dia').css("font-size", "10px");
+      $('#prom_usuario').css("font-size", "10px");
+      $('#total_usuario').css("font-size", "10px");
+      $('#rogue_mes').css("font-size", "10px");
+
+      $('#total_aps').parent().css("font-size", "10px");
+      $('#gb_max_dia').parent().css("font-size", "10px");
+      $('#gb_min_dia').parent().css("font-size", "10px");
+      $('#prom_usuario').parent().css("font-size", "10px");
+      $('#total_usuario').parent().css("font-size", "10px");
+      $('#rogue_mes').parent().css("font-size", "10px");
+
+      $('#title_w').css({'margin-top' : ''});
+      $('#title_s').css({'margin-top' : ''});
+      $('#title_cgs').css({'margin-top' : ''});
+      $('#title_aps').css({'margin-top' : ''});
+      $('#title_obs').css({'margin-top' : ''});
+
+      $('#title_s').css("margin-top", "100px");
+      $('#title_aps').css("margin-top", "180px");
+
+      // var searchText = $('div.dataTables_filter input').val();
+      // oTable.fnDestroy();
+      // $('#datosHotel').dataTable({
+      //   paging: false,
+      // });
+      // oTable.fnFilter(searchText);
+      // $('div.dataTables_filter input').hide();
+      // $('div.dataTables_filter label').hide();
+      // oTable.fnDestroy();
+      window.print();
+      // $('#datosHotel').dataTable();
+    });
+
 })();

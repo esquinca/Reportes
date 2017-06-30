@@ -24,7 +24,7 @@
   @section('main-content')
 
   <section class="content">
-    <section class="seleccion">
+    <section class="seleccion no-print">
       <div class="row">
         <div class="col-xs-12">
 
@@ -101,7 +101,7 @@
         <div class="col-md-12 text-center">
           <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset ('../img/logo_sit.png') }}" width="160px" height="80px" style="display:flex; margin:0 auto;" class="img-responsive">
+                <img id='oficina_lg' name='oficina_lg'src="{{ asset ('../img/logo_sit.png') }}" width="160px" height="80px" style="display:flex; margin:0 auto;" class="img-responsive">
             </div>
             <div class="col-md-4 text-center">
               <h1 style="font-size: 22px;"><i class="fa fa-bookmark-o"></i> {{ trans('message.titulorepbasic') }}</h1>
@@ -115,7 +115,7 @@
         </div>
       </div>
 
-      <div class="row" style="margin-top: 16px;">
+      <div class="row" >
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -177,7 +177,7 @@
         </div>
       </div>
 
-      <div class="row" style="margin-top: 16px;">
+      <div id="title_w" name="title_w" class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -191,12 +191,12 @@
       </div>
 
       <div class="row margin_div">
-        <div id="graphicwlan" class="col-md-12">
-          <div id="mainwlan" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        <div id="graphicwlan" class="col-md-12 col-xs-10">
+          <div id="mainwlan" style="height:300px; width: 75%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
       </div>
 
-      <div class="row" style="margin-top: 16px;">
+      <div id="title_s" name="title_s" class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -210,12 +210,12 @@
       </div>
 
       <div class="row margin_div">
-        <div id="graphictopssid" class="col-md-12">
-            <div id="maintopssid" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        <div id="graphictopssid" class="col-md-12 col-xs-10">
+            <div id="maintopssid" style="height:300px; width: 75%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
       </div>
 
-      <div class="row" style="margin-top: 16px;">
+      <div id="title_cgs" name="title_cgs" class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -229,12 +229,12 @@
       </div>
 
       <div class="row margin_div">
-        <div id="graphicuser" class="col-md-12">
-            <div id="mainuser" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        <div id="graphicuser" class="col-md-12 col-xs-10">
+            <div id="mainuser" style="height:300px; width: 75%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
       </div>
 
-      <div class="row" style="margin-top: 16px;">
+      <div id="title_aps" name="title_aps" class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -249,13 +249,13 @@
 
 
       <div class="row margin_div">
-        <div id="graphicaps" class="col-md-6">
-            <div id="mainaps" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+        <div id="graphicaps" class="col-md-7 col-xs-10">
+            <div id="mainaps" style="height:300px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
-        <div class="col-md-6">
-          <table id="table_det_aps" name='table_det_aps' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
-            <thead >
-              <tr class="bg-primary" style="background: #0091EB;">
+        <div class="col-md-5">
+          <table class="table table-striped table-bordered" id="table_det_aps" name="table_det_aps">
+            <thead style="background-color: #0091EB; color: white;">
+              <tr >
                 <th>{{ trans('message.description') }}</th>
                 <th>{{ trans('message.dirmac') }}</th>
                 <th>{{ trans('message.nclientd') }}</th>
@@ -267,6 +267,7 @@
         </div>
       </div>
 
+    <!--
       <div class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
@@ -300,8 +301,8 @@
             <div id="maincompart" style="height:400px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
         </div>
       </div>
-
-      <div class="row" style="margin-top: 16px;">
+    -->
+      <div id="title_obs" name="title_obs"  class="row" style="margin-top: 16px;">
         <div class="col-md-12">
           <div class="media service-box">
               <div class="pull-left">
@@ -317,6 +318,16 @@
       <div class="row margin_div">
         <div class="col-md-12">
             <p id='coment_itc' name='coment_itc'></p>
+        </div>
+      </div>
+
+      <div class="row no-print" style="margin-top: 16px;">
+        <div class="col-md-12">
+          <div class="media service-box">
+              <div class="media-body">
+                  <a id="generatePdf" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.generar')}} PDF</a>
+              </div>
+          </div>
         </div>
       </div>
 

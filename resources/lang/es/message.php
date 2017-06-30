@@ -383,11 +383,11 @@ return [
     'cuadro_unoa' => 'Antenas',
     'cuadro_unob' => 'totales',
 
-    'cuadro_dosa' => 'GB Max por',
-    'cuadro_dosb' => 'mes',
+    'cuadro_dosa' => 'GB Max',
+    'cuadro_dosb' => 'por mes',
 
-    'cuadro_tresa' => 'GB Min por',
-    'cuadro_tresb' => 'mes',
+    'cuadro_tresa' => 'GB Min',
+    'cuadro_tresb' => 'por mes',
 
     'cuadro_cuatro' => 'Prom de usuario',
     'cuadro_cinco' => 'Num. usuarios mensual',

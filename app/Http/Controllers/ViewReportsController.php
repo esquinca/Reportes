@@ -132,6 +132,9 @@ class ViewReportsController extends Controller
       ->where('Fecha', '=', $date)
       ->where('id', '=', $numero_hotel)
       ->groupBy('NombreWLAN')
+      ->orderBy('ClientesWLAN', 'desc')
+
+      ->take(5)
       ->get();
       return json_encode($resultados);
     }
