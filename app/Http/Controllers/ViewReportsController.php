@@ -104,7 +104,7 @@ class ViewReportsController extends Controller
       $date= $request->mes;
       $resultados = DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','TOTALUSER','MaxClientes','RogueDevice')
                                 ->where('ID', '=' , $numero_hotel)
-                                ->where('MesGB', '=' , $date)
+                                ->where('Mes', '=' , $date)
                                 ->get();
       return json_encode($resultados);
     }
@@ -193,7 +193,7 @@ class ViewReportsController extends Controller
       $fechan= $this->returnDate($date);
       $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MaxGBV0','MaxGBV1','MinGBv','MinGBV0','MinGBV1','MaxClientes','AVGUSER', 'RogueDevice')
                   ->where('ID', '=' , $numero_hotel)
-                  ->where('MesUsuario', '=' , $fechan)
+                  ->where('Mes', '=' , $fechan)
                   ->get();
      //return $fechan;
      return json_encode($resultados);

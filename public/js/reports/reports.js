@@ -1005,17 +1005,25 @@ function validarInput(campo) {
       $('#title_s').css("margin-top", "100px");
       $('#title_aps').css("margin-top", "180px");
 
-      // var searchText = $('div.dataTables_filter input').val();
-      // oTable.fnDestroy();
-      // $('#datosHotel').dataTable({
-      //   paging: false,
-      // });
-      // oTable.fnFilter(searchText);
-      // $('div.dataTables_filter input').hide();
-      // $('div.dataTables_filter label').hide();
-      // oTable.fnDestroy();
       window.print();
-      // $('#datosHotel').dataTable();
+
+      $('#total_aps').parent().css("font-size", "14px");
+      $('#gb_max_dia').parent().css("font-size", "14px");
+      $('#gb_min_dia').parent().css("font-size", "14px");
+      $('#prom_usuario').parent().css("font-size", "14px");
+      $('#total_usuario').parent().css("font-size", "14px");
+      $('#rogue_mes').parent().css("font-size", "14px");
+
+      $('#total_aps').css("font-size", "24px");
+      $('#gb_max_dia').css("font-size", "24px");
+      $('#gb_min_dia').css("font-size", "24px");
+      $('#prom_usuario').css("font-size", "24px");
+      $('#total_usuario').css("font-size", "24px");
+      $('#rogue_mes').css("font-size", "24px");
+
+      $('#title_s').css("margin-top", "16px");
+      $('#title_aps').css("margin-top", "16px");
+
     });
 
 })();

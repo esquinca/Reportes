@@ -56,7 +56,9 @@ $('#select_two').on('change', function(e){
           //$('#fecha_act').val(data);
           $('#calendar_fecha').val('');
           $('#calendar_fecha').attr('readonly', false);
+          $("#calendar_fecha").children().val('');
           $('#calendar_fecha').datepicker({
+              defaultDate: '',
               format: "mm-yyyy",
               viewMode: "months",
               minViewMode: "months",
