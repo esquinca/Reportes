@@ -50,6 +50,17 @@ class ImportController extends Controller
 
         return $mesyear;
     }
+    public function returnDateTwo($date)
+    {
+        $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+
+        $numMes = date ("F", strtotime($date));
+        $year = date ("Y", strtotime($date));
+
+        $mesyear = $numMes.' '. $year;
+
+        return $mesyear;
+    }
     public function subir2(Request $request)
     {
       $archivo = $request->file('documento');
@@ -68,8 +79,9 @@ class ImportController extends Controller
           $bytes = ((($gb * 1024) * 1024) * 1024);
 
           $mesyear = $this->returnDate($fechaSalida);
+          $auxone = $this->returnDateTwo($fechaSalida);
+          $auxiliar = $hotel.' '.$auxone;
 
-          
           $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
 
           // echo $bytes;
@@ -82,11 +94,11 @@ class ImportController extends Controller
           // echo "<br>";
 
           $resultGB = DB::table('GBXDia')->insert([
-            ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid]
+            ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
           ]);
 
           $resultUS = DB::table('UsuariosXDia')->insert([
-            ['NumClientes' => $nclient, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid]
+            ['NumClientes' => $nclient, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
           ]);
 
         });
@@ -136,13 +148,13 @@ class ImportController extends Controller
           $ssid= $fila->rogue_ssid;
           $fecha= $fila->rogue_mes;
 
-          $result_rg = DB::table('RogueDevices')->insertGetId([
-            'MACRogue' => $mac,
-            'ChannelRogue' => $canal,
-            'TypeRogue' => "1",
-            'SSIDRogue' => $ssid,
-            'Mes' => $fecha,
-            'hotels_id' => $hotel]);
+          // $result_rg = DB::table('RogueDevices')->insertGetId([
+          //   'MACRogue' => $mac,
+          //   'ChannelRogue' => $canal,
+          //   'TypeRogue' => "1",
+          //   'SSIDRogue' => $ssid,
+          //   'Mes' => $fecha,
+          //   'hotels_id' => $hotel]);
 
           // echo "Informacion de rogue<br>";
           // $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
