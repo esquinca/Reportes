@@ -66,7 +66,7 @@ class roguedevices extends Command
       $fmeses= $meses[date('n')-1].' '.date('Y');
       $zoneDirect_sql= DB::table('zonedirect_ip')->select('ip','id_hotel')->where('status' , '=', 1)->get(); //Retorna un array stdClass Object
       $contar_ip= count($zoneDirect_sql); //Cuento el tamaño del array anterior
-
+      $sumasreg=1;
       //Creo un ciclo for para recorrer las posiciones del array
       for ($i=0; $i < $contar_ip ; $i++) {
         $host=$zoneDirect_sql[$i]->ip;
@@ -105,7 +105,9 @@ class roguedevices extends Command
               'TypeRogue' => ${"snmp_ac".$i}[1],
               'SSIDRogue' => ${"snmp_d".$i}[key(${"snmp_d".$i})],
               'Mes' => $fmeses,
-              'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
+              'hotels_id' => $zoneDirect_sql[$i]->id_hotel,
+              'valor'=> $sumasreg
+            ]);
 
 
               next(${"snmp_a".$i}); //Este es para que avance la key en el array
