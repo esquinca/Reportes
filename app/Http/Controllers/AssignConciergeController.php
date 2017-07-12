@@ -128,19 +128,28 @@ class AssignConciergeController extends Controller
 
     public function rutaestadoserver()
     {
+      $host = '200.78.168.233'; //ORP
+      $host1 = '177.237.78.210:1161'; // OceanDream
+      $host2 = '177.237.60.22:1611'; //Kore
+      
+      $host3 = '177.237.78.98:1161'; //Ibero-Paraiso ZD2
+      $host4 = '177.237.78.100:1161'; //Ibero-Paraiso ZD3- MAL
+      $host5 = '189.206.2.209:1161'; //Ibero-Cancun
+
       $boolean = 0;
       //187.157.151.52
       //201.161.132.22
       //187.252.50.79
-      $session = new SNMP(SNMP::VERSION_2C, '187.157.151.52', "public");
+
+      $session = new SNMP(SNMP::VERSION_2C, $host4, "public");
       try {
-        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.4.1.1.2");
+        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
+        var_dump($res);
       } catch (\Exception $e) {
         $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
         var_dump($boolean);
       }
       echo $boolean;
-
       $session->close();
     }
 
