@@ -678,17 +678,35 @@ function info_cuadros(){
     data: { number : hotel, mes: calendario,  _token : _token },
     success: function (data){
       $.each(JSON.parse(data),function(index, objdata){
-        //console.log(objdata);
-        $("#total_aps").attr("data-to", objdata.AP);
-        $("#gb_max_dia").attr("data-to", objdata.MaxGBV0);
-        $("#gb_min_dia").attr("data-to", objdata.MinGBV0);
-        $("#prom_usuario").attr("data-to", objdata.AVGUSER);
-        $("#total_usuario").attr("data-to", objdata.MaxClientes);
-        $("#rogue_mes").attr("data-to", objdata.RogueDevice);
-        $('.timer').each(count); // Ejecutar el contador despues de recibir valores
+        // console.log(objdata);
+        // console.log(objdata.AP);
+        // console.log(objdata.AVGClientes);
+        // console.log(objdata.AVGGB);
+        // console.log(objdata.CantidadRogue);
+        // console.log(objdata.MINGB);
+        // console.log(objdata.MaxClientes);
+        // console.log(objdata.MinClientes);
+        // console.log(objdata.AP);
 
-        $("#gbmaxid").html(objdata.MaxGBV1 + " Max por");
-        $("#gbminid").html(objdata.MinGBV1 + " Min por");
+        $("#total_aps").attr("data-to", objdata.AP);
+        $("#gb_max_dia").attr("data-to", objdata.MAXGB);
+        $("#gb_min_dia").attr("data-to", objdata.MINGB);
+        $("#prom_usuario").attr("data-to", objdata.AVGClientes);
+        $("#total_usuario").attr("data-to", objdata.MaxClientes);
+        $("#rogue_mes").attr("data-to", objdata.CantidadRogue);
+
+
+
+        // $("#total_aps").attr("data-to", objdata.AP);
+        // $("#gb_max_dia").attr("data-to", objdata.MaxGBV0);
+        // $("#gb_min_dia").attr("data-to", objdata.MinGBV0);
+        // $("#prom_usuario").attr("data-to", objdata.AVGUSER);
+        // $("#total_usuario").attr("data-to", objdata.MaxClientes);
+        // $("#rogue_mes").attr("data-to", objdata.RogueDevice);
+         $('.timer').each(count); // Ejecutar el contador despues de recibir valores
+        //
+        // $("#gbmaxid").html(objdata.MaxGBV1 + " Max por");
+        // $("#gbminid").html(objdata.MinGBV1 + " Min por");
 
       });
     },

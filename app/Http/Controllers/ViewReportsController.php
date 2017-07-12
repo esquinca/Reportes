@@ -189,14 +189,32 @@ class ViewReportsController extends Controller
     public function info_cuad(Request $request)
     {
       $numero_hotel= $request->number;
-      $date= $request->mes;
-      $fechan= $this->returnDate($date);
-      $resultados= DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MaxGBV0','MaxGBV1','MinGBv','MinGBV0','MinGBV1','MaxClientes','AVGUSER', 'RogueDevice')
-                  ->where('ID', '=' , $numero_hotel)
-                  ->where('Mes', '=' , $fechan)
-                  ->get();
-     //return $fechan;
-     return json_encode($resultados);
+      $type= $request->type;
+      $datenum= $request->mes;
+      $date = $this->returnDate($datenum);
+
+
+      $resultadosOne = DB::table('NewClientesDashboard')
+            ->join('NewGbDashboard', 'NewClientesDashboard.ID', '=', 'NewGbDashboard.hotels_id')
+            ->join('NewRogueAPDashboard', 'NewClientesDashboard.ID', '=', 'NewRogueAPDashboard.IDHOTEL')
+            ->select('NewGbDashboard.MAXGB','NewGbDashboard.MINGB', 'NewGbDashboard.AVGGB','NewGbDashboard.Total',
+            'NewClientesDashboard.MaxClientes','NewClientesDashboard.MinClientes', 'NewClientesDashboard.TotalClientes','NewClientesDashboard.AVGClientes',
+            'NewRogueAPDashboard.CantidadRogue','NewRogueAPDashboard.AP')
+            ->where('NewGbDashboard.hotels_id', '=' , $numero_hotel)
+            ->where('NewGbDashboard.Mes', '=' , $date)
+            ->where('NewClientesDashboard.ID', '=' , $numero_hotel)
+            ->where('NewClientesDashboard.Mes', '=' , $date)
+            ->where('NewRogueAPDashboard.IDHOTEL', '=' , $numero_hotel)
+            ->where('NewRogueAPDashboard.Mes', '=' , $date)
+            ->get();
+      //
+      // $resultadostwo = DB::table('UsuariosGBMaxMin')->select('AP','MaxGBv','MinGBv','TOTALUSER','MaxClientes','RogueDevice')
+      //                           ->where('ID', '=' , $numero_hotel)
+      //                           ->where('Mes', '=' , $date)
+      //                           ->get();
+      //
+      return json_encode($resultadosOne);
+
     }
 
     public function info_hotel(Request $request)
