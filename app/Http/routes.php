@@ -107,4 +107,8 @@ Route::group(['middleware' => ['auth']], function() {
 	//Route::post('/uploaddoc', 'ImportController@subir');
 	//Route::post('/uploaddoc', 'ImportController@create');
 		Route::post('/uploaddoc', 'ImportController@subir2');
+	//Cuestionario
+	Route::get('/survey_questions', 'QuizQuestionsController@index');
+	Route::get('/survey_results', 'QuizResultsController@index');
+
 });

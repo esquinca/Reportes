@@ -407,5 +407,9 @@ return [
     'nusuario' => 'No.Usuarios',
     'importar'=> 'Importar',
     'importarfile'=>'Subir documento',
+    //Encuesta
+    'quiz' => 'Encuesta',
+    'questions' => 'Preguntas',
+    'results' => 'Resultados',
 
 ];

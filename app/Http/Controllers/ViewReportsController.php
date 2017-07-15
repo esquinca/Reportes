@@ -121,6 +121,7 @@ class ViewReportsController extends Controller
       $resultados = DB::table('cant_client_usuario')->select('NumClientes','Dia','Fecha')
                     ->where('id', '=' , $numero_hotel)
                     ->where('Fecha', '=' , $date)
+                    ->orderBy('Dia', 'asc')
                     ->get();
       return json_encode($resultados);
     }

@@ -34,8 +34,12 @@
                 <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
                 <li><a href="{{ url('import') }}"><i class='fa fa-upload'></i> <span>{{{ trans('message.importar') }}}</span></a></li>
 
-                <li class="header">{{ trans('message.page') }}</li>
+                <li class="header">{{ trans('message.quiz') }}</li>
+                <li><a href="{{ url('survey_questions') }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
+                <li><a href="{{ url('survey_results') }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.results') }}</span></a></li>
 
+
+                <li class="header">{{ trans('message.page') }}</li>
                 <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
                 <li><a href="{{ url('config_one') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settings') }}</span></a></li>
                 <!--<li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>-->
