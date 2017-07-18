@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/assigncldelete', 'assignclientController@destroy');
 
 	Route::get('/putohehe', 'AssignConciergeController@rutaestadoserver');
+	Route::get('/acm1pt', 'AssignConciergeController@curlZen');
 
 	//Captura individual
 	Route::get('/individual', 'IndividualController@index');

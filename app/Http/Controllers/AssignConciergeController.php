@@ -153,6 +153,54 @@ class AssignConciergeController extends Controller
       $session->close();
     }
 
+    public function curlZen()
+    {
+      //define("ZDURL", "https://sitwifi.zendesk.com/api/v2/tickets.json");
+      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=type:user+email:jesquinca@sitwifi.com";
+      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31+type:ticket";
+      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
+      $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
+      
+      //$json = json_encode(array('ticket' => array('subject' => $arr['z_subject'], 'comment' => array( "value"=> $arr['z_description']), 'requester' => array('name' => $arr['z_name'], 'email' => $arr['z_requester']))));
+
+      // created>2014-08-01 created<2014-08-05
+
+      //$json2 = json_encode(array('' => '')); 
+
+      $ch = curl_init();
+      //echo "Inicializa la funcion .. ";
+      curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false );
+      curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_USERPWD, "jesquinca@sitwifi.com/token:f4qs3fDR9b9J635IcP6Ce5cGXxKx32ewexk3qmvz");
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+      curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+
+      //curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+      
+      //echo ".. Termina la funcion ..";
+      $output = curl_exec($ch);
+
+      $curlerrno = curl_errno($ch);
+      if ($curlerrno != 0) {
+          echo "Error en el curl";
+      }else{
+          
+      }
+      //echo '   Curl error number:  ' . curl_errno($ch) . '|| Curl error message: ' . curl_error($ch); 
+      curl_close($ch);
+      $decoded = json_decode($output);
+
+      return $output;
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
