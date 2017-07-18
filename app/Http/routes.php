@@ -110,5 +110,6 @@ Route::group(['middleware' => ['auth']], function() {
 	//Cuestionario
 	Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
+	Route::post('/survey_viewresult', 'QuizResultsController@view');
 
 });

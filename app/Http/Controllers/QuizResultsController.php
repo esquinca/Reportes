@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use DB;
+
+use Auth;
+
 class QuizResultsController extends Controller
 {
     /**
@@ -16,6 +20,37 @@ class QuizResultsController extends Controller
     public function index()
     {
        return view('quiz.quizresults');
+    }
+
+    public function view(Request $request)
+    {
+      $year= $request->searchyear;
+      $vertical= $request->searchvertical;
+
+      if ($year == '' && $vertical == '') {
+        $sql= DB::table('resultEnc')
+              ->get();
+      }
+
+      if ($year != '' && $vertical != '') {
+        $sql= DB::table('resultEnc')
+              ->where('years', '=', $year)
+              ->where('vertical', '=', $vertical)
+              ->get();
+      }
+      if ($year != '' && $vertical == '') {
+        //$v='si hay año pero no vertical';
+        $sql= DB::table('resultEnc')
+              ->where('years', '=', $year)
+              ->get();
+      }
+      if ($year == '' && $vertical != '') {
+        //$v='no hay año pero si vertical';
+        $sql= DB::table('resultEnc')
+              ->where('vertical', '=', $vertical)
+              ->get();
+      }
+      return json_encode($sql);
     }
 
     /**

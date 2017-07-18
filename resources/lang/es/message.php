@@ -411,5 +411,6 @@ return [
     'quiz' => 'Encuesta',
     'questions' => 'Preguntas',
     'results' => 'Resultados',
+    'quiztest' => 'Encuesta de servicio'
 
 ];
