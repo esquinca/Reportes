@@ -98,6 +98,12 @@
     .col-top{
       margin-top: 2em;
     }
+    .row-separation{
+      padding-top: 20px;
+    }
+    .interlineado-title{
+      line-height: 1.6;
+    }
   </style>
   <script type="text/javascript">
     $(function() {
@@ -108,41 +114,107 @@
       $('#example-1to10').barrating({
         theme: 'bars-1to10'
       });
-
       // $("#answer_one").hide();
       $("#answer_two").hide();
       $("#answer_three").hide();
       $("#answer_four").hide();
       $("#answer_five").hide();
+      $('#comment_a').parent().parent().hide();
+      $('#comment_b').parent().parent().hide();
+      $('#comment_c').parent().parent().hide();
 
     });
 
     $('#answer_one input[name="radio"]').on('click', function() {
       if($('input:radio[name=radio]:checked').val() == "100"){
-          // alert(100);
           $(".evaluation").hide();
           $("#answer_four").show()
           $("#answer_five").show();
 
+          $('#comment_a').parent().parent().hide(100);
+          $('#comment_a').val('');
+          $('#comment_b').parent().parent().hide(100);
+          $('#comment_b').val('');
+          $('#comment_c').parent().parent().show(100);
+          $('#comment_c').val('');
       }
       if($('input:radio[name=radio]:checked').val() == "0"){
-          // alert(0);
           $(".evaluation").hide();
           $("#answer_two").show();
-          $("#answer_four").show()
-          $("#answer_five").show();
           $('input:checkbox').prop('checked', false);
+          $("#answer_five").show();
 
+
+          $('#comment_a').parent().parent().hide(100);
+          $('#comment_a').val('');
+          $('#comment_b').parent().parent().hide(100);
+          $('#comment_b').val('');
+          $('#comment_c').parent().parent().hide(100);
+          $('#comment_c').val('');
       }
       if($('input:radio[name=radio]:checked').val() == "ninguna"){
-          // alert('ninguna');
           $(".evaluation").hide();
           $("#answer_three").show();
-          $("#answer_four").show()
-          $("#answer_five").show();
           $('input:checkbox').prop('checked', false);
+          $("#answer_five").show();
 
+
+          $('#comment_a').parent().parent().hide(100);
+          $('#comment_a').val('');
+          $('#comment_b').parent().parent().hide(100);
+          $('#comment_b').val('');
+          $('#comment_c').parent().parent().hide(100);
+          $('#comment_c').val('');
       }
+    });
+
+    $('input[type="checkbox"]').click(function() {
+        var id = $(this).prop('id');
+        var status = $(this).is(':checked');
+        //$(this).is(':checked') ? alert('checked ' + id) : alert('unchecked ' + id);
+
+        selected_check(id, status, radiob2, comment_a);
+        selected_check(id, status, radiob3, comment_b);
+        selected_check(id, status, radiob1, comment_c);
+
+        selected_check(id, status, radioc2, comment_a);
+        selected_check(id, status, radioc3, comment_b);
+        selected_check(id, status, radioc1, comment_c);
+    });
+
+
+     function selected_check(identificador, estado, idverificar, campoarea) {
+
+      if( identificador == idverificar.id && estado == true){
+          $('#answer_four').show(300);
+          $('#'+campoarea.id).parent().parent().show(300);
+          $('#'+campoarea.id).val('');
+          //alert('true mostrar');
+      }
+      if( identificador == idverificar.id && estado == false){
+          $('#'+campoarea.id).parent().parent().hide(100);
+          $('#'+campoarea.id).val('');
+          //alert('false ocultar');
+      }
+    }
+
+
+    $("#register_quiz").click(function(event) {
+
+		  var objData = $("#delta").serialize();
+      //alert(objData);
+      $.ajax({
+           url: "/survey_form",
+           type: "POST",
+           data: objData,
+           success: function (data) {
+             alert(data);
+
+           },
+           error: function (data) {
+             console.log('Error:', data);
+           }
+       });
     });
 
 
@@ -168,6 +240,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row center">
+                {!! Form::open(['id' => 'delta']) !!}
                 <div class="col-sm-12">
                   <h3>
                       Con base en el servicio que le brindamos durante el mes de
@@ -181,7 +254,6 @@
                       ¿Qué probabilidad existe de que usted recomiende nuestros servicios con sus familiares, colegas o amigos?
                   </h3>
                 </div>
-
                 <div class="col-sm-2"></div>
                 <div class="col-sm-8">
                   <div id="answer_one" class="row">
@@ -200,8 +272,6 @@
                   </div>
                 </div>
                 <div class="col-sm-2"></div>
-
-
                 <!-- Detractor -->
                 <div id="answer_two" class="col-sm-12 evaluation">
                   <h3>
@@ -210,23 +280,22 @@
 
                   <div class="row">
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radio2" id="radiob2" class="radio"/>
+                      <input type="checkbox" name="radiob2" id="radiob2" class="radio boxb" value='Comercial'/>
                       <label class="borderlistradio" for="radiob2">Comercial</label>
                     </div>
 
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radio2" id="radiob3" class="radio"/>
+                      <input type="checkbox" name="radiob3" id="radiob3" class="radio boxb" value='ProyectoseInstalaciones'/>
                       <label class="borderlistradio" for="radiob3">Proyectos e instalaciones</label>
                     </div>
 
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radio2" id="radiob1" class="radio"/>
+                      <input type="checkbox" name="radiob1" id="radiob1" class="radio boxb" value='SoporteTecnico'/>
                       <label class="borderlistradio" for="radiob1">Soporte Tecnico</label>
                     </div>
                   </div>
 
                 </div>
-
                 <!-- Pasivo -->
                 <div id="answer_three" class="col-sm-12 evaluation">
                   <h3>
@@ -234,28 +303,37 @@
                   </h3>
                   <div class="row">
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radioc2" id="radioc2" class="radio"/>
+                      <input type="checkbox" name="radioc2" id="radioc2" class="radio" value='Comercial'/>
                       <label class="borderlistradio" for="radioc2">Comercial</label>
                     </div>
 
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radioc3" id="radioc3" class="radio"/>
+                      <input type="checkbox" name="radioc3" id="radioc3" class="radio" value='ProyectoseInstalaciones'/>
                       <label class="borderlistradio" for="radioc3">Proyectos e instalaciones</label>
                     </div>
 
                     <div class="col-sm-4">
-                      <input type="checkbox" name="radioc1" id="radioc1" class="radio"/>
+                      <input type="checkbox" name="radioc1" id="radioc1" class="radio" value='SoporteTecnico'/>
                       <label class="borderlistradio" for="radioc1">Soporte Tecnico</label>
                     </div>
                   </div>
                 </div>
-
                 <!-- Promotor -->
                 <div id="answer_four" class="col-sm-12 evaluation">
-                  <h3>
-                    Por favor ayúdanos con un comentario sobre tu experiencia con el servicio.
-                  </h3>
-                  <textarea cols="50" rows="5"></textarea>
+                  <div class="row row-separation">
+                    <div class="col-sm-3"> <h4 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Comercial </h4></div>
+                    <div class="col-sm-9"><textarea id="comment_a" name="comment_a" cols="50" rows="5"></textarea></div>
+                  </div>
+
+                  <div class="row row-separation">
+                    <div class="col-sm-3"> <h4 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Proyectos e instalaciones </h4></div>
+                    <div class="col-sm-9"><textarea id="comment_b" name="comment_b" cols="50" rows="5"></textarea></div>
+                  </div>
+
+                  <div class="row row-separation">
+                    <div class="col-sm-3"> <h4 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Soporte Tecnico </h4></div>
+                    <div class="col-sm-9"><textarea id="comment_c" name="comment_c" cols="50" rows="5"></textarea></div>
+                  </div>
 
                 </div>
                 <!-- Calificacion -->
@@ -280,12 +358,11 @@
                     <option value="10">10</option>
                   </select>
                 </div>
-
+                {!! Form::close() !!}
                 <div class="col-sm-12 col-top">
                   <button id="register_quiz" type="button" class="btn bg-navy"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Evaluar</button>
                   <button id="reload_quiz" type="button" class="btn bg-orange"><span class="fa fa-refresh" style="margin-right: 4px;"></span>Reiniciar evaluación</button>
                 </div>
-
               </div>
             </div>
             <!-- /.box-body -->

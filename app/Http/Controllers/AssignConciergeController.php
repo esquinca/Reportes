@@ -131,17 +131,24 @@ class AssignConciergeController extends Controller
       $host = '200.78.168.233'; //ORP
       $host1 = '177.237.78.210:1161'; // OceanDream
       $host2 = '177.237.60.22:1611'; //Kore
-      
+
       $host3 = '177.237.78.98:1161'; //Ibero-Paraiso ZD2
       $host4 = '177.237.78.100:1161'; //Ibero-Paraiso ZD3- MAL
       $host5 = '189.206.2.209:1161'; //Ibero-Cancun
+      $host6 = '200.56.193.10:1161'; //Ibero playamita zd1 no hay info
+      $host7 = '200.56.193.10:1162'; //Ibero playamita pendiente
+
+      $host8 = '187.157.233.30:1161'; //Ibero cozumel
+
+      $host9 = '177.237.79.186:1161'; //Ibero playacar si responde
+
 
       $boolean = 0;
       //187.157.151.52
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host4, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host8, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
         var_dump($res);
@@ -160,12 +167,12 @@ class AssignConciergeController extends Controller
       //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31+type:ticket";
       //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
       $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
-      
+
       //$json = json_encode(array('ticket' => array('subject' => $arr['z_subject'], 'comment' => array( "value"=> $arr['z_description']), 'requester' => array('name' => $arr['z_name'], 'email' => $arr['z_requester']))));
 
       // created>2014-08-01 created<2014-08-05
 
-      //$json2 = json_encode(array('' => '')); 
+      //$json2 = json_encode(array('' => ''));
 
       $ch = curl_init();
       //echo "Inicializa la funcion .. ";
@@ -183,7 +190,7 @@ class AssignConciergeController extends Controller
 
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
       curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-      
+
       //echo ".. Termina la funcion ..";
       $output = curl_exec($ch);
 
@@ -191,9 +198,9 @@ class AssignConciergeController extends Controller
       if ($curlerrno != 0) {
           echo "Error en el curl";
       }else{
-          
+
       }
-      //echo '   Curl error number:  ' . curl_errno($ch) . '|| Curl error message: ' . curl_error($ch); 
+      //echo '   Curl error number:  ' . curl_errno($ch) . '|| Curl error message: ' . curl_error($ch);
       curl_close($ch);
       $decoded = json_decode($output);
 

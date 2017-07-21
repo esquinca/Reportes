@@ -69,7 +69,7 @@
     $("#boton-aplica-filtro-visitantes").click(function(event) {
 		  //var urlDest = baseUrl + "/result_filter";
 		  var objData = $("#filasasw").find("select,textarea, input").serialize();
-      var objData = $('#filasasw').find('select, textarea, input').serialize();
+      //var objData = $('#filasasw').find('select, textarea, input').serialize();
       var _token = $('input[name="_token"]').val();
       //alert(objData);
       $.ajax({
