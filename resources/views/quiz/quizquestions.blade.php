@@ -198,7 +198,6 @@
       }
     }
 
-
     $("#register_quiz").click(function(event) {
 
 		  var objData = $("#delta").serialize();
@@ -358,11 +357,11 @@
                     <option value="10">10</option>
                   </select>
                 </div>
-                {!! Form::close() !!}
                 <div class="col-sm-12 col-top">
                   <button id="register_quiz" type="button" class="btn bg-navy"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Evaluar</button>
                   <button id="reload_quiz" type="button" class="btn bg-orange"><span class="fa fa-refresh" style="margin-right: 4px;"></span>Reiniciar evaluación</button>
                 </div>
+                {!! Form::close() !!}
               </div>
             </div>
             <!-- /.box-body -->
