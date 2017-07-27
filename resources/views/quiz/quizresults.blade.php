@@ -27,6 +27,7 @@
       $("#selectfiltro").hide();
       $("#filter_year").hide();
       $("#filter_vertical").hide();
+      $("#filter_operation").hide();
     });
 
     $('#boton_muestra_selectfiltro').on('click', function() {
@@ -165,25 +166,24 @@
       vartable.fnClearTable();
       $.each(JSON.parse(datajson), function(index, status){
         vartable.fnAddData([
-          status.id,
           status.vertical,
-          status.sitio,
-          status.en,
-          status.febr,
-          status.mzo,
-          status.abr,
-          status.my,
-          status.jun,
-          status.jul,
-          status.agto,
-          status.sept,
-          status.oct,
-          status.nov,
-          status.dic,
-          status.ind,
-          status.prom,
-          status.itc,
-          status.comentario
+          status.hotel,
+          status.January,
+          status.February,
+          status.March,
+          status.April,
+          status.May,
+          status.June,
+          status.July,
+          status.August,
+          status.September,
+          status.October,
+          status.November,
+          status.December,
+          //'<span class="fa '+status.indicador+'"></span>'
+          status.Promedio,
+          status.indicador,
+          status.IT
           ]);
         });
 
@@ -213,11 +213,18 @@
     }
     table.dataTable tbody td {
       word-wrap:break-word !important;
-      font-size: 10px
+      font-size: 24px
     }
     .custombtntable{
       margin-right: 3px
     }
+    .fa-info {
+      color:pink;
+    }
+    .fa-thumbs-up { color: #449D44; }
+    .fa-hand-o-right { color: #EC971F; }
+    .fa-thumbs-down { color: #D43F3A;}
+
     /*.section-hidden {
       visibility: hidden;
     }*/
@@ -268,6 +275,19 @@
             </div>
           </div>
 
+          <div id="filter_operation" name="filter_operation" class="row row-separation control-filter">
+            <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
+  						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Operación</strong>
+  					</div>
+            <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
+              <select id="searchoperation" name="searchoperation" class="form-control" style="width: 100%;">
+                <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
+                <option value="CUN">Wifi Admin</option>
+                <option value="CDMX">Wifimedia</option>
+              </select>
+            </div>
+          </div>
+
         </div>
 
         <div class="form-inline row-separation">
@@ -284,6 +304,7 @@
             <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
             <option value="filter_year">Año</option>
             <option value="filter_vertical">Vertical</option>
+            <option value="filter_operation">Operación</option>
           </select>
 
         </div>
@@ -297,7 +318,7 @@
             <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>
             <thead >
               <tr class="bg-primary" style="background: #00A5BA;">
-                <th> <small>No.</small> </th>
+                <!-- <th> <small>No.</small> </th> -->
                 <th> <small>Vertical</small> </th>
                 <th> <small>Sitio</small> </th>
                 <th> <small>En.</small> </th>
@@ -312,10 +333,11 @@
                 <th> <small>Oct.</small> </th>
                 <th> <small>Nov.</small> </th>
                 <th> <small>Dic.</small> </th>
-                <th> <small>Ind.</small> </th>
                 <th> <small>Prom.</small> </th>
+                <th> <small>Ind.</small> </th>
                 <th> <small>Ingeniero</small> </th>
-                <th  > <small >Comentario</small> </th>
+                <!--
+                <th> <small >Comentario</small> </th> -->
               </tr>
             </thead>
             <tbody style="background: #FFFFFF;">
