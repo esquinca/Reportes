@@ -53,6 +53,8 @@ class QuizResultsController extends Controller
         $data = array();
         $data_one = array();
         $data_two = array();
+        $data_three = array();
+        $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
 
           # code................................................................
@@ -63,11 +65,6 @@ class QuizResultsController extends Controller
           $array_caracter = explode("&|", $cal_pos); // ------>$array
           $numero = count($array_caracter);
 
-          $month_0= false;  $month_1= false;  $month_2= false;  $month_3= false;
-          $month_4= false;  $month_5= false;  $month_6= false;  $month_7= false;
-          $month_8= false;  $month_9= false;  $month_10= false; $month_11= false;
-
-
           for ($z=0; $z <= 11; $z++) {
 
             if ($z <= ($numero-1) ) {
@@ -75,55 +72,20 @@ class QuizResultsController extends Controller
               $arraydos = explode("-", $valor);
               $extraer_mes = $arraydos[0];
 
-              if ($extraer_mes == 'January') { array_push($data_one, array( "January" => $arraydos[1] )); }
-              else { array_push($data_one, array( "January" => ' ' )); }
-
-              if ($extraer_mes == 'February') { array_push($data_one, array( "February" => $arraydos[1] )); }
-              else { array_push($data_one, array( "February" => ' ' )); }
-
-              if ($extraer_mes == 'March') { array_push($data_one, array( "March" => $arraydos[1] )); }
-              else { array_push($data_one, array( "March" => ' ' )); }
-
-              if ($extraer_mes == 'April') { array_push($data_one, array( "April" => $arraydos[1] )); }
-              else { array_push($data_one, array( "April" => ' ' )); }
-
-              if ($extraer_mes == 'May') { array_push($data_one, array( "May" => $arraydos[1] )); }
-              else { array_push($data_one, array( "May" => ' ' )); }
-
-              if ($extraer_mes == 'June') { array_push($data_one, array( "June" => $arraydos[1] )); }
-              else { array_push($data_one, array( "June" => ' ' )); }
-
-              if ($extraer_mes == 'July') { array_push($data_one, array( "July" => $arraydos[1] )); }
-              else { array_push($data_one, array( "July" => ' ' )); }
-
-              if ($extraer_mes == 'August') { array_push($data_one, array( "August" => $arraydos[1] )); }
-              else { array_push($data_one, array( "August" => ' ' )); }
-
-              if ($extraer_mes == 'September') { array_push($data_one, array( "September" => $arraydos[1] )); }
-              else { array_push($data_one, array( "September" => ' ' )); }
-
-              if ($extraer_mes == 'October') { array_push($data_one, array( "October" => $arraydos[1] )); }
-              else { array_push($data_one, array( "October" => ' ' )); }
-
-              if ($extraer_mes == 'November') { array_push($data_one, array( "November" => $arraydos[1] )); }
-              else { array_push($data_one, array( "November" => ' ' )); }
-
-              if ($extraer_mes == 'December') { array_push($data_one, array( "December" => $arraydos[1] )); }
-              else { array_push($data_one, array( "December" => ' ' )); }
-              // switch ($extraer_mes) {
-              //   case 'January':  $month_0= true;  array_push($data_one, array( "January" => $arraydos[1] )); break;
-              //   case 'February': $month_1= true;  array_push($data_one, array( "February" => $arraydos[1] )); break;
-              //   case 'March':    $month_2= true;  array_push($data_one, array( "March" => $arraydos[1] )); break;
-              //   case 'April':    $month_3= true;  array_push($data_one, array( "April" => $arraydos[1] )); break;
-              //   case 'May':      $month_4= true;  array_push($data_one, array( "May" => $arraydos[1] )); break;
-              //   case 'June':     $month_5= true;  array_push($data_one, array( "June" => $arraydos[1] )); break;
-              //   case 'July':     $month_6= true;  array_push($data_one, array( "July" => $arraydos[1] )); break;
-              //   case 'August':   $month_7= true;  array_push($data_one, array( "August" => $arraydos[1] )); break;
-              //   case 'September':$month_8= true;  array_push($data_one, array( "September" => $arraydos[1] )); break;
-              //   case 'October':  $month_9= true;  array_push($data_one, array( "October" => $arraydos[1] )); break;
-              //   case 'November': $month_10= true; array_push($data_one, array( "November" => $arraydos[1] )); break;
-              //   case 'December': $month_11= true; array_push($data_one, array( "December" => $arraydos[1] )); break;
-              // }
+              switch ($extraer_mes) {
+                case 'January':  $month_0= true;  array_push($data_one, array( "January" => $arraydos[1] )); break;
+                case 'February': $month_1= true;  array_push($data_one, array( "February" => $arraydos[1] )); break;
+                case 'March':    $month_2= true;  array_push($data_one, array( "March" => $arraydos[1] )); break;
+                case 'April':    $month_3= true;  array_push($data_one, array( "April" => $arraydos[1] )); break;
+                case 'May':      $month_4= true;  array_push($data_one, array( "May" => $arraydos[1] )); break;
+                case 'June':     $month_5= true;  array_push($data_one, array( "June" => $arraydos[1] )); break;
+                case 'July':     $month_6= true;  array_push($data_one, array( "July" => $arraydos[1] )); break;
+                case 'August':   $month_7= true;  array_push($data_one, array( "August" => $arraydos[1] )); break;
+                case 'September':$month_8= true;  array_push($data_one, array( "September" => $arraydos[1] )); break;
+                case 'October':  $month_9= true;  array_push($data_one, array( "October" => $arraydos[1] )); break;
+                case 'November': $month_10= true; array_push($data_one, array( "November" => $arraydos[1] )); break;
+                case 'December': $month_11= true; array_push($data_one, array( "December" => $arraydos[1] )); break;
+              }
 
               if($z == ($numero-2)){
                 $mes_ant=$arraydos[1];
@@ -148,7 +110,43 @@ class QuizResultsController extends Controller
 
             if( $z == 11){
               $data_one = array_collapse($data_one);
+
+              $mes_n0=array_key_exists('January', $data_one);
+              $mes_n1=array_key_exists('February', $data_one);
+              $mes_n2=array_key_exists('March', $data_one);
+              $mes_n3=array_key_exists('April', $data_one);
+              $mes_n4=array_key_exists('May', $data_one);
+              $mes_n5=array_key_exists('June', $data_one);
+              $mes_n6=array_key_exists('July', $data_one);
+              $mes_n7=array_key_exists('August', $data_one);
+              $mes_n8=array_key_exists('September', $data_one);
+              $mes_n9=array_key_exists('October', $data_one);
+              $mes_n10=array_key_exists('November', $data_one);
+              $mes_n11=array_key_exists('December', $data_one);
+
+              if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
+              if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
+              if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
+              if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
+              if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
+              if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
+              if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
+              if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
+              if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
+              if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
+              if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
+              if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+
+              $data_three = array_collapse($data_three);
+
+
               array_push($data_two,$data_one);
+              array_push($data_two,$data_three);
+
+              $data_two = array_collapse($data_two);
+
+              array_push($data_four,$data_two);
+
             }
 
           }
@@ -281,7 +279,7 @@ class QuizResultsController extends Controller
               ->get();
       }
       */
-      return json_encode($data_two);
+      return json_encode($data_four);
     }
 
     /**
