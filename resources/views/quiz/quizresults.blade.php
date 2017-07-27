@@ -180,6 +180,7 @@
           status.October,
           status.November,
           status.December,
+          status.years,
           //'<span class="fa '+status.indicador+'"></span>'
           status.Promedio,
           status.indicador,
@@ -333,6 +334,7 @@
                 <th> <small>Oct.</small> </th>
                 <th> <small>Nov.</small> </th>
                 <th> <small>Dic.</small> </th>
+                <th> <small>Año.</small> </th>
                 <th> <small>Prom.</small> </th>
                 <th> <small>Ind.</small> </th>
                 <th> <small>Ingeniero</small> </th>
