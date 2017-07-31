@@ -142,6 +142,12 @@ class AssignConciergeController extends Controller
 
       $host9 = '177.237.79.186:1161'; //Ibero playacar si responde
 
+      $host10= '187.217.115.165:1161';
+
+      $host11= "187.157.165.6:1161"; //Azul beach bien
+      $host12= "187.141.65.236:1161"; //sensatori
+      $host13= "187.157.183.71:1161"; //azul five
+
 
       $boolean = 0;
       //187.157.151.52

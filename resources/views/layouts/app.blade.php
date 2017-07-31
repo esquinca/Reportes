@@ -41,7 +41,7 @@ desired effect
       @if(Auth::check())
             @if (Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Programador' ||
             Auth::user()->Privilegio == 'Helpdesk' || Auth::user()->Privilegio == 'Cliente' ||
-            Auth::user()->Privilegio == 'IT')
+            Auth::user()->Privilegio == 'IT' || Auth::user()->Privilegio == 'Encuestado' || Auth::user()->Privilegio == 'Encuestador' )
 
                 @include('layouts.partials.contentheader')
                 @include('layouts.partials.alert')

@@ -158,6 +158,8 @@ return [
     'idnum' => 'Número',
     'operation'     => 'Operaciones',
     'viewuser' => 'Ver usuarios',
+    'viewusergen' => 'Ver usuarios en general',
+    'viewuserenc' => 'Ver usuarios encuestados',
     'selectopt' => 'Seleccione una opción',
     // mensajes de validaciones.
     'emotionOps'     => 'Oops!',

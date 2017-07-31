@@ -89,7 +89,10 @@ class UserController extends Controller
          'name',
          'email',
          'Privilegio'
-        )->orderBy('id', 'asc')->get();
+        )
+        ->where('Privilegio', '!=', 'Encuestador')
+        ->where('Privilegio', '!=', 'Encuestado')
+        ->orderBy('id', 'asc')->get();
        return json_encode($resultado);
 
         //

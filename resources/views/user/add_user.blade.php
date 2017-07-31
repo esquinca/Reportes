@@ -172,7 +172,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-users"></i> {{ trans('message.viewuser') }}
+            <i class="fa fa-users"></i> {{ trans('message.viewusergen') }}
           </h2>
         </div>
       </div>
@@ -203,6 +203,36 @@
       <!-- /.row -->
 
       <!-- this row will not appear when printing -->
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            <i class="fa fa-users"></i> {{ trans('message.viewuserenc') }}
+          </h2>
+        </div>
+      </div>
+      <!-- Table row -->
+      <div class="row invoice-info">
+        <div class="col-xs-12 table-responsive">
+          <table id="tableUser_quiz" name='tableUser_quiz' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
+            <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>
+            <thead >
+              <tr class="bg-primary" style="background: #001934;">
+                <th>{{ trans('message.nick') }}</th>
+                <th>{{ trans('message.email') }}</th>
+                <th>{{ trans('message.privilegio') }}</th>
+                <th style="width:100px; ">{{ trans('message.operation') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
 
     </section>
   @endsection
