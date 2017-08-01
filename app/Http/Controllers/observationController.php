@@ -24,28 +24,32 @@ class observationController extends Controller
       $priv = Auth::user()->Privilegio;
 
       if($priv == 'Cliente'){
-          $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-          if ($exitecliente != 0) {
-              /*SI existe*/
-              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-              return view('observation.observation', compact('selectDatahotel'));
-          }
+          // $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+          // if ($exitecliente != 0) {
+          //     /*SI existe*/
+          //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+          //     return view('observation.observation', compact('selectDatahotel'));
+          // }
+          return view('observation.observation');
       }
       if($priv == 'IT'){
-          $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-          if ($exiteClienteVer != 0) {
-              /*SI existe este en la lista de clientes*/
-              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-              return view('observation.observation', compact('selectDatahotel'));
-          }
-          else {
-              /*SI existe no existe en la lista de clientes*/
-              $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
-              return view('observation.observation', compact('selectDatahotel'));
-          }
+          // $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+          // if ($exiteClienteVer != 0) {
+          //     /*SI existe este en la lista de clientes*/
+          //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+          //     return view('observation.observation', compact('selectDatahotel'));
+          // }
+          // else {
+          //     /*SI existe no existe en la lista de clientes*/
+          //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
+          //     return view('observation.observation', compact('selectDatahotel'));
+          // }
+          $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
+          return view('observation.observation', compact('selectDatahotel'));
       }
       if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
-          $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+          //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+          $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
           return view('observation.observation', compact('selectDatahotel'));
       }
     }
@@ -67,7 +71,7 @@ class observationController extends Controller
       return $capt_r_sql;
 
     }
-    
+
     public function obsdata(Request $request)
     {
       $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');

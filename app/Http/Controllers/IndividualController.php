@@ -24,28 +24,31 @@ class IndividualController extends Controller
         $priv = Auth::user()->Privilegio;
 
         if($priv == 'Cliente'){
-            $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-            if ($exitecliente != 0) {
-                /*SI existe*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-                return view('captureind.individual', compact('selectDatahotel'));
-            }
+            // $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+            // if ($exitecliente != 0) {
+            //     /*SI existe*/
+            //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+            // }
+            return view('captureind.individual');
         }
         if($priv == 'IT'){
-            $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-            if ($exiteClienteVer != 0) {
-                /*SI existe este en la lista de clientes*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-                return view('captureind.individual', compact('selectDatahotel'));
-            }
-            else {
-                /*SI existe no existe en la lista de clientes*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
-                return view('captureind.individual', compact('selectDatahotel'));
-            }
+            // $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+            // if ($exiteClienteVer != 0) {
+            //     /*SI existe este en la lista de clientes*/
+            //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+            //     return view('captureind.individual', compact('selectDatahotel'));
+            // }
+            // else {
+            //     /*SI existe no existe en la lista de clientes*/
+            //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
+            //     return view('captureind.individual', compact('selectDatahotel'));
+            // }
+            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
+            return view('captureind.individual', compact('selectDatahotel'));
         }
         if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
-            $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
             return view('captureind.individual', compact('selectDatahotel'));
         }
     }
@@ -185,7 +188,7 @@ class IndividualController extends Controller
           return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
         }
         if($validacionRegistro == 0){
-        
+
             $mesyear = $this->returnDate($fecha);
 
             $nombre1 = $request->input('bf1_1');
@@ -205,12 +208,12 @@ class IndividualController extends Controller
 
             DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);         
+            ]);
 
             if (!empty($nombre2)  && !empty($clientew2) ) {
                 $result = DB::table('WLAN')->insert([
                     ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fecha, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-                ]); 
+                ]);
             }
             if (!empty($nombre3) && !empty($clientew3) ) {
                 $result = DB::table('WLAN')->insert([

@@ -16,14 +16,10 @@
   <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 
   <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <script src="/plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
   <script src="/js/reports/script_reports.js"></script>
   <script src="/plugins/echarts/echarts.js"></script>
   <script src="/js/reports/reports.js"></script>
-  <style>
-    .nowrap {
-      white-space: normal;
-    }
-  </style>
   @endpush
   @section('main-content')
 

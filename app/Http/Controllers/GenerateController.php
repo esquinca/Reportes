@@ -24,28 +24,26 @@ class GenerateController extends Controller
         $priv = Auth::user()->Privilegio;
 
         if($priv == 'Cliente'){
-            $exitecliente= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-            if ($exitecliente != 0) {
-                /*SI existe*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-                return view('generate.generate', compact('selectDatahotel'));
-            }
+            return view('generate.generate');
         }
         if($priv == 'IT'){
-            $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-            if ($exiteClienteVer != 0) {
-                /*SI existe este en la lista de clientes*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-                return view('generate.generate', compact('selectDatahotel'));
-            }
-            else {
-                /*SI existe no existe en la lista de clientes*/
-                $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
-                return view('generate.generate', compact('selectDatahotel'));
-            }
+            // $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
+            // if ($exiteClienteVer != 0) {
+            //     /*SI existe este en la lista de clientes*/
+            //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
+            //     return view('generate.generate', compact('selectDatahotel'));
+            // }
+            // else {
+            //     /*SI existe no existe en la lista de clientes*/
+            //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
+            //     return view('generate.generate', compact('selectDatahotel'));
+            // }
+            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
+            return view('viewreport.viewreports', compact('selectDatahotel'));
         }
         if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
-            $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
             return view('generate.generate', compact('selectDatahotel'));
         }
     }
@@ -123,20 +121,20 @@ class GenerateController extends Controller
             DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);            
+            ]);
         }elseif ($request->input('nombrew4') == '' && $request->input('clientew4') == '') {
             DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);           
+            ]);
         }elseif ($request->input('nombrew5') == '' && $request->input('clientew5') == '') {
             DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre2, 'ClientesWLAN' => $clientew2, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);            
+            ]);
         }else{
             DB::table('WLAN')->insert([
                 ['NombreWLAN' => $nombre1, 'ClientesWLAN' => $clientew1, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
@@ -144,7 +142,7 @@ class GenerateController extends Controller
                 ['NombreWLAN' => $nombre3, 'ClientesWLAN' => $clientew3, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre4, 'ClientesWLAN' => $clientew4, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel],
                 ['NombreWLAN' => $nombre5, 'ClientesWLAN' => $clientew5, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
-            ]);      
+            ]);
         }
 
         DB::commit();
