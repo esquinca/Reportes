@@ -19,7 +19,11 @@
   <script src="/js/reports/script_reports.js"></script>
   <script src="/plugins/echarts/echarts.js"></script>
   <script src="/js/reports/reports.js"></script>
-
+  <style>
+    .nowrap {
+      white-space: normal;
+    }
+  </style>
   @endpush
   @section('main-content')
 
@@ -132,7 +136,8 @@
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-rss fa-2x"></i>
-            <h3 id="total_aps" name="total_aps" class="timer" data-to="11900" data-speed="10500"></h3>
+            <!--<h3 id="total_aps" name="total_aps" class="timer" data-to="11900" data-speed="10500"></h3>-->
+            <h3 id="total_aps" name="total_aps"></h3>
             <strong>{{ trans('message.cuadro_unoa') }}</strong><br>
             <strong>{{ trans('message.cuadro_unob') }}</strong>
           </div>
@@ -140,7 +145,8 @@
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-upload fa-2x"></i>
-            <h3 id="gb_max_dia" name="gb_max_dia" class="timer" data-to="" data-speed="5000"></h3>
+            <!--<h3 id="gb_max_dia" name="gb_max_dia" class="timer" data-to="" data-speed="5000"></h3>-->
+            <h3 id="gb_max_dia" name="gb_max_dia"></h3>
             <strong id="gbmaxid">{{ trans('message.cuadro_dosa') }}</strong><br>
             <strong>{{ trans('message.cuadro_dosb') }}</strong>
           </div>
@@ -148,7 +154,8 @@
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-download fa-2x"></i>
-            <h3 id="gb_min_dia" name="gb_min_dia" class="timer" data-to="" data-speed="5000"></h3>
+            <!--<h3 id="gb_min_dia" name="gb_min_dia" class="timer" data-to="" data-speed="5000"></h3>-->
+            <h3 id="gb_min_dia" name="gb_min_dia"></h3>
             <strong id="gbminid">{{ trans('message.cuadro_tresa') }}</strong><br>
             <strong>{{ trans('message.cuadro_tresb') }}</strong>
           </div>
@@ -156,21 +163,24 @@
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-users fa-2x"></i>
-            <h3 id="prom_usuario" name="prom_usuario" class="timer" data-to="" data-speed="5000"></h3>
+            <!--<h3 id="prom_usuario" name="prom_usuario" class="timer" data-to="" data-speed="5000"></h3>-->
+            <h3 id="prom_usuario" name="prom_usuario" ></h3>
             <strong>{{ trans('message.cuadro_cuatro') }}</strong><br>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-calendar fa-2x"></i>
-            <h3 id="total_usuario" name="total_usuario" class="timer" data-to="" data-speed="5000"></h3>
+            <!--<h3 id="total_usuario" name="total_usuario" class="timer" data-to="" data-speed="5000"></h3>-->
+            <h3 id="total_usuario" name="total_usuario"></h3>
             <strong>{{ trans('message.cuadro_cinco') }}</strong>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="col-sm-12 bloque">
             <i class="fa fa-tablet fa-2x"></i>
-            <h3 id="rogue_mes" name="rogue_mes" class="timer" data-to="" data-speed="10500"></h3>
+            <!--<h3 id="rogue_mes" name="rogue_mes" class="timer" data-to="" data-speed="10500"></h3>-->
+            <h3 id="rogue_mes" name="rogue_mes"></h3>
             <strong>{{ trans('message.cuadro_seisa') }}</strong><br>
             <strong>{{ trans('message.cuadro_seisb') }}</strong>
           </div>
@@ -318,6 +328,12 @@
       <div class="row margin_div">
         <div class="col-md-12">
             <p id='coment_itc' name='coment_itc'></p>
+            <p id="coment_gen" name="coment_gen" style="display: inline-block;">
+             Actualmente el numero total de antenas es de <small id='total_aps2' name='total_aps2'></small>
+             con un total de usuarios mensuales de <small id='total_usuario2' name='total_usuario2'></small>,
+             de los cuales la cantidad de rogue device es de <small id='rogue_mes2' name='rogue_mes2'></small>.
+             La cantidad de Gigabyte maximo presentado en este mes es de <small id="gb_max_dia2" name="gb_max_dia2"></small>.
+             </p>
         </div>
       </div>
 

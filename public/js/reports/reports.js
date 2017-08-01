@@ -688,12 +688,24 @@ function info_cuadros(){
         // console.log(objdata.MinClientes);
         // console.log(objdata.AP);
 
-        $("#total_aps").attr("data-to", objdata.AP);
-        $("#gb_max_dia").attr("data-to", objdata.MAXGB);
-        $("#gb_min_dia").attr("data-to", objdata.MINGB);
-        $("#prom_usuario").attr("data-to", objdata.AVGClientes);
-        $("#total_usuario").attr("data-to", objdata.MaxClientes);
-        $("#rogue_mes").attr("data-to", objdata.CantidadRogue);
+        // $("#total_aps").attr("data-to", objdata.AP);
+        // $("#gb_max_dia").attr("data-to", objdata.MAXGB);
+        // $("#gb_min_dia").attr("data-to", objdata.MINGB);
+        // $("#prom_usuario").attr("data-to", objdata.AVGClientes);
+        // $("#total_usuario").attr("data-to", objdata.MaxClientes);
+        // $("#rogue_mes").attr("data-to", objdata.CantidadRogue);
+
+        $("#total_aps").text(objdata.AP);
+        $("#gb_max_dia").text(objdata.MAXGB);
+        $("#gb_min_dia").text(objdata.MINGB);
+        $("#prom_usuario").text(objdata.AVGClientes);
+        $("#total_usuario").text(objdata.MaxClientes);
+        $("#rogue_mes").text(objdata.CantidadRogue);
+
+        $("#total_aps2").text(objdata.AP);
+        $("#total_usuario2").text(objdata.MaxClientes);
+        $("#rogue_mes2").text(objdata.CantidadRogue);
+        $("#gb_max_dia2").text(objdata.MAXGB);
 
 
 
@@ -703,7 +715,7 @@ function info_cuadros(){
         // $("#prom_usuario").attr("data-to", objdata.AVGUSER);
         // $("#total_usuario").attr("data-to", objdata.MaxClientes);
         // $("#rogue_mes").attr("data-to", objdata.RogueDevice);
-         $('.timer').each(count); // Ejecutar el contador despues de recibir valores
+//         $('.timer').each(count); // Ejecutar el contador despues de recibir valores
         //
         // $("#gbmaxid").html(objdata.MaxGBV1 + " Max por");
         // $("#gbminid").html(objdata.MinGBV1 + " Min por");
@@ -842,6 +854,7 @@ function count(options) {
 }
 
 jQuery(function ($) {
+  /*
   $('#total_aps').data('countToOptions', {
     formatter: function (value, options) {
       return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
@@ -872,6 +885,7 @@ jQuery(function ($) {
       return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
     }
   });
+  */
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -888,15 +902,15 @@ function info_observation(){
     success: function (data){
       if (data != '') {
         //Existe observacion
+        $("#coment_itc").show();
         $("#coment_itc").text(data);
+        $("#coment_gen").hide();
+        coment_itc
+        coment_gen
       }
       if (data == '') {
-        var texto_cont_one= 'Actualmente el numero total de antenas es de ' + $("#total_aps").attr("data-to");
-        var texto_cont_two= ', con un total de usuarios mensuales de ' +  $("#total_usuario").attr("data-to");
-        var texto_cont_three= ', de los cuales la cantidad de rogue device es de ' + $("#rogue_mes").attr("data-to") + '. ';
-        var texto_cont_four=  'La cantidad de Gigabyte maximo presentado en este mes es de ' + $("#gb_max_dia").attr("data-to")  + '.';
-        var texto_aleat = texto_cont_one + texto_cont_two + texto_cont_three + texto_cont_four;
-        $("#coment_itc").text(texto_aleat);
+        $("#coment_gen").show();
+        $("#coment_itc").hide();
         //No existe observacion
       }
 
