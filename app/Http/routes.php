@@ -114,5 +114,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/survey_viewresult', 'QuizResultsController@view');
 
 	Route::post('/survey_form', 'QuizQuestionsController@store');
+	//configuracion encuestados
+	Route::get('/config_two', 'UserClientController@index');
+
+	//configuracion clientes
+	Route::get('/config_three', 'UserQuizController@index');
+	Route::get('/usershowenc', 'UserQuizController@show');
 
 });

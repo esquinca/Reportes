@@ -38,7 +38,9 @@
 
                 <li class="header">{{ trans('message.page') }}</li>
                 <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
-                <li><a href="{{ url('config_one') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settings') }}</span></a></li>
+                <li><a href="{{ url('config_one') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settingsa') }}</span></a></li>
+                <li><a href="{{ url('config_two') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settingsb') }}</span></a></li>
+                <li><a href="{{ url('config_three') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settingsc') }}</span></a></li>
                 <!--<li><a href="{{ url('about') }}"><i class='fa fa-users'></i> <span>{{ trans('message.aboutMe') }}</span></a></li>-->
 
             </ul>

@@ -184,6 +184,10 @@ return [
     'profile'     => 'Perfil',
     'aboutMe'     => 'Acerca de',
     'settings'    => 'Configuración',
+    'settingsa'    => 'Configuración Admin',
+    'settingsb'    => 'Configuración Clientes',
+    'settingsc'    => 'Configuración Encuestados',
+
     'visual'      => 'Archivos',
 
     //mensaje de login redes sociales
@@ -413,6 +417,14 @@ return [
     'quiz' => 'Encuesta',
     'questions' => 'Preguntas',
     'results' => 'Resultados',
-    'quiztest' => 'Encuesta de servicio'
-
+    'quiztest' => 'Encuesta de servicio',
+    'addUserclient' => 'Añadir Usuario Cliente',
+    'registermemberenc'  => 'Registar un nuevo encuestado',
+    'addUserencuest' => 'Añadir Usuario Encuestados',
+    'ope1' => 'Operación A',
+    'ope2' => 'Operación B',
+    'ope3' => 'Operación C',
+    'visualizarinfoenc' => 'visualizar informacion de encuestado',
+    'passgenerate' => 'Contraseña generada',
+    'urlgenerate' => 'Enlace temporal',
 ];
