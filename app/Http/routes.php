@@ -120,5 +120,6 @@ Route::group(['middleware' => ['auth']], function() {
 	//configuracion clientes
 	Route::get('/config_three', 'UserQuizController@index');
 	Route::get('/usershowenc', 'UserQuizController@show');
+	Route::post('/config_two_edit', 'UserController@editar');
 
 });
