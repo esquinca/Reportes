@@ -43,7 +43,7 @@
                                   font-size: 12px;
                                   text-align: left;">Su contraseña sera: <strong><?php echo $password; ?></strong></p>
 
-                        <a href=""  style="background-color: #3869D4;
+                        <a href="<?php echo 'http://'.$url ?>"  style="background-color: #3869D4;
                                   border-top: 10px solid #3869D4;
                                   border-right: 18px solid #3869D4;
                                   border-bottom: 10px solid #3869D4;
@@ -66,22 +66,18 @@
 
                       </td>
                   </tr>
-            
+
 
                   <tr style="padding: 35px;">
-                      <td style="padding: 35px;">
-                        <!-- <p style="margin-top: 0;
-                                  color: #74787E;
-                                  line-height: 1.5em;
-                                  text-align: left;
-                                  font-size: 12px;
-                                  text-align: left;">Su enlace de acceso es el siguiente: <strong><?php echo $url; ?></strong></p> -->
                         <p style="margin-top: 0;
                                   color: #74787E;
                                   line-height: 1.5em;
                                   text-align: left;
                                   font-size: 12px;
                                   text-align: left;"> Si tienes problemas con el botón de arriba, copia y pega la URL a continuación en tu navegador web. </p>
+                        <?php
+                        echo "<a href='http://$url'>$url</a>"
+                        ?>
                       </td>
                   </tr>
                 </table>
