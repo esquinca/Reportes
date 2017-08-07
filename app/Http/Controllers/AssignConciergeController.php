@@ -147,6 +147,7 @@ class AssignConciergeController extends Controller
       $host11= "187.157.165.6:1161"; //Azul beach bien
       $host12= "187.141.65.236:1161"; //sensatori
       $host13= "187.157.183.71:1161"; //azul five
+      $host14= "187.217.120.133:1161";
 
 
       $boolean = 0;
@@ -154,7 +155,7 @@ class AssignConciergeController extends Controller
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host8, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host14, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
         var_dump($res);

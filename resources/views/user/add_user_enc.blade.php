@@ -16,7 +16,7 @@
 
   @section('main-content')
 
-  <div class="modal modal-default fade" id="modal-editUser" data-backdrop="static">
+  <div class="modal modal-default fade" id="modal-editUserenc" data-backdrop="static">
     <div class="modal-dialog" >
       <div class="modal-content">
         <div class="modal-header">
@@ -29,7 +29,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   {!! Form::open(['id' => 'formrewrite', 'class' => 'form-horizontal' ]) !!}
-                      <input id='id_recibido' name='id_recibido' type="hidden" class="form-control" placeholder="">
+                      <input id='i_recibido' name='i_recibido' type="hidden" class="form-control" placeholder="">
                       <div class="form-group">
                         <label for="inpuEditnick" class="col-sm-4 control-label">{{ trans('message.nick')}}<span style="color: red;">*</span></label>
                         <div class="col-sm-8">
@@ -55,13 +55,13 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="selectEditPriv" class="col-sm-4 control-label">{{ trans('message.passgenerate') }}</label>
+                        <label for="passgeneratetemp" class="col-sm-4 control-label">{{ trans('message.passgenerate') }}</label>
                         <div class="col-sm-8">
                           <input type="text" class="form-control" id="passgeneratetemp" name="passgeneratetemp" readonly>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="selectEditPriv" class="col-sm-4 control-label">{{ trans('message.urlgenerate') }}</label>
+                        <label for="urlgeneratetemp" class="col-sm-4 control-label">{{ trans('message.urlgenerate') }}</label>
                         <div class="col-sm-8">
                           <input type="text" class="form-control" id="urlgeneratetemp" name="urlgeneratetemp"  readonly>
                         </div>
@@ -73,7 +73,46 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!--<button type="button" class="btn bg-navy" id='update_user_data'><i class="fa fa-pencil-square-o" style="margin-right: 4px;"></i>{{ trans('message.actualizar') }}</button>-->
+          <button type="button" class="btn bg-orange" id='update_edituser_data'><i class="fa fa-pencil-square-o " style="margin-right: 4px;"></i>Cambiar datos</button>
+
+          <button type="button" class="btn bg-navy" id='update_keyuser_data'><i class="fa fa-key" style="margin-right: 4px;"></i>Generar Nueva Clave</button>
+
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal modal-default fade" id="modal-Userenc" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-id-card-o" style="margin-right: 4px;"></i>Ingrese correo a donde se enviara copia</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  {!! Form::open(['id' => 'formrewritecc', 'class' => 'form-horizontal' ]) !!}
+                      <input id='r_recibido' name='r_recibido' type="hidden" class="form-control" placeholder="">
+                      <input id='r_rec_host' name='r_rec_host' type="hidden" class="form-control" placeholder="">
+                      <div class="form-group">
+                        <label for="inpuEditnick" class="col-sm-4 control-label">Correo a enviar copia<span style="color: red;">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="email" class="form-control" id="inputcc" name="inputcc" >
+                        </div>
+                      </div>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-navy" id='send_user_data'><i class="fa fa-send" style="margin-right: 4px;"></i>Enviar</button>
 
           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
 
@@ -155,7 +194,6 @@
                   <th>{{ trans('message.privilegio') }}</th>
                   <th>{{ trans('message.ope1') }}</th>
                   <th>{{ trans('message.ope2') }}</th>
-                  <th>{{ trans('message.ope3') }}</th>
                 </tr>
               </thead>
               <tbody>

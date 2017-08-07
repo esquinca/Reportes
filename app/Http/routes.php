@@ -94,7 +94,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/assignclupdate', 'assignclientController@update');
 	Route::post('/assigncldelete', 'assignclientController@destroy');
 
-	Route::get('/putohehe', 'AssignConciergeController@rutaestadoserver');
+	Route::get('/pthehe', 'AssignConciergeController@rutaestadoserver');
 	Route::get('/acm1pt', 'AssignConciergeController@curlZen');
 
 	//Captura individual
@@ -120,6 +120,9 @@ Route::group(['middleware' => ['auth']], function() {
 	//configuracion clientes
 	Route::get('/config_three', 'UserQuizController@index');
 	Route::get('/usershowenc', 'UserQuizController@show');
-	Route::post('/config_two_edit', 'UserController@editar');
+	Route::post('/config_two_edit', 'UserQuizController@editar');
+	Route::post('/config_two_rand', 'UserQuizController@nrand');
+	Route::post('/config_two_data_chang', 'UserQuizController@editdata');
+	Route::post('/config_two_ccmail', 'UserQuizController@copiamail');
 
 });
