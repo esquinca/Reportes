@@ -15,7 +15,7 @@
   @endpush
 
   @section('main-content')
-
+  <!--Modal editar, generar nueva key y enlace al encuestado-->
   <div class="modal modal-default fade" id="modal-editUserenc" data-backdrop="static">
     <div class="modal-dialog" >
       <div class="modal-content">
@@ -84,6 +84,7 @@
     </div>
   </div>
 
+  <!--Modal enviar mail al encuestado y copia al mail deseado-->
   <div class="modal modal-default fade" id="modal-Userenc" data-backdrop="static">
     <div class="modal-dialog" >
       <div class="modal-content">
@@ -121,6 +122,76 @@
     </div>
   </div>
 
+  <!--Modal eliminar relacion hotel encuestado-->
+  <div class="modal modal-default fade" id="modal-delhotenc" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-bookmark" style="margin-right: 4px;"></i>{{ trans('message.confirmacion') }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <input id='recibidoconf' name='recibidoconf' type="hidden" class="form-control" placeholder="">
+                  <h4 style="font-weight: bold;">{{ trans('message.preguntaconf') }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id='delete_enc_data'><i class="fa fa-trash" style="margin-right: 4px;"></i>{{ trans('message.eliminar') }}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal editar relacion hotel encuestado-->
+  <div class="modal modal-default fade" id="modal-edithotenc" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-id-card-o" style="margin-right: 4px;"></i>{{ trans('message.editreghotelenc') }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                    {!! Form::open(['id' => 'formeditrelhotenc', 'class' => 'form-horizontal' ]) !!}
+                        <input id='id_recibido' name='id_recibido' type="hidden" class="form-control" placeholder="">
+                        <div class="form-group">
+                          <label for="inputhotel" class="col-sm-4 control-label">{{ trans('message.hotel')}}</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputhotel" name="inputhotel" maxlength="60" title="" readonly/>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="selectEditClient" class="col-sm-4 control-label">{{ trans('message.cliente') }}<span style="color: red;">*</span></label>
+                          <div class="col-sm-8">
+                            <select id="selectEditClient" name="selectEditClient"  class="form-control" required>
+
+                            </select>
+                          </div>
+                        </div>
+                    {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-navy" id='update_encues_assign'><i class="fa fa-pencil-square-o" style="margin-right: 4px;"></i>{{ trans('message.actualizar') }}</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <section class="invoice">
@@ -177,6 +248,77 @@
         <!-- /.row -->
         <div class="col-xs-12">
           <h2 class="page-header">
+            <i class="fa fa-handshake-o"></i> Asignar encuestado a hotel
+          </h2>
+        </div>
+        <!-- /.row -->
+
+        <!-- info row -->
+        <div class="row invoice-info">
+
+          <div class="col-sm-12 invoice-col">
+            <div class="callout callout-warning">
+               <h4>Información importante!</h4>
+               <p>Si usted registro un encuestado, y luego no asigno un hotel a dicho encuestado, no podra contestar la encuesta aunque le envie los datos al correo electronico.</p>
+             </div>
+          </div>
+
+          <div class="col-sm-12 invoice-col">
+            {!! Form::open(['id' => 'formassinguserht', 'class' => 'form-horizontal' ]) !!}
+              <div class="form-group">
+                <label for="select_one" class="col-sm-2 control-label">{{ trans('message.selecthotel')}}<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                  <select class="form-control select2" id="select_one" name="select_one">
+                    <option value="" selected>{{ trans('message.optionOne')}}</option>
+                    @foreach ($selectonedata as $infoH)
+                    <option value="{{ $infoH->id }}"> {{ $infoH->Nombre_hotel }} </option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="select_two" class="col-sm-2 control-label">{{ trans('message.selectencuest')}}<span style="color: red;">*</span></label>
+                <div class="col-sm-10">
+                  <select class="form-control select2" id="select_two" name="select_two">
+                    <option value="" selected>{{ trans('message.optionOne')}}</option>
+                    @foreach ($selecttwodata as $infoE)
+                    <option value="{{ $infoE->id }}"> {{ $infoE->email }} </option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button id='btnregasig' name='btnregasig' type="button" class="btn btn-danger">{{ trans('message.registrar') }}</button>
+                </div>
+              </div>
+            {!! Form::close() !!}
+          </div>
+
+          <div class="col-sm-12 invoice-col">
+            <table id="tableUREnc" name='tableUREnc' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
+              <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>
+              <thead >
+                <tr class="bg-primary" style="background: #00A274;">
+                  <th>{{ trans('message.hotel') }}</th>
+                  <th>{{ trans('message.email') }}</th>
+                  <th>{{ trans('message.ope1') }}</th>
+                  <th>{{ trans('message.ope2') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- /.row -->
+        <div class="col-xs-12">
+          <h2 class="page-header">
             <i class="fa fa-users"></i> {{ trans('message.viewuserenc') }}
           </h2>
         </div>
@@ -188,7 +330,7 @@
             <table id="tableUserenc" name='tableUserenc' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
               <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>
               <thead >
-                <tr class="bg-primary" style="background: #001934;">
+                <tr class="bg-primary" style="background: #003078;">
                   <th>{{ trans('message.nick') }}</th>
                   <th>{{ trans('message.email') }}</th>
                   <th>{{ trans('message.privilegio') }}</th>
@@ -202,11 +344,6 @@
           </div>
         </div>
         <!-- /.col -->
-
-
-
-
-
 
       </div>
   </section>

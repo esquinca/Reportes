@@ -107,7 +107,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/import', 'ImportController@index');
 	//Route::post('/uploaddoc', 'ImportController@subir');
 	//Route::post('/uploaddoc', 'ImportController@create');
-		Route::post('/uploaddoc', 'ImportController@subir2');
+	Route::post('/uploaddoc', 'ImportController@subir2');
 	//Cuestionario
 	Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
@@ -124,5 +124,13 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/config_two_rand', 'UserQuizController@nrand');
 	Route::post('/config_two_data_chang', 'UserQuizController@editdata');
 	Route::post('/config_two_ccmail', 'UserQuizController@copiamail');
+
+	Route::post('/config_reg_verfmail', 'UserQuizController@emailverf');
+	Route::get('/usershowrhe', 'UserQuizController@store');
+	Route::post('/config_two_asignreg', 'UserQuizController@create');
+	Route::post('/config_two_delet', 'UserQuizController@delete');
+	Route::post('/config_rec_rel_hotenc', 'UserQuizController@showclient');
+	Route::post('/config_rec_data_obj', 'UserQuizController@edithotelenc');
+	Route::post('/config_hotelenc_chang', 'UserQuizController@changehotelenc');
 
 });
