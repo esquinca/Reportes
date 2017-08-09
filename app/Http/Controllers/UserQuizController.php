@@ -78,6 +78,36 @@ class UserQuizController extends Controller
     public function changeuserenckeys(Request $request)
     {
       # code...update
+      $preg_all_user = DB::table('user_reportes')
+                    ->select('id')
+                    ->where('Privilegio', '=', 'Encuestado')
+                    ->get();
+
+      $user_size= count($preg_all_user);
+
+      if ( $user_size == 0 ) {
+        # code...
+        return 'NA';
+      }
+      if ( $user_size != 0 ) {
+        # code...
+        for ($i=0; $i < $user_size; $i++) {
+
+          $identif=$preg_all_user[$i]->id;
+          $six_random_number = mt_rand(100000, 999999);
+          $encrypt_id= Crypt::encrypt($identif);
+          $encrypt_pass= bcrypt($six_random_number);
+          $sql = DB::table('user_reportes')->where('id', '=', $identif)
+          ->update([
+            'password' => $encrypt_pass,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'temp_pass'  => $six_random_number,
+            'shell' => $encrypt_id
+          ]);
+        }
+        return 'OK';
+      }
+
     }
 
     public function checkReg($value, $value2)

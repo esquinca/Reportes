@@ -250,6 +250,7 @@ $('#update_keyusergeneral_data').on('click', function(){
        url: './config_two_rand_all',
        data: { _token : _token},
        success: function (data) {
+
          if (data == 'OK') { /*Si se  cambio*/
            toastr.success('Keys generadas con exito!', 'Mensaje', {timeOut: 2000});
          }
