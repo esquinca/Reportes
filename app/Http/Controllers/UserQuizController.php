@@ -75,6 +75,11 @@ class UserQuizController extends Controller
       }
     }
 
+    public function changeuserenckeys(Request $request)
+    {
+      # code...update
+    }
+
     public function checkReg($value, $value2)
     {
         $sql = DB::table('relacionclientes')->where([['id_hotels', '=', $value],['id_clientes', '=', $value2]])->count();

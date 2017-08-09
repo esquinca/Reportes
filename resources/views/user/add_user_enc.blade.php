@@ -326,6 +326,11 @@
 
         <!-- /.row -->
         <div class="row invoice-info">
+          <div class="col-xs-12">
+            <div class="form-group">
+            <button type="button" class="btn bg-purple" id='update_keyusergeneral_data'><i class="fa fa-key" style="margin-right: 4px;"></i>Generar Nueva Clave a Todos los usuarios</button>
+            </div>
+          </div>
           <div class="col-xs-12 table-responsive">
             <table id="tableUserenc" name='tableUserenc' class="display nowrap table table-bordered table-hover" cellspacing="0" width="95%">
               <input type='hidden' id='_tokenb' name='_tokenb' value='{!! csrf_token() !!}'>

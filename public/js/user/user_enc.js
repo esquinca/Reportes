@@ -46,8 +46,8 @@ function table(){
             status.name,
             status.email,
             status.Privilegio,
-            '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.id+'" class="btn btn-success btn-block btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-eye" style="margin-right: 4px;"></span>Visualizar</a>',
-            '<a href="javascript:void(0);" onclick="enviardos(this)" value="'+status.id+'" class="btn btn-warning btn-block btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-share-square-o" style="margin-right: 4px;"></span>Enviar</a>',
+            '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.id+'" class="btn btn-default btn-block btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-eye" style="margin-right: 4px;"></span>Visualizar</a>',
+            '<a href="javascript:void(0);" onclick="enviardos(this)" value="'+status.id+'" class="btn bg-olive btn-block btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-share-square-o" style="margin-right: 4px;"></span>Enviar</a>',
           ]);
         });
   });
@@ -241,6 +241,26 @@ $('#send_user_data').on('click', function(){
     })
   }
 
+});
+
+$('#update_keyusergeneral_data').on('click', function(){
+  var _token = $('input[name="_token"]').val();
+   $.ajax({
+       type: "POST",
+       url: './config_two_rand_all',
+       data: { _token : _token},
+       success: function (data) {
+         if (data == 'OK') { /*Si se  cambio*/
+           toastr.success('Keys generadas con exito!', 'Mensaje', {timeOut: 2000});
+         }
+         if (data == 'NA') { /*No se cambio*/
+           toastr.error('Problema al generar la Key!', 'Mensaje', {timeOut: 2000});
+         }
+       },
+       error: function (data) {
+         console.log('Error:', data);
+       }
+  })
 });
 
 //Registrar un nuevo encuestado

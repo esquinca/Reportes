@@ -132,5 +132,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/config_rec_rel_hotenc', 'UserQuizController@showclient');
 	Route::post('/config_rec_data_obj', 'UserQuizController@edithotelenc');
 	Route::post('/config_hotelenc_chang', 'UserQuizController@changehotelenc');
+	Route::post('/config_two_rand_all', 'UserQuizController@changeuserenckeys');
+
 
 });
