@@ -114,10 +114,23 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/survey_viewresult', 'QuizResultsController@view');
 
 	Route::post('/survey_form', 'QuizQuestionsController@store');
-	//configuracion encuestados
-	Route::get('/config_two', 'UserClientController@index');
-
 	//configuracion clientes
+	Route::get('/config_two', 'UserClientController@index');
+	Route::post('/config_two_store', 'UserClientController@store');
+	Route::post('config_two_validation', 'UserClientController@validatePriv');
+	Route::get('/conchesumare', 'UserClientController@validatePriv');
+	Route::get('/usershowclien', 'UserClientController@show');
+	Route::post('/config_showmodal', 'UserClientController@edit');
+	Route::post('/config_cliente_data_chang','UserClientController@editdata');
+
+	Route::post('/config_two_client_asign', 'UserClientController@create');
+	Route::get('/usershowrhe_client','UserClientController@showTable');
+	Route::post('/config_rec_rel_hotenc_cliente', 'UserClientController@showclient');
+	Route::post('/config_rec_data_obj_cliente', 'UserClientController@edithotelclien');
+	Route::post('/config_hotelclient_chang', 'UserClientController@changehotelclien');
+	Route::post('/config_two_delet_cliente', 'UserClientController@delete');
+
+	//configuracion encuestados
 	Route::get('/config_three', 'UserQuizController@index');
 	Route::get('/usershowenc', 'UserQuizController@show');
 	Route::post('/config_two_edit', 'UserQuizController@editar');

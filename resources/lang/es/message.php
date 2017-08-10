@@ -19,7 +19,7 @@ return [
     'remember'                => 'Recuérdame',
     'buttonsign'              => 'Iniciar',
     'forgotpassword'          => 'Olvidé mi contraseña',
-    'registermember'          => 'Registar un nuevo miembro',
+    'registermember'          => 'Registrar un nuevo miembro',
     'terms'                   => 'Acepto los términos',
     'conditions'              => 'Términos y Condiciones',
     'register'                => 'Registro',
@@ -419,7 +419,7 @@ return [
     'results' => 'Resultados',
     'quiztest' => 'Encuesta de servicio',
     'addUserclient' => 'Añadir Usuario Cliente',
-    'registermemberenc'  => 'Registar un nuevo encuestado',
+    'registermemberenc'  => 'Registrar un nuevo encuestado',
     'addUserencuest' => 'Añadir Usuario Encuestados',
     'ope1' => 'Operación A',
     'ope2' => 'Operación B',
@@ -427,4 +427,7 @@ return [
     'visualizarinfoenc' => 'visualizar informacion de encuestado',
     'passgenerate' => 'Contraseña generada',
     'urlgenerate' => 'Enlace temporal',
+
+    //Cliente
+    'registerclient' => 'Añadir Cliente',
 ];
