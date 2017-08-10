@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//Route::post('/uploaddoc', 'ImportController@create');
 	Route::post('/uploaddoc', 'ImportController@subir2');
 	//Cuestionario
-	Route::get('/survey_questions', 'QuizQuestionsController@index');
+	//Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
 	Route::post('/survey_viewresult', 'QuizResultsController@view');
 
@@ -134,5 +134,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/config_hotelenc_chang', 'UserQuizController@changehotelenc');
 	Route::post('/config_two_rand_all', 'UserQuizController@changeuserenckeys');
 
+	//Pruebas encuesta con key
+	Route::get('/survey_questions/{id}', 'QuizQuestionsController@index');
+	// Route::get('/survey_questions/{id}', function ($id) {
+  //   return 'User '.$id;
+	// });
+	Route::get('/shalala/{id}', 'QuizQuestionsController@index2');
 
 });

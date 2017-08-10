@@ -8,7 +8,7 @@
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="img/avatars/{{ Auth::user()->avatar }}" class="img-circle" alt="User Image" />
+                    <img src="{{ asset('img/avatars/'.Auth::user()->avatar) }}" class="img-circle" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name }}</p>
@@ -32,7 +32,7 @@
                 <li><a href="{{ url('import') }}"><i class='fa fa-upload'></i> <span>{{{ trans('message.importar') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.quiz') }}</li>
-                <li><a href="{{ url('survey_questions') }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
+                <li><a href="{{ url('survey_questions/'.Auth::user()->shell) }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
                 <li><a href="{{ url('survey_results') }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.results') }}</span></a></li>
 
 
@@ -85,7 +85,7 @@
             <ul class="sidebar-menu">
               <li class="header">{{ trans('message.navigation') }}</li>
               <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
-              <li><a href="{{ url('survey_questions') }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
+              <li><a href="{{ url('survey_questions/'.Auth::user()->shell) }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.questions') }}</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
             @endif

@@ -9,6 +9,7 @@
   @endsection
 
   @push('scripts')
+  <!---
   <script src="/js/quiz/questions.js"></script>
   <link href="{{ asset('/plugins/jquery-bar-rating-master/dist/themes/bars-1to10.css') }}" rel="stylesheet" type="text/css" />
   <script src="{{ asset('/plugins/jquery-bar-rating-master/dist/jquery.barrating.min.js') }}" type="text/javascript"></script>
@@ -216,15 +217,67 @@
        });
     });
 
-
-
-
   </script>
+  -->
+    @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
+    @endif
+
+    @if (Auth::user()->Privilegio == 'Encuestado')
+      <script src="/js/quiz/question_enc.js"></script>
+    @endif
+
   @endpush
   @section('main-content')
+
+   @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
+      <p>Preview sin funcionalidad </p>
+   @endif
+
+   @if (Auth::user()->Privilegio == 'Encuestado')
+      <!--
+        <p>Preview 2 con funcionalidad </p>
+      -->
+      <section class="content">
+        <div class="row">
+          <div class="col-sm-12">
+            {!! Form::open(['id' => 'formadduserenc', 'class' => 'form-inline' ]) !!}
+              <div class="form-group">
+                <label for="selecthotelofclient" class="col-sm-6 control-label">Elija el hotel<span style="color: red;">*</span></label>
+                <div class="col-sm-6">
+                  <select id="selecthotelofclient" name="selecthotelofclient"  class="form-control" required>
+                    <option value="">Elija</option>
+                    @foreach ($selectdata as $infoH)
+                      <option value="{{ $infoH->id_hotels }}"> {{ $infoH->Nombre_hotel }} </option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="selecthotelofclient" class="col-sm-8 control-label">Calificar por igual todos los hoteles</label>
+                <div class="col-sm-4">
+                  <input type="checkbox" name="radioigualdad" id="radioigualdad" value='Comercial'/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <a id="generateGbInfo" class="btn btn-primary"><i class="fa fa-dot-circle-o "></i> Generar encuesta </a>
+                <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+              </div>
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </section>
+   @endif
+
+
   <section class="content">
     <div class="row">
       <div class="col-md-12">
+
+
+
+
 
 
         <div class="box box-solid">
@@ -239,6 +292,12 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row center">
+
+
+
+
+
+              <!--
                 {!! Form::open(['id' => 'delta']) !!}
                 <div class="col-sm-12">
                   <h3>
@@ -271,7 +330,10 @@
                   </div>
                 </div>
                 <div class="col-sm-2"></div>
+
+              -->
                 <!-- Detractor -->
+              <!--
                 <div id="answer_two" class="col-sm-12 evaluation">
                   <h3>
                     ¿Cualés son lo aspectos del servicio con los que está inconforme y debemos mejorar?
@@ -295,7 +357,9 @@
                   </div>
 
                 </div>
+              -->
                 <!-- Pasivo -->
+              <!--
                 <div id="answer_three" class="col-sm-12 evaluation">
                   <h3>
                     ¿Qué aspectos debemos mejorar para lograr la mayor probabilidad de que nos pueda recomendar?
@@ -317,7 +381,9 @@
                     </div>
                   </div>
                 </div>
+              -->
                 <!-- Promotor -->
+              <!--
                 <div id="answer_four" class="col-sm-12 evaluation">
                   <div class="row row-separation">
                     <div class="col-sm-3"> <h4 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Comercial </h4></div>
@@ -335,7 +401,9 @@
                   </div>
 
                 </div>
+              -->
                 <!-- Calificacion -->
+              <!--
                 <div id="answer_five" class="col-sm-12 evaluation">
                   <h3>Evalua el servicio del mes de <?php
                   $now = new \DateTime();
@@ -362,12 +430,12 @@
                   <button id="reload_quiz" type="button" class="btn bg-orange"><span class="fa fa-refresh" style="margin-right: 4px;"></span>Reiniciar evaluación</button>
                 </div>
                 {!! Form::close() !!}
+              -->
               </div>
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
 
       </div>
     </div>

@@ -8,6 +8,12 @@ use App\Http\Requests;
 
 use DateTime;
 
+use \Crypt;
+
+use DB;
+
+use Auth;
+
 class QuizQuestionsController extends Controller
 {
     /**
@@ -15,9 +21,46 @@ class QuizQuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index2($id)
+     {
+      $sin_encriptar =Crypt::encrypt($id);
+      return $sin_encriptar;
+     }
+    public function index($id)
     {
-      return view('quiz.quizquestions');
+      $id_encriptado = $id;
+      $sin_encriptar =Crypt::decrypt($id);
+
+      $shell_session = Auth::user()->shell;
+      $id_session = Auth::user()->id;
+
+      if ( $id_session != $sin_encriptar || $shell_session != $id_encriptado ) {
+        # code...
+        Auth::logout();
+        notificationMsg('danger', 'Esta url no pertenece a su usuario o ha expirado..!!');
+        return redirect('/');
+      }
+      else {
+        $sql = DB::table('user_reportes')
+              ->where([
+                ['id', '=', $sin_encriptar],
+                ['shell', '=', $id_encriptado],
+                ['Privilegio', '=', 'Encuestado']])
+              ->orWhere('Privilegio','=', 'Programador')
+              ->orWhere('Privilegio','=', 'Admin')
+              ->count();
+        if ($sql == 0) {
+          # code...
+          return $respuesta = 'FALSE';
+        }
+        else{
+          # code...
+          #return $respuesta = 'TRUE';
+          $selectdata = DB::table('relacionclientes')->select('id_hotels','Nombre_hotel')->where('id_clientes', '=', $sin_encriptar)->orderBy('id', 'asc')->get();
+          return view('quiz.quizquestions',compact('selectdata'));
+        }
+      }
+      //return view('quiz.quizquestions');
     }
 
     /**
@@ -52,7 +95,7 @@ class QuizQuestionsController extends Controller
         $req_radc1= $request->radioc1;
         $req_radc2= $request->radioc2;
         $req_radc3= $request->radioc3;
-        
+
         $req_rating = $request->rating;
 
         $fechain = date("Y-m-d");
