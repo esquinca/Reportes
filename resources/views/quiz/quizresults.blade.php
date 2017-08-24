@@ -78,6 +78,7 @@
            type: "POST",
            data: objData,
            success: function (data) {
+             //alert(data)
              tablaEnc(data, $("#example1") , 0);
            },
            error: function (data) {
@@ -246,7 +247,6 @@
 
         </div>
       </div>
-
       {!! Form::open(['action' => 'QuizResultsController@filter', 'url' => '/result_filter', 'method' => 'post', 'id' => 'filasasw']) !!}
         <div id="filtration_container" name="filtration_container">
           <div id="filter_year" name="filter_year" class="row row-separation control-filter">
@@ -256,8 +256,9 @@
             <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
               <select id="searchyear" name="searchyear" class="form-control">
                 <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
+                @foreach ($selectYear as $infoY)
+                  <option value="{{ $infoY->Year1 }}"> {{ $infoY->Year1 }} </option>
+                @endforeach
               </select>
             </div>
           </div>

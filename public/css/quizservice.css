@@ -1,0 +1,95 @@
+h3{
+  line-height: 1.5;
+}
+.center{
+  text-align: center;
+}
+
+.borderlistradio {
+  width: 200px;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4;
+}
+
+/* hide input */
+input.radio:empty {
+  display: none;
+  /*margin-left: -999px;*/
+}
+
+/* style label */
+input.radio:empty ~ label {
+  position: relative;
+  float: left;
+  /*line-height: 2.5em;
+  text-indent: 3.25em;*/
+  line-height: 2.5em;
+  text-indent: 2.6em;
+  margin-top: 2em;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.radio:empty ~ label:before {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 2.5em;
+  background: #D1D3D4;
+  border-radius: 3px 0 0 3px;
+}
+
+/* toggle hover */
+input.radio:hover:not(:checked) ~ label:before {
+  /*content:'\2714';*/
+  text-indent: .9em;
+  color: #C2C2C2;
+}
+
+input.radio:hover:not(:checked) ~ label {
+  color: #888;
+}
+
+/* toggle on */
+input.radio:checked ~ label:before {
+  /*content:'\2714';*/
+  text-indent: .9em;
+  color: #9CE2AE;
+  background-color: #ff851b;
+}
+
+input.radio:checked ~ label {
+  color: #000;
+  background-color:rgba(242, 223, 156, 0.63);
+
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.br-theme-bars-1to10 .br-widget a {
+      width: 90px;
+}
+.col-top{
+  margin-top: 2em;
+}
+.row-separation{
+  padding-top: 20px;
+}
+.interlineado-title{
+  line-height: 1.6;
+}
+
+#validation1 small { color: red; }
+#validation2 small { color: red; }
+#validation3 small { color: red; }
