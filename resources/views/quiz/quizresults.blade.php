@@ -30,6 +30,8 @@
       $("#filter_operation").hide();
       $("#filter_average").hide();
       $("#tfoot_average").hide();
+
+      $('#filasasw')[0].reset();
     });
 
     $('#boton_muestra_selectfiltro').on('click', function() {
@@ -194,7 +196,8 @@
           //'<span class="fa '+status.indicador+'"></span>'
           status.Promedio,
           status.indicador,
-          status.IT
+          status.IT,
+          status.UltimoComentario
           ]);
         });
 
@@ -312,19 +315,19 @@
                 iTotalMarket15 += aaData[i][15]*1;
               }
               /* Calculate the market share for browsers on this page */
-              var iPageMarket2 = 0;
-              var iPageMarket3 = 0;
-              var iPageMarket4 = 0;
-              var iPageMarket5 = 0;
-              var iPageMarket6 = 0;
-              var iPageMarket7 = 0;
-              var iPageMarket8 = 0;
-              var iPageMarket9 = 0;
-              var iPageMarket10 = 0;
-              var iPageMarket11 = 0;
-              var iPageMarket12 = 0;
-              var iPageMarket13 = 0;
-              var iPageMarket15 = 0;
+                var iPageMarket2 = 0;
+                var iPageMarket3 = 0;
+                var iPageMarket4 = 0;
+                var iPageMarket5 = 0;
+                var iPageMarket6 = 0;
+                var iPageMarket7 = 0;
+                var iPageMarket8 = 0;
+                var iPageMarket9 = 0;
+                var iPageMarket10 = 0;
+                var iPageMarket11 = 0;
+                var iPageMarket12 = 0;
+                var iPageMarket13 = 0;
+                var iPageMarket15 = 0;
 
               for ( var i=iStart ; i<iEnd ; i++ )
               {
@@ -402,7 +405,8 @@
           //'<span class="fa '+status.indicador+'"></span>'
           status.Promedio,
           status.indicador,
-          status.IT
+          status.IT,
+          status.UltimoComentario
           ]);
         });
 
@@ -510,7 +514,7 @@
 
           <div id="filter_average" name="filter_average" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
-  						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Operación</strong>
+  						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Promedio</strong>
   					</div>
             <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
               <select id="searchaverage" name="searchaverage" class="form-control" style="width: 100%;">
@@ -572,8 +576,7 @@
                 <th> <small>Prom.</small> </th>
                 <th> <small>Ind.</small> </th>
                 <th> <small>Ingeniero</small> </th>
-                <!--
-                <th> <small >Comentario</small> </th> -->
+                <th> <small >Comentario</small> </th>
               </tr>
             </thead>
             <tbody style="background: #FFFFFF;">
@@ -581,6 +584,7 @@
             </tbody>
             <tfoot id='tfoot_average'>
               <tr>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
