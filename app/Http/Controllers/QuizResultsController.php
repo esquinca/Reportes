@@ -1576,6 +1576,7 @@ class QuizResultsController extends Controller
         $data = DB::table('calificaciones')->where('hotels_id', '=', $id)->max('Fecha');
         $sql= DB::table('calificaciones')->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha')
               ->where('Fecha', '=', $data)
+              ->where('hotels_id', '=', $id)
               ->get();
         return json_encode($sql);
     }
