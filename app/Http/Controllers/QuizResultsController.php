@@ -60,6 +60,11 @@ class QuizResultsController extends Controller
                   ->select('UltimoComentario')
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                    ->select('id')
+                    ->pluck('id');
+
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -68,7 +73,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" =>  $sql_seven[$i] ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] , "hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" =>  $sql_seven[$i] ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -269,6 +274,13 @@ class QuizResultsController extends Controller
                   ->where('Operacion', '=', $operation)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Year1', '=', $year)
+                  ->where('Vertical', '=', $vertical)
+                  ->where('Operacion', '=', $operation)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -277,7 +289,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] , "hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -449,6 +461,11 @@ class QuizResultsController extends Controller
                   ->where('Year1', '=', $year)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Year1', '=', $year)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -457,7 +474,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] ,"hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -627,6 +644,11 @@ class QuizResultsController extends Controller
                   ->where('Vertical', '=', $vertical)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Vertical', '=', $vertical)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -635,7 +657,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i]  ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] ,"hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i]  ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -805,6 +827,11 @@ class QuizResultsController extends Controller
                   ->where('Operacion', '=', $operation)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Operacion', '=', $operation)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -813,7 +840,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i]) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] , "hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i]) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -991,6 +1018,12 @@ class QuizResultsController extends Controller
                   ->where('Vertical', '=', $vertical)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Year1', '=', $year)
+                  ->where('Vertical', '=', $vertical)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -999,7 +1032,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
            # code................................................................
-           array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
+           array_push($data_one, array("identificador" => $sql_eight[$i] ,"hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
            # code................................................................
            $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
            // $numero  = count($cal_pos);
@@ -1177,6 +1210,12 @@ class QuizResultsController extends Controller
                   ->where('Operacion', '=', $operation)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Year1', '=', $year)
+                  ->where('Operacion', '=', $operation)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -1185,7 +1224,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i], "UltimoComentario" => $sql_seven[$i] ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] ,"hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i], "UltimoComentario" => $sql_seven[$i] ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -1363,6 +1402,12 @@ class QuizResultsController extends Controller
                   ->where('Operacion', '=', $operation)
                   ->pluck('UltimoComentario');
 
+        $sql_eight= DB::table('DashboardCalificacion')
+                  ->select('id')
+                  ->where('Vertical', '=', $vertical)
+                  ->where('Operacion', '=', $operation)
+                  ->pluck('id');
+
         $longitud = count($sql_one);
         $data = array();
         $data_one = array();
@@ -1371,7 +1416,7 @@ class QuizResultsController extends Controller
         $data_four = array();
         for ($i=0; $i <= ($longitud-1); $i++) {
           # code................................................................
-          array_push($data_one, array("hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
+          array_push($data_one, array("identificador" => $sql_eight[$i] ,"hotel" => $sql_one[$i] , "vertical" => $sql_two[$i], "IT" => $sql_four[$i] , "years" => $sql_six[$i] , "Promedio" => $sql_five[$i] , "UltimoComentario" => $sql_seven[$i] ) );
           # code................................................................
           $cal_pos = $sql_three[$i];// January-9&|February-9&|March-9&|April-9&|May-9&|June-10&|July-10
           // $numero  = count($cal_pos);
@@ -1527,7 +1572,12 @@ class QuizResultsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id= $request->sector;
+        $data = DB::table('calificaciones')->where('hotels_id', '=', $id)->max('Fecha');
+        $sql= DB::table('calificaciones')->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha')
+              ->where('Fecha', '=', $data)
+              ->get();
+        return json_encode($sql);
     }
 
     /**

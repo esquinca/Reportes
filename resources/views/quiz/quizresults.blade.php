@@ -197,11 +197,38 @@
           status.Promedio,
           status.indicador,
           status.IT,
-          status.UltimoComentario
+          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.identificador+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
+          //status.UltimoComentario
           ]);
         });
 
     }
+
+    function enviar(e){
+      var valor= e.getAttribute('value');
+      var _token = $('input[name="_token"]').val();
+      //$('#modal-comments').modal('show');
+      $('#comment_a').val('');
+      $('#comment_b').val('');
+      $('#comment_c').val('');
+      $.ajax({
+           type: "POST",
+           url: './show_comments',
+           data: { sector : valor, _token : _token},
+           success: function (data) {
+            var datos = JSON.parse(data);
+            $('#comment_date').val(datos[0].Aux);
+            $('#comment_a').val(datos[0].Comentario1);
+            $('#comment_b').val(datos[0].Comentario2);
+            $('#comment_c').val(datos[0].Comentario3);
+             $('#modal-comments').modal('show');
+           },
+           error: function (data) {
+             console.log('Error:', data);
+           }
+       })
+    }
+
 
     function tablaEnctwo(datajson, table, order){
       //console.log(table);
@@ -237,12 +264,14 @@
           {
             extend: 'excelHtml5',
             text: '<i class="fa fa-file-excel-o"></i> Extraer a Excel',
+            footer: true,
             titleAttr: 'Excel',
             className: 'btn btn-info custombtntable',
           },
           {
             extend: 'csvHtml5',
             text: '<i class="fa fa-file-text-o"></i> Extraer a CSV',
+            footer: true,
             titleAttr: 'CSV',
             className: 'btn btn-danger',
           }
@@ -406,7 +435,7 @@
           status.Promedio,
           status.indicador,
           status.IT,
-          status.UltimoComentario
+          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.identificador+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
           ]);
         });
 
@@ -455,6 +484,69 @@
 
   @endpush
   @section('main-content')
+  <div class="modal modal-default fade" id="modal-comments" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-id-card-o" style="margin-right: 4px;"></i>Ultimos Comentarios</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="inputEditEmail" class="col-sm-12 control-label">Información</label>
+                    <div class="col-sm-12">
+                      <input id="comment_date" name="comment_date" type="text" class="form-control" readonly>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="inputEditEmail" class="col-sm-12 control-label">Comercial</label>
+                    <div class="col-sm-12">
+                      <textarea id="comment_a" name="comment_a"  class="form-control" style="min-width: 100%"readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="inputEditEmail" class="col-sm-12 control-label">Proyectos e instalaciones</label>
+                    <div class="col-sm-12">
+                      <textarea id="comment_b" name="comment_b" class="form-control" style="min-width: 100%" readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label for="inputEditEmail" class="col-sm-12 control-label">Soporte Tecnico</label>
+                    <div class="col-sm-12">
+                      <textarea id="comment_c" name="comment_c" class="form-control" style="min-width: 100%" readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <section class="content">
       <div class="row">
         <!-- <div class="col-md-10">

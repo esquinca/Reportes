@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
 	Route::post('/survey_viewresult', 'QuizResultsController@view');
+	Route::post('/show_comments', 'QuizResultsController@store');
 
 	Route::post('/survey_form', 'QuizQuestionsController@store');
 	//configuracion clientes
@@ -153,5 +154,6 @@ Route::group(['middleware' => ['auth']], function() {
   //   return 'User '.$id;
 	// });
 	Route::get('/shalala/{id}', 'QuizQuestionsController@index2');
+
 
 });
