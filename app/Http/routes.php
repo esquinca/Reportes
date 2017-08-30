@@ -155,5 +155,8 @@ Route::group(['middleware' => ['auth']], function() {
 	// });
 	Route::get('/shalala/{id}', 'QuizQuestionsController@index2');
 
+	//configuracion de commentarios
+	Route::get('/survey_comments', 'QuizCommentsController@index');
+	Route::post('/result_filter_comments', 'QuizCommentsController@store');
 
 });

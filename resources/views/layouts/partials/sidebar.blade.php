@@ -34,6 +34,7 @@
                 <li class="header">{{ trans('message.quiz') }}</li>
                 <li><a href="{{ url('survey_questions/'.Auth::user()->shell) }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
                 <li><a href="{{ url('survey_results') }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.results') }}</span></a></li>
+                <li><a href="{{ url('survey_comments') }}"><i class='fa fa-comments '></i> <span>{{ trans('message.resultscomment') }}</span></a></li>
 
 
                 <li class="header">{{ trans('message.page') }}</li>
@@ -96,6 +97,7 @@
               <li class="header">{{ trans('message.navigation') }}</li>
               <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
               <li><a href="{{ url('survey_results') }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.results') }}</span></a></li>
+              <li><a href="{{ url('survey_comments') }}"><i class='fa fa-comments '></i> <span>{{ trans('message.resultscomment') }}</span></a></li>
 
               <li class="header">{{ trans('message.page') }}</li>
               <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>

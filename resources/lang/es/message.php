@@ -430,4 +430,5 @@ return [
 
     //Cliente
     'registerclient' => 'Añadir Cliente',
+    'resultscomment'=> 'Historico Comentarios',
 ];
