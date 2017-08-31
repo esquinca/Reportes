@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\roguedevices::class,
         Commands\wlanxdia::class,
         Commands\recbytesxdia::class,
+        Commands\ResetEncxmes::class,
     ];
 
     /**
@@ -48,5 +49,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('ap:dia')->dailyAt('23:40');
         $schedule->command('wlan:dia')->dailyAt('23:50');
         $schedule->command('rougue:mes')->monthly();
+        $schedule->command('reset:enc')->monthlyOn(28,'21:00');
     }
 }

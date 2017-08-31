@@ -19,7 +19,7 @@
 
 
     @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
-      <script src="/js/quiz/question_enc_preview.js"></script>
+      <!--<script src="/js/quiz/question_enc_preview.js"></script>-->
     @endif
 
     @if (Auth::user()->Privilegio == 'Encuestado')
