@@ -228,7 +228,9 @@
            }
        })
     }
+$("#example1").on('search.dt', function() {
 
+});
 
     function tablaEnctwo(datajson, table, order){
       //console.log(table);
@@ -267,6 +269,26 @@
             footer: true,
             titleAttr: 'Excel',
             className: 'btn btn-info custombtntable',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+              },
+            customize: function(xlsx) {
+      				var sheet = xlsx.xl.worksheets['sheet1.xml'];
+      				//First row
+      				$('row:first c', sheet).attr('s', '7');
+      				//Search all cells for a specific text
+      				$('row c', sheet).each(function() {
+                if ( $(this).text() >= 9 && $(this).text() <= 10) {
+                  $(this).attr( 's', '15' );
+                }
+                else if ( $(this).text() >= 7 && $(this).text() <9) {
+                  $(this).attr( 's', '7' );
+                }
+                else if ($(this).text() >= 0 && $(this).text() <7 ) {
+                  $(this).attr( 's', '12' );
+                }
+      				});
+      			}
           },
           {
             extend: 'csvHtml5',
@@ -274,12 +296,21 @@
             footer: true,
             titleAttr: 'CSV',
             className: 'btn btn-danger',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+              },
           }
           // ,{
           //   extend: 'pdfHtml5',
-          //   text: '<i class="fa fa-file-pdf-o"></i>',
+          //   text: '<i class="fa fa-file-pdf-o"></i> Extraer a PDF',
+          //   footer: true,
           //   titleAttr: 'PDF',
-          //   className: 'btn btn-success',
+          //   orientation: 'landscape',
+          //   pageSize: 'LEGAL',
+          //   className: 'btn bg-orange',
+          //   exportOptions: {
+          //     columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+          //   }
           // }
         ],
         paging: false,
@@ -308,108 +339,442 @@
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
           }
         },
-        "fnFooterCallback": function ( nRow, aaData, iStart, iEnd, aiDisplay ) {
-             /*
-             * Calculate the total market share for all browsers in this table the pagination
-             */
-              var iTotalMarket2 = 0;
-              var iTotalMarket3 = 0;
-              var iTotalMarket4 = 0;
-              var iTotalMarket5 = 0;
-              var iTotalMarket6 = 0;
-              var iTotalMarket7 = 0;
-              var iTotalMarket8 = 0;
-              var iTotalMarket9 = 0;
-              var iTotalMarket10 = 0;
-              var iTotalMarket11 = 0;
-              var iTotalMarket12 = 0;
-              var iTotalMarket13 = 0;
-              var iTotalMarket15 = 0;
-
-              var totalmark=aaData.length;
-              for ( var i=0 ; i<aaData.length ; i++ )
-              {
-                iTotalMarket2 += aaData[i][2]*1;
-                iTotalMarket3 += aaData[i][3]*1;
-                iTotalMarket4 += aaData[i][4]*1;
-                iTotalMarket5 += aaData[i][5]*1;
-                iTotalMarket6 += aaData[i][6]*1;
-                iTotalMarket7 += aaData[i][7]*1;
-                iTotalMarket8 += aaData[i][8]*1;
-                iTotalMarket9 += aaData[i][9]*1;
-                iTotalMarket10 += aaData[i][10]*1;
-                iTotalMarket11 += aaData[i][11]*1;
-                iTotalMarket12 += aaData[i][12]*1;
-                iTotalMarket13 += aaData[i][13]*1;
-                iTotalMarket15 += aaData[i][15]*1;
+        "columnDefs": [
+          {
+          "targets": 0,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData === 'Educación' ) {
+                $(td).css('background-color', '#0070C0').css('color', 'white').css('font-weight', 'bold');
               }
-              /* Calculate the market share for browsers on this page */
-                var iPageMarket2 = 0;
-                var iPageMarket3 = 0;
-                var iPageMarket4 = 0;
-                var iPageMarket5 = 0;
-                var iPageMarket6 = 0;
-                var iPageMarket7 = 0;
-                var iPageMarket8 = 0;
-                var iPageMarket9 = 0;
-                var iPageMarket10 = 0;
-                var iPageMarket11 = 0;
-                var iPageMarket12 = 0;
-                var iPageMarket13 = 0;
-                var iPageMarket15 = 0;
-
-              for ( var i=iStart ; i<iEnd ; i++ )
-              {
-                  iPageMarket2 += aaData[ aiDisplay[i] ][2]*1;
-                  iPageMarket3 += aaData[ aiDisplay[i] ][3]*1;
-                  iPageMarket4 += aaData[ aiDisplay[i] ][4]*1;
-                  iPageMarket5 += aaData[ aiDisplay[i] ][5]*1;
-                  iPageMarket6 += aaData[ aiDisplay[i] ][6]*1;
-                  iPageMarket7 += aaData[ aiDisplay[i] ][7]*1;
-                  iPageMarket8 += aaData[ aiDisplay[i] ][8]*1;
-                  iPageMarket9 += aaData[ aiDisplay[i] ][9]*1;
-                  iPageMarket10 += aaData[ aiDisplay[i] ][10]*1;
-                  iPageMarket11 += aaData[ aiDisplay[i] ][11]*1;
-                  iPageMarket12 += aaData[ aiDisplay[i] ][12]*1;
-                  iPageMarket13 += aaData[ aiDisplay[i] ][13]*1;
-                  iPageMarket15 += aaData[ aiDisplay[i] ][15]*1;
+              if ( cellData === 'Aereopuerto' ) {
+                $(td).css('background-color', '#7030A0').css('color', 'white').css('font-weight', 'bold');
               }
-              /* Modify the footer row to match what we want */
-              var nCells = nRow.getElementsByTagName('th');
-              nCells[0].innerHTML = 'No. Registros= '+iEnd;
-              nCells[1].innerHTML = 'Promedio Por Mes: ';
-              nCells[2].innerHTML = parseFloat(iPageMarket2)/iEnd;
-              nCells[3].innerHTML = parseFloat(iPageMarket3)/iEnd;
-              nCells[4].innerHTML = parseFloat(iPageMarket4)/iEnd;
-              nCells[5].innerHTML = parseFloat(iPageMarket5)/iEnd;
-              nCells[6].innerHTML = parseFloat(iPageMarket6)/iEnd;
-              nCells[7].innerHTML = parseFloat(iPageMarket7)/iEnd;
-              nCells[8].innerHTML = parseFloat(iPageMarket8)/iEnd;
-              nCells[9].innerHTML = parseFloat(iPageMarket9)/iEnd;
-              nCells[10].innerHTML = parseFloat(iPageMarket10)/iEnd;
-              nCells[11].innerHTML = parseFloat(iPageMarket11)/iEnd;
-              nCells[12].innerHTML = parseFloat(iPageMarket12)/iEnd;
-              nCells[13].innerHTML = parseFloat(iPageMarket13)/iEnd;
-              nCells[14].innerHTML = 'Promedio General: ';
-              nCells[15].innerHTML = parseFloat(iPageMarket15)/iEnd;
+              if ( cellData === 'Hospitalidad' ) {
+                $(td).css('background-color', '#008081').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Oficinas' ) {
+                $(td).css('background-color', '#333F4F').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Retail' ) {
+                $(td).css('background-color', '#F7AC25').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Parques' ) {
+                $(td).css('background-color', '#92D050').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Plaza' ) {
+                $(td).css('background-color', '#757171').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Kidzania' ) {
+                $(td).css('background-color', '#FFD966').css('color', 'white').css('font-weight', 'bold');
+              }
+            }
+          },
+          {
+            "targets": 1,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 2,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+           },
+          {
+            "targets": 3,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+           },
+          {
+            "targets": 4,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 5,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 6,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+           },
+          {
+            "targets": 7,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+           },
+          {
+            "targets": 8,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+           },
+          {
+            "targets": 9,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 10,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 11,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 12,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 13,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 15,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData > 8 ) {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData >= 1 && cellData <= 6 ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+              if ( cellData > 6 && cellData <= 8 ) {
+                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
+              }
+              if(cellData <= 0){
+                $(td).css('background-color', '#cfcfcf');
+              }
+            }
+          },
+          {
+            "targets": 16,
+            "createdCell": function (td, cellData, rowDat1a, row, col) {
+              if ( cellData == '🖒') {
+                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
+              }
+              if (cellData === '☞'  ) {
+                $(td).css('background-color', '#F8FB68').css('color', 'black').css('font-weight', 'bold');
+              }
+              if ( cellData ==='👎' ) {
+                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
+              }
+            }
+          }
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
 
+                    // converting to interger to find total
+                    var intVal = function ( i ) {
+                      return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                  //CONTADOR DE ZEROS EN CADA COLUMNA
+                    var nregister = api.column(2, { search:'applied' }).data().length;
+
+                    var count_ene = api.column(2, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_feb = api.column(3, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_mzo = api.column(4, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_abr = api.column(5, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_myo = api.column(6, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_jun = api.column(7, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_jul = api.column(8, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_agto= api.column(9, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_sept= api.column(10, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_oct = api.column(11, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_nov = api.column(12, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+                    var count_dic = api.column(13, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+
+                  //SUMA EN COLUMNAS
+                    var monto_ene = api.column( 2 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_feb = api.column( 3 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_mzo = api.column( 4 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_abr = api.column( 5 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_myo = api.column( 6 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_jun = api.column( 7 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_jul = api.column( 8 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_agto= api.column( 9 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_sept= api.column( 10 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_oct = api.column( 11 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_nov = api.column( 12 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    var monto_div = api.column( 13 , { search:'applied' }).data().reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                  //Columna de Promedio
+                  var count_average = api.column(15, { search:'applied' } ).data()
+                              .filter( function (value, index) {
+                                    return value <= 0 ? true : false;
+                              }).length;
+
+                  var monto_average = api.column( 15 , { search:'applied' }).data().reduce( function (a, b) {
+                          return intVal(a) + intVal(b);
+                      }, 0 );
+
+
+                  //Asignación de valores
+                    var nCells = row.getElementsByTagName('th');
+
+                    nCells[1].innerHTML = 'PROMEDIO MENSUAL';
+                    nCells[14].innerHTML = 'PROM. INGENIEROS';
+
+                    if (nregister != 0){
+                       //nCells[2].innerHTML =  count_ene;
+                       //nCells[3].innerHTML =  nregister;
+                       //nCells[4].innerHTML =  monto_ene;
+                       //nCells[2].innerHTML = parseFloat( monto_ene / (nregister - count_ene) ).toFixed(2);
+                       if (monto_ene != 0) { nCells[2].innerHTML = parseFloat( monto_ene / (nregister - count_ene) ).toFixed(2); } else { nCells[2].innerHTML =0; }
+                       if (monto_feb != 0) { nCells[3].innerHTML = parseFloat( monto_feb / (nregister - count_feb) ).toFixed(2); } else { nCells[3].innerHTML =0; }
+                       if (monto_mzo != 0) { nCells[4].innerHTML = parseFloat( monto_mzo / (nregister - count_mzo) ).toFixed(2); } else { nCells[4].innerHTML =0; }
+                       if (monto_abr != 0) { nCells[5].innerHTML = parseFloat( monto_abr / (nregister - count_abr) ).toFixed(2); } else { nCells[5].innerHTML =0; }
+                       if (monto_myo != 0) { nCells[6].innerHTML = parseFloat( monto_myo / (nregister - count_myo) ).toFixed(2); } else { nCells[6].innerHTML =0; }
+                       if (monto_jun != 0) { nCells[7].innerHTML = parseFloat( monto_jun / (nregister - count_jun) ).toFixed(2); } else { nCells[7].innerHTML =0; }
+                       if (monto_jul != 0) { nCells[8].innerHTML = parseFloat( monto_jul / (nregister - count_jul) ).toFixed(2); } else { nCells[8].innerHTML =0; }
+                       if (monto_agto != 0){ nCells[9].innerHTML = parseFloat( monto_agto /(nregister -count_agto) ).toFixed(2); } else { nCells[9].innerHTML =0; }
+                       if (monto_sept != 0){ nCells[10].innerHTML= parseFloat( monto_sept /(nregister -count_sept) ).toFixed(2); } else { nCells[10].innerHTML =0; }
+                       if (monto_oct != 0) { nCells[11].innerHTML = parseFloat( monto_oct / (nregister - count_oct) ).toFixed(2); } else { nCells[11].innerHTML =0; }
+                       if (monto_nov != 0) { nCells[12].innerHTML = parseFloat( monto_nov / (nregister - count_nov) ).toFixed(2); } else { nCells[12].innerHTML =0; }
+                       if (monto_div != 0) { nCells[13].innerHTML = parseFloat( monto_div / (nregister - count_dic) ).toFixed(2); } else { nCells[13].innerHTML =0; }
+                       if (monto_average != 0) { nCells[15].innerHTML = parseFloat( monto_average / (nregister - count_average) ).toFixed(2); } else { nCells[15].innerHTML =0; }
+                    }
+                    else {
+                      nCells[2].innerHTML = 0;
+                      nCells[3].innerHTML = 0;
+                      nCells[4].innerHTML = 0;
+                      nCells[5].innerHTML = 0;
+                      nCells[6].innerHTML = 0;
+                      nCells[7].innerHTML = 0;
+                      nCells[8].innerHTML = 0;
+                      nCells[9].innerHTML = 0;
+                      nCells[10].innerHTML = 0;
+                      nCells[11].innerHTML = 0;
+                      nCells[12].innerHTML = 0;
+                      nCells[13].innerHTML = 0;
+                      nCells[15].innerHTML = 0;
+                    }
         }
-        // "fnFooterCallback": function(nFoot, aData, iStart, iEnd, aiDisplay) {
-        //     nFoot.getElementsByTagName('th')[0].innerHTML = "Starting index is " + iStart;
-        // }
-        // "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        //     // Bold the grade for all 'A' grade browsers
-        //     if (aData[4]) {
-        //         $('td:eq(4)', nRow).html('<b>A</b>');
-        //     }
-        // },
-        // "fnInfoCallback": function (oSettings, iStart, iEnd, iMax, iTotal, sPre) {
-        //     return iStart + " to " + iEnd;
-        // }
-        // "fnHeaderCallback": function (nHead, aData, iStart, iEnd, aiDisplay) {
-        //    nHead.getElementsByTagName('th')[0].innerHTML = "Displaying " + (iEnd - iStart) + " records";
-        // }
-
 
       });
 
@@ -583,9 +948,9 @@
             <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
               <select id="searchvertical" name="searchvertical" class="form-control" style="width: 100%;">
                 <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
-                <option value="Educación">Educación</option>
-                <option value="Hospitalidad">Hospitalidad</option>
-                <option value="Retail">Retail</option>
+                @foreach ($selectVertical as $infoV)
+                  <option value="{{ $infoV->Vertical }}"> {{ $infoV->Vertical }} </option>
+                @endforeach
               </select>
             </div>
           </div>

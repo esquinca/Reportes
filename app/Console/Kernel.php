@@ -42,12 +42,12 @@ class Kernel extends ConsoleKernel
         //$schedule->command('wlan:dia')->daily();
         //$schedule->command('rougue:mes')->monthly();
 
-        $schedule->command('estado:server')->dailyAt('23:10');
-        $schedule->command('usuario:dia')->dailyAt('23:13');
-        $schedule->command('rebytes:dia')->dailyAt('23:20');
-        $schedule->command('bytes:dia')->dailyAt('23:30');
-        $schedule->command('ap:dia')->dailyAt('23:40');
-        $schedule->command('wlan:dia')->dailyAt('23:50');
+        $schedule->command('estado:server')->dailyAt('11:10');
+        $schedule->command('usuario:dia')->dailyAt('11:13');
+        $schedule->command('rebytes:dia')->dailyAt('11:20');
+        $schedule->command('bytes:dia')->dailyAt('11:30');
+        $schedule->command('ap:dia')->dailyAt('11:40');
+        $schedule->command('wlan:dia')->dailyAt('11:50');
         $schedule->command('rougue:mes')->monthly();
         $schedule->command('reset:enc')->monthlyOn(28,'21:00');
     }

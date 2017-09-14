@@ -21,7 +21,8 @@ class QuizResultsController extends Controller
     {
       //SELECT `Year1` FROM `calificaciones` GROUP BY `Year1` ORDER BY `Year1` ASC
       $selectYear = DB::table('calificaciones')->select('Year1')->groupBy('Year1')->orderBy('Year1', 'asc')->get();
-      return view('quiz.quizresults', compact('selectYear'));
+      $selectVertical = DB::table('listarvertical')->select('Vertical')->orderBy('Vertical', 'asc')->get();
+      return view('quiz.quizresults', compact('selectYear', 'selectVertical'));
        //return view('quiz.quizresults');
     }
 
@@ -114,18 +115,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -192,18 +193,18 @@ class QuizResultsController extends Controller
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
 
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
                 $data_three = array_collapse($data_three);
 
@@ -330,18 +331,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -401,18 +402,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);
@@ -515,18 +516,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -585,18 +586,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);
@@ -698,18 +699,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -768,18 +769,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '')); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);
@@ -881,18 +882,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -951,18 +952,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);
@@ -1074,18 +1075,18 @@ class QuizResultsController extends Controller
               $mes_n10=array_key_exists('November', $data_one);
               $mes_n11=array_key_exists('December', $data_one);
 
-              if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-              if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-              if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-              if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-              if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-              if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-              if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-              if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-              if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-              if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-              if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-              if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+              if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ''  )); }
+              if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+              if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+              if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+              if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+              if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+              if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+              if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+              if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+              if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+              if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+              if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
               $data_three = array_collapse($data_three);
 
@@ -1266,18 +1267,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -1336,18 +1337,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);
@@ -1458,18 +1459,18 @@ class QuizResultsController extends Controller
              $mes_n10=array_key_exists('November', $data_one);
              $mes_n11=array_key_exists('December', $data_one);
 
-             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+             if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+             if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+             if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+             if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+             if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+             if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+             if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+             if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+             if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ''  )); }
+             if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+             if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+             if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
 
              $data_three = array_collapse($data_three);
 
@@ -1528,18 +1529,18 @@ class QuizResultsController extends Controller
                 $mes_n9=array_key_exists('October', $data_one);
                 $mes_n10=array_key_exists('November', $data_one);
                 $mes_n11=array_key_exists('December', $data_one);
-                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => ' ' )); }
-                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => ' ' )); }
-                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => ' ' )); }
-                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => ' ' )); }
-                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => ' ' )); }
-                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => ' ' )); }
-                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => ' ' )); }
-                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => ' ' )); }
-                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => ' ' )); }
-                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => ' ' )); }
-                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => ' ' )); }
-                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => ' ' )); }
+                if ($mes_n0 == false ) { array_push( $data_three, array( "January" => '' )); }
+                if ($mes_n1 == false ) { array_push( $data_three, array( "February" => '' )); }
+                if ($mes_n2 == false ) { array_push( $data_three, array( "March" => '' )); }
+                if ($mes_n3 == false ) { array_push( $data_three, array( "April" => '' )); }
+                if ($mes_n4 == false ) { array_push( $data_three, array( "May" => '' )); }
+                if ($mes_n5 == false ) { array_push( $data_three, array( "June" => '' )); }
+                if ($mes_n6 == false ) { array_push( $data_three, array( "July" => '' )); }
+                if ($mes_n7 == false ) { array_push( $data_three, array( "August" => '' )); }
+                if ($mes_n8 == false ) { array_push( $data_three, array( "September" => '' )); }
+                if ($mes_n9 == false ) { array_push( $data_three, array( "October" => '' )); }
+                if ($mes_n10 == false ) { array_push( $data_three, array( "November" => '' )); }
+                if ($mes_n11 == false ) { array_push( $data_three, array( "December" => '' )); }
                 $data_three = array_collapse($data_three);
                 array_push($data_two,$data_one);
                 array_push($data_two,$data_three);

@@ -149,13 +149,15 @@ class AssignConciergeController extends Controller
       $host13= "187.157.183.71:1161"; //azul five
       $host14= "187.217.120.133:1161";
 
+      $host15="187.157.182.98:1161";
+      $host16="187.157.182.98:2161";
 
       $boolean = 0;
       //187.157.151.52
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host14, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host15, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
         var_dump($res);
