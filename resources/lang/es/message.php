@@ -13,6 +13,7 @@ return [
     |
     */
     //Titulos
+    'captencuesta'                  => 'Capturar encuesta',
     'logged'                  => 'Usted está en el sistema!',
     'someproblems'            => 'Hay algunos problemas con su entrada.',
     'siginsession'            => 'Inicia sesión para acceder',
@@ -431,4 +432,28 @@ return [
     //Cliente
     'registerclient' => 'Añadir Cliente',
     'resultscomment'=> 'Historico Comentarios',
+
+    //Textos Encuestados
+    'text_title_questions' => 'Con base en el servicio que le brindamos durante el mes de',
+    'text_questions_one' => '¿Qué probabilidad existe de que usted recomiende nuestros servicios con sus familiares, colegas o amigos?',
+
+    'cienporcentaje' => '100 %',
+    'ceroporcentaje' => '0 %',
+    'naporcentaje' => 'Ninguna de las anteriores',
+
+    'text_questions_two' => '¿Cualés son lo aspectos del servicio con los que está inconforme y debemos mejorar?',
+    'comercial' => 'Comercial',
+    'proyeceinst' => 'Proyectos e instalaciones',
+    'soportetec' => 'Soporte Tecnico',
+
+    'text_questions_three' => '¿Qué aspectos debemos mejorar para lograr la mayor probabilidad de que nos pueda recomendar?',
+
+
+    'text_help_question' => 'Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de',
+
+    'requerimiemtos_comment' => 'Caracteres mínimo 4 y caracteres máximo 150.',
+    'text_eval_month' => 'Evalua el servicio del mes de',
+    'text_eval_month_continue' => 'con respecto a soporte',
+    'text_eval_month_general' => 'Evalua el servicio del mes seleccionado con respecto a',
+
 ];

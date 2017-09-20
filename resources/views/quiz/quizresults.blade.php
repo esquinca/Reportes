@@ -193,7 +193,6 @@
           status.November,
           status.December,
           status.years,
-          //'<span class="fa '+status.indicador+'"></span>'
           status.Promedio,
           status.indicador,
           status.IT,

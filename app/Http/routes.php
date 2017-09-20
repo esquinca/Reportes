@@ -158,5 +158,8 @@ Route::group(['middleware' => ['auth']], function() {
 	//configuracion de commentarios
 	Route::get('/survey_comments', 'QuizCommentsController@index');
 	Route::post('/result_filter_comments', 'QuizCommentsController@store');
+	//Encuestado en Admin
+	Route::get('/survey_user', 'QuizQuestionsAdminController@index');
+	Route::post('/searchencuestad', 'QuizQuestionsAdminController@search');
 
 });

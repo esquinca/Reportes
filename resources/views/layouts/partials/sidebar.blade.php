@@ -32,6 +32,7 @@
                 <li><a href="{{ url('import') }}"><i class='fa fa-upload'></i> <span>{{{ trans('message.importar') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.quiz') }}</li>
+                <li><a href="{{ url('survey_user') }}"><i class='fa fa-pencil-square'></i> <span>{{ trans('message.captencuesta') }}</span></a></li>
                 <li><a href="{{ url('survey_questions/'.Auth::user()->shell) }}"><i class='fa fa-comments-o'></i> <span>{{ trans('message.questions') }}</span></a></li>
                 <li><a href="{{ url('survey_results') }}"><i class='fa fa-info-circle'></i> <span>{{ trans('message.results') }}</span></a></li>
                 <li><a href="{{ url('survey_comments') }}"><i class='fa fa-comments '></i> <span>{{ trans('message.resultscomment') }}</span></a></li>
