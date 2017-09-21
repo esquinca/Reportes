@@ -22,6 +22,9 @@ class Kernel extends ConsoleKernel
         Commands\wlanxdia::class,
         Commands\recbytesxdia::class,
         Commands\ResetEncxmes::class,
+        Commands\ticketsxhistory::class,
+        Commands\metricsxhistory::class,
+        Commands\ticketxmonthly::class,
     ];
 
     /**
@@ -50,5 +53,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('wlan:dia')->dailyAt('11:50');
         $schedule->command('rougue:mes')->monthly();
         $schedule->command('reset:enc')->monthlyOn(28,'21:00');
+        // Agregar en un futuro el comando after para saber cuando termine el comando.
+        $schedule->command('ticket:monthly')->weekly()->sundays()->at('23:00'); 
     }
 }

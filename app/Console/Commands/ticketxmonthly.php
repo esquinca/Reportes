@@ -594,7 +594,7 @@ class ticketxmonthly extends Command
             DB::commit();
         }
         $this->info('Command ended successfuly.');
-        Logg::notice('Command ended successfuly.');
+        Logg::notice('Command ticket:monthly ended successfuly.');
     }
 
     // Funcion cURL para consultas a la API de zendesk.
