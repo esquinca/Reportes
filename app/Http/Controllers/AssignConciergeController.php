@@ -148,6 +148,9 @@ class AssignConciergeController extends Controller
       $host12= "187.141.65.236:1161"; //sensatori
       $host13= "187.157.183.71:1161"; //azul five
       $host14= "187.217.120.133:1161";
+      $host15 = "187.157.182.98:1161";
+      $host16 = "187.157.182.98:2161";
+      $host17 = "177.237.78.38:1611"; // Parnassus Great
 
       $host15="187.157.182.98:1161";
       $host16="187.157.182.98:2161";
@@ -157,7 +160,7 @@ class AssignConciergeController extends Controller
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host15, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host17, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
         var_dump($res);
@@ -174,9 +177,19 @@ class AssignConciergeController extends Controller
       //define("ZDURL", "https://sitwifi.zendesk.com/api/v2/tickets.json");
       //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=type:user+email:jesquinca@sitwifi.com";
       //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31+type:ticket";
+      $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-26&type:ticket&sort_by=created_at&sort_order=asc";
       //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
-      $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
+      $url2 = "https://sitwifi.zendesk.com/api/v2/search.json?page=31&query=created>2012-12-26&sort_by=created_at&sort_order=asc";
 
+      $url3 = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2012-12-26&created<2017-09-01&type:ticket&sort_by=created_at&sort_order=asc";
+
+      $url4 = "https://sitwifi.zendesk.com/api/v2/search.json?page=100&query=created%3E2012-12-26&sort_by=created_at&sort_order=asc";
+
+      $urlnext = "https://sitwifi.zendesk.com/api/v2/search.json?page=101&query=created%3E2012-12-26&sort_by=created_at&sort_order=asc";
+
+      $urlticket = "https://sitwifi.zendesk.com/api/v2/tickets/599.json";
+      $urltickets = "https://sitwifi.zendesk.com/api/v2/tickets.json";
+      $urlmetrics = "https://sitwifi.zendesk.com/api/v2/ticket_metrics.json";
       //$json = json_encode(array('ticket' => array('subject' => $arr['z_subject'], 'comment' => array( "value"=> $arr['z_description']), 'requester' => array('name' => $arr['z_name'], 'email' => $arr['z_requester']))));
 
       // created>2014-08-01 created<2014-08-05
@@ -189,7 +202,7 @@ class AssignConciergeController extends Controller
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false );
       curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
-      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_URL, $urlmetrics);
       curl_setopt($ch, CURLOPT_USERPWD, "jesquinca@sitwifi.com/token:f4qs3fDR9b9J635IcP6Ce5cGXxKx32ewexk3qmvz");
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
       curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
@@ -203,19 +216,55 @@ class AssignConciergeController extends Controller
       //echo ".. Termina la funcion ..";
       $output = curl_exec($ch);
 
+      $curlerr = curl_error($ch);
       $curlerrno = curl_errno($ch);
       if ($curlerrno != 0) {
-          echo "Error en el curl";
+          return "Error en el curl";
       }else{
 
       }
       //echo '   Curl error number:  ' . curl_errno($ch) . '|| Curl error message: ' . curl_error($ch);
       curl_close($ch);
       $decoded = json_decode($output);
+      // $numero = $decoded->results[0]->via->source->from->address;
+      // $source = $decoded->results[0]->via;
+      //$variable = $decoded->results[0]->url;
+      //$variable2 = $decoded->next_page;
+      //$variable3 = $decoded->previous_page;
+      // if (empty($variable3)) {
+      //   return "Es nulo o vacio";
 
-      return $output;
+      // $tags = $decoded->results[0]->tags[0];
+      // $tagcount = count($decoded->results[0]->tags);
+
+      // $satif = $decoded->results[0]->satisfaction_rating->score;
+
+      // $custom = $decoded->results[0]->custom_fields[3]->value;
+      // }
+
+      // $colab = count($decoded->results[0]->collaborator_ids);
+      // $collaborator_ids = "";
+
+      //echo $decoded->results[0]->collaborator_ids[0];
+
+      // for ($k=0; $k < $colab; $k++) {
+      //   $collaborator_ids = $collaborator_ids . $decoded->results[0]->collaborator_ids[$k] . "&";
+      // }
+      // $collaborator_ids = substr($collaborator_ids, 0, -1);
+      // $incident = $decoded->results[0]->has_incidents;
+      //var_dump($decoded->results[0]->external_id);
+
+      // $customcount = count($decoded->results[0]->custom_fields);
+      // $custom1 = $decoded->results[0]->custom_fields[0]->value;
+
+      $variable2 = $decoded->ticket_metrics[1]->reply_time_in_minutes;
+      $variable3 = $decoded->ticket_metrics[1]->reply_time_in_minutes->business;
+      $result = DB::connection('zendesk')->table('tickets')->pluck('id_ticket');
+      dd($result);
+      //return $output;
 
     }
+
 
     /**
      * Remove the specified resource from storage.
