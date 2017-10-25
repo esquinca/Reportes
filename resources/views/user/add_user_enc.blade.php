@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
+@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestador')
 
   @section('htmlheader_title')
       {{ trans('message.addUserencuest') }}
@@ -11,7 +11,7 @@
   @endsection
 
   @push('scripts')
-  <script src="/js/user/user_enc.js"></script>
+  <script src="/js/user/user_enc2.js"></script>
   @endpush
 
   @section('main-content')
@@ -329,6 +329,7 @@
           <div class="col-xs-12">
             <div class="form-group">
             <button type="button" class="btn bg-purple" id='update_keyusergeneral_data'><i class="fa fa-key" style="margin-right: 4px;"></i>Generar Nueva Clave a Todos los usuarios</button>
+            <button type="button" class="btn bg-maroon" id='mail_keyusergeneral_data'><i class="fa fa-share-alt" style="margin-right: 4px;"></i>Enviar todos los correos</button>
             </div>
           </div>
           <div class="col-xs-12 table-responsive">
@@ -356,7 +357,7 @@
 
 @endif
 
-@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin')
+@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin' || Auth::user()->Privilegio != 'Encuestador')
   @section('htmlheader_title')
       {{ trans('message.pagenotfound') }}
   @endsection

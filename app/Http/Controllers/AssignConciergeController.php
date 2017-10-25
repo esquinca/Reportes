@@ -160,7 +160,7 @@ class AssignConciergeController extends Controller
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host17, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host3, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
         var_dump($res);

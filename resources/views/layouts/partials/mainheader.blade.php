@@ -36,7 +36,33 @@
                         </li>
                         <!--<li class="footer"><a href="javascript:void(0);"></a></li>-->
                     </ul>
-                  </li><!-- /.messages-menu -->
+                </li><!-- /.messages-menu -->
+                <!-- Tasks: style can be found in dropdown.less -->
+            @if (Auth::user()->Privilegio == 'IT')
+            <li class="dropdown tasks-menu">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" title="{{ trans('message.notification') }}">
+                <i class="fa fa-flag-o"></i>
+                <span id="siderbarpendientes" class="label label-danger">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">{{ trans('message.youhave') }} <small id="desplegablependientes">0</small> {{ trans('message.monthofapproval') }}</li>
+              </ul>
+            </li>
+            @endif
+            @if (Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Programador')
+            <li class="dropdown tasks-menu">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" title="{{ trans('message.notification') }}">
+                <i class="fa fa-flag-o"></i>
+                <span id="siderbarpendientes" class="label label-danger">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">{{ trans('message.youhave') }} <small id="desplegablependientes">0</small> {{ trans('message.monthofapproval') }}</li>
+                <li class="footer">
+                  <a href="{{ url('approvals') }}">{{ trans('message.taskapproval') }}</a>
+                </li>
+              </ul>
+            </li>
+          @endif
 
 
                 @if (Auth::guest())

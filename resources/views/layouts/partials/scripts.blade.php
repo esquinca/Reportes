@@ -11,6 +11,27 @@
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/select2/select2.full.min.js') }}" type="text/javascript"></script>
 
+<script type="application/javascript">
+$(document).ready(function() {
+    function pendientesactivos(){
+      var _token = $('input[name="_token"]').val();
+      $.ajax({
+        type: "POST",
+        url: "./showpendient",
+        data: { _token : _token },
+        success: function (data){
+          $("#siderbarpendientes").text(data);
+          $("#desplegablependientes").text(data);
+        },
+        error: function (data) {
+          console.error('Error:', data);
+        }
+      });
+    }
+    setInterval(pendientesactivos, 3000);
+});
+</script>
+
 @stack('scripts')
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the

@@ -76,7 +76,12 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/consultcuadros','ViewReportsController@contenido');
 	Route::post('/consultnivelreport','ViewReportsController@nvreport');
 
+	Route::post('/consultnivelreportpermit','ViewReportsController@nvreport');
+	Route::post('/consultnivelreportadmin','ViewReportsController@nvreportadmin');
+
+
 	Route::post('/consultshowgrafone','ViewReportsController@show_graf_one');
+	Route::post('/consultshowgrafgbdia','ViewReportsController@show_graf_gb');
 	Route::post('/consultshowgraftwo','ViewReportsController@show_graf_two');
 	Route::post('/consultshowgrafthree','ViewReportsController@show_graf_three');
 	Route::post('/consultshowgraffour','ViewReportsController@show_graf_four');
@@ -161,5 +166,34 @@ Route::group(['middleware' => ['auth']], function() {
 	//Encuestado en Admin
 	Route::get('/survey_user', 'QuizQuestionsAdminController@index');
 	Route::post('/searchencuestad', 'QuizQuestionsAdminController@search');
+	Route::post('/info_register_calf', 'QuizQuestionsAdminController@infocalf');
+	Route::post('/quizencuestamanual', 'QuizQuestionsAdminController@registrandocalif');
+	//Editar Encuesta.
+	Route::get('/survey_edit', 'QuizEditController@index');
+	Route::post('/info_edit_register', 'QuizEditController@edit');
+	Route::post('/info_search_register', 'QuizEditController@editar');
+	//Aprovacion
+	Route::get('/approval', 'ApprovalController@index');
+	Route::get('/approvals', 'ApprovalController@index2');
+
+	Route::post('/approvalcreateone', 'ApprovalController@createone');
+	Route::post('/approvalcreatetwo', 'ApprovalController@createtwo');
+
+	Route::post('/typereportnew','ApprovalController@typerep');
+	Route::post('/showtypereports','ApprovalController@show');
+	Route::post('/delete_register_aprobation','ApprovalController@destroy');
+
+	Route::post('/showpendient','ApprovalController@showpendientes');
+	Route::post('/changependientactive','ApprovalController@pendientesapproval');
+	Route::post('/changependientdesactive','ApprovalController@pendientesdesapproval');
+	Route::post('/changependientall','ApprovalController@pendientesallapproval');
+	Route::post('/result_filter_approval','ApprovalController@filterapproval');
+
+	//Para el reporte nuevos cambios
+	Route::post('/consultnivelreport2','ViewReportsController@table_month_vs_month_previous');
+	Route::post('/consultimgzd','ViewReportsController@consultexitimg');
+	Route::post('/restartimgzd','ViewReportsController@consultrouteimg');
+
+	Route::post('/imagenband','IndividualController@update_avatar');
 
 });

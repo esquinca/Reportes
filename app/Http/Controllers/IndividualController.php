@@ -6,9 +6,21 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Illuminate\Support\Facades\Redirect;
+
+use Illuminate\Http\RedirectResponse;
+
 use Auth;
 
 use DB;
+
+use Image;
+
+use File;
+
+use Location;
+
+use Carbon;
 
 class IndividualController extends Controller
 {
@@ -43,12 +55,13 @@ class IndividualController extends Controller
             //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
             //     return view('captureind.individual', compact('selectDatahotel'));
             // }
-            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
+            $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('IDUsuario', '=', $ID)->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+            // $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
             return view('captureind.individual', compact('selectDatahotel'));
         }
         if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
             //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
-            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('IDUsuario', '!=', '38')->where('IDUsuario', '!=', '1')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
             return view('captureind.individual', compact('selectDatahotel'));
         }
     }
@@ -62,6 +75,46 @@ class IndividualController extends Controller
     {
         //
     }
+
+    public function update_avatar(Request $request){
+
+
+       if($request->hasFile('upload_img')){
+         $hotel= $request->select_one;
+         $date= $request->month_upload;
+         $dateNew=$date.'-01';
+
+          $exist = DB::table('report_hotel_banda')->select('img')
+          ->where('id_hotel', '=', $hotel)
+          ->where('fecha', '=', $dateNew)
+          ->count();
+
+          $val_exist = DB::table('report_hotel_banda')->select('img')
+          ->where('id_hotel', '=', $hotel)
+          ->where('fecha', '=', $dateNew)
+          ->value('img');
+
+          if( $exist != 0){
+            $file = public_path('img/anchobanda/' . $val_exist);
+            if (File::exists($file)) {  unlink($file);  }
+            notificationMsg('danger', 'Existe registro.!!');
+          }
+          else {
+            $avatar = $request->file('upload_img');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(600,200)->save( public_path('/img/anchobanda/' . $filename ) );
+
+            $updates = DB::table('report_hotel_banda')->insert([
+              ['id_hotel' => $hotel,
+              'fecha' => $dateNew,
+              'img' => $filename]
+            ]);
+            notificationMsg('success', 'Imagen registrada.!!');
+          }
+       }
+       //notificationMsg('imagenperf', 'Imagen actualizada.!!');
+       return redirect('/individual');
+   }
 
     /**
      * Store a newly created resource in storage.

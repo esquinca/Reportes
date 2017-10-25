@@ -28,7 +28,7 @@ function control(f){
           //$("#danger-alert").slideUp(500);
         //});
     }
-    
+
 //Formulario de perfil
 $('#update_data').on('click', function() {
 	var z0=validarInput('inputNamefull');

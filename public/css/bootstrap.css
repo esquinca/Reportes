@@ -179,6 +179,97 @@ th {
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 /*Codigo de impresion**********************************************************/
 @media print {
+  .colornaranja{
+    color: #FC4A00
+  }
+  .col-sm-4.invoice-col h1,p {
+    text-align: center
+  }
+  .col-sm-4.invoice-col h1{
+    font-size: 18px;
+  }
+  .col-sm-4.invoice-col p{
+    margin: 0;
+  }
+  .bloque{
+    color: #F15D24;
+    margin-top: 1%;
+    border: 3px solid #09347A;
+    float: left;
+    margin-left: 1em;
+    text-align: center;
+    width: auto !important;
+  }
+  .information-icon i.fa.fa-comments {
+        font-size: 5em;
+        color: #F15D24;
+  }
+  .information-icon{
+      margin-top: 0.5em;
+      float:center;
+      /*width:5%*/
+  }
+  .information-info{
+      float: center;
+      /*margin-left: 0.5em;*/
+      text-align: center;
+      margin-bottom: 0.5em;
+      /*width: 95%*/
+  }
+  .information-info h3{
+    font-size:1em;
+    margin:0;
+    font-weight: bold;
+  }
+  .information-info strong{
+    font-size:1em !important;
+    color:#09347A !important;
+    margin:0 !important;
+    letter-spacing:1px;
+    text-decoration:none;
+  }
+  .media.service-box {
+    margin: 5px 0;
+  }
+  .media.service-box .pull-left {
+    margin-right: 0px;
+  }
+  .media.service-box .pull-left > i {
+    font-size: 24px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 40px;
+    border-radius: 100%;
+    color: #09347A; /*Cambias el color de los fa icons*/
+    /*box-shadow: inset 0 0 0 1px #271C7C;
+    -webkit-box-shadow: inset 0 0 0 1px #271C7C;*/
+    transition: background-color 400ms, background-color 400ms;
+    position: relative;
+  }
+  .media.service-box .pull-left > i:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    margin-top: -10px;
+    right: -10px;
+    border: 4px solid #fff;
+    border-radius: 20px;
+    background: #FD602D; /*Cambias el color de los circulos junto a los fa icons*/
+  }
+  #table_det_aps thead > tr > th{
+    font-size:0.5em;
+  }
+  #table_det_aps tbody{
+    font-size:0.5em;
+  }
+  .saltopagina{
+      display:block;
+      page-break-before:always;
+   }
+/*
   #title_aps .media.service-box .pull-left > i:after {
     content: "";
     position: absolute;
@@ -190,7 +281,7 @@ th {
     border: 4px solid #fff;
     border-radius: 20px;
     background: #FD602D;
-}
+}*/
   .TamañoLetra{
     font-size: 12px;
   }
@@ -216,6 +307,12 @@ th {
       color: white !important;
       -webkit-print-color-adjust: exact;
   }
+  #table_detalle thead {
+      background-color: #0091EB !important;
+      color: white !important;
+      -webkit-print-color-adjust: exact;
+  }
+
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left;
   }

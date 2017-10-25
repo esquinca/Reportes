@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestado')
+@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestador')
   @section('htmlheader_title')
       {{ trans('message.quiz') }}
   @endsection
@@ -20,7 +20,7 @@
 
   @section('main-content')
 
-   @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
+   @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestador')
 	 <section class="seleccion no-print">
 		 <div class="row">
 			 <div class="col-xs-12">
@@ -34,12 +34,12 @@
 					 <div class="box-body">
 						 <!-- row -->
 						 <div class="row">
-							 {!! Form::open(['method' => 'post']) !!}
+               {!! Form::open(['method' => 'post', 'id' => 'alpha']) !!}
 							 <div class="col-md-3 col-sm-6 col-xs-12">
 								 <div class="form-group">
 									 <label for="select_one" class="col-sm-12 control-label" style="text-align: left;">Hotel</label>
 									 <div class="col-sm-12">
-										 <select class="form-control select2" id="select_one" style="width: 100%;">
+										 <select class="form-control select2" id="select_one" name="select_one" style="width: 100%;">
 											 <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
 											 @foreach ($sql as $info_enc)
 											 <option value="{{ $info_enc->id_hotels }}"> {{ $info_enc->Nombre_hotel }} </option>
@@ -53,7 +53,7 @@
 								 <div class="form-group">
 									 <label for="select_two" class="col-sm-12 control-label" style="text-align: left;">Cliente</label>
 									 <div class="col-sm-12">
-										 <select class="form-control select2" id="select_two"  style="width: 100%;"></select>
+										 <select class="form-control select2" id="select_two" name="select_two" style="width: 100%;"></select>
 									 </div>
 								 </div>
 							 </div>
@@ -62,7 +62,7 @@
 								 <div class="form-group">
 									 <label for="dolar" class="col-sm-12 control-label" style="text-align: left;">{{ trans('message.fecha') }}</label>
 									 <div class="col-sm-12">
-										 <input id="calendar_fecha" type="text" class="form-control" style="width: 100%;" maxlength="7" title="{{ trans('message.maxcarsiete')}}">
+										 <input id="calendar_fecha" name="calendar_fecha" type="text" class="form-control" style="width: 100%;" maxlength="7" title="{{ trans('message.maxcarsiete')}}">
 									 </div>
 								 </div>
 							 </div>
@@ -72,7 +72,7 @@
 									 <div class="col-sm-12">
 										 <div class="btn-group" style="margin-top: 23px;">
 											 <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.generar')}}</a>
-											 <a id="generateClear" class="btn btn-danger"><i class="fa fa-trash"></i> {{ trans('message.limpiar')}}</a>
+											 <a id="generateClear" class="btn btn-danger"><i class="fa fa-trash"></i> {{ trans('message.limpiar')}} todo</a>
 										 </div>
 									 </div>
 								 </div>
@@ -110,7 +110,15 @@
                  </div>
                </div>
 
-               <div class="form-group question_tone">
+               <div class="form-group">
+                 <div class="col-sm-12">
+                   <input type="text" id="check_a" name="check_a" value="">
+                   <input type="text" id="check_b" name="check_b" value="">
+                   <input type="text" id="check_c" name="check_c" value="">
+                 </div>
+               </div>
+
+               <div id="question_tone" class="form-group">
                  <label for="select_quest_two" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_two') }} </label>
                  <div class="col-sm-4">
                    <select id="select_quest_two" name="select_quest_two"  class="form-control" multiple="multiple" style="width: 100%;">
@@ -121,7 +129,7 @@
                  </div>
                </div>
 
-               <div id="" class="form-group question_ttwo">
+               <div id="question_ttwo" class="form-group">
                  <label for="select_quest_three" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_three') }} </label>
                  <div class="col-sm-4">
                    <select id="select_quest_three" name="select_quest_three"  class="form-control" multiple="multiple" style="width: 100%;">
@@ -132,28 +140,29 @@
                  </div>
                </div>
 
-               <div class="form-group comment_ab">
+               <div id="comment_ab" class="form-group">
                  <label for="comment_a" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.comercial') }}</label>
                  <div class="col-sm-12">
-                   <textarea id="comment_a" name="comment_a" cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                   <textarea id="comment_a" name="comment_a" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
                  </div>
                </div>
 
-               <div class="form-group comment_bc">
+               <div id="comment_bc" class="form-group">
                  <label for="comment_b" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.proyeceinst') }}</label>
                  <div class="col-sm-12">
-                   <textarea id="comment_b" name="comment_b" cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                   <textarea id="comment_b" name="comment_b" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
                  </div>
                </div>
 
-               <div class="form-group comment_cd">
+
+               <div id="comment_cd" class="form-group">
                  <label for="comment_c" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.soportetec') }}</label>
                  <div class="col-sm-12">
-                   <textarea id="comment_c" name="comment_c" cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                   <textarea id="comment_c" name="comment_c" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
                  </div>
                </div>
 
-               <div class="form-group question_tthree">
+               <div id="question_tthree" class="form-group">
                  <label for="select_quest_calf" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
                  <div class="col-sm-4">
                    <select class="form-control" id="select_quest_calf" style="width: 100%;">
@@ -189,15 +198,12 @@
 
    @endif
 
-   @if (Auth::user()->Privilegio == 'Encuestado')
-
-   @endif
 
   @endsection
 
 @endif
 
-@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin' || Auth::user()->Privilegio != 'Encuestado')
+@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin' || Auth::user()->Privilegio != 'Encuestador')
 		  @section('htmlheader_title')
 		      {{ trans('message.pagenotfound') }}
 		  @endsection

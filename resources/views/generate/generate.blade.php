@@ -42,7 +42,7 @@
                   <select class="form-control select2" id="select_one">
                     <option value="" selected>{{ trans('message.optionOne')}}</option>
                     @foreach ($selectDatahotel as $info)
-                    <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                    <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                     @endforeach
                   </select>
                 </div>

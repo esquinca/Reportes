@@ -13,6 +13,7 @@ return [
     |
     */
     //Titulos
+    'required_view' => 'Requerimientos',
     'captencuesta'                  => 'Capturar encuesta',
     'logged'                  => 'Usted está en el sistema!',
     'someproblems'            => 'Hay algunos problemas con su entrada.',
@@ -62,7 +63,7 @@ return [
     'birthdaydate'            => 'Será 23 el 24 de abril',
     'progress'                => 'Progreso de Tareas',
     'customtemplate'          => 'Diseño plantilla personalizada',
-    'statstab'                => 'Pestaña de Contenido de Estadisticas',
+    'statstab'                => 'Pestaña de Contenido de estadísticas',
     'generalset'              => 'Configuración general',
     'reportpanel'             => 'Informe de uso del panel',
     'checked'                 => 'comprobado',
@@ -140,7 +141,7 @@ return [
     'informe' => 'Informe',
     'landescription'=>'Sistema Web',
     'userdevelop'=>'Desarrollado por el',
-    'userdevelopme'=>'Ing. Alonso Cauich Viana de la Area de desarrollo de sit-wifi',
+    'userdevelopme'=>'Area de desarrollo de sit-wifi',
     'maxcarname' => 'Maximo 60 caracteres',
     'maxcarfolder' => 'Maximo 30 caracteres',
     // mensajes de usuario
@@ -261,7 +262,7 @@ return [
     'formato'=> 'Formato',
     'ejemplo' => 'Ejemplo',
     'fpago' => 'Forma de Pago',
-
+    'date' => 'Fecha',
     'factura' => 'Factura',
     'montomens' => 'Monto Mensual',
     'montomensdol' => 'Monto Mensual USD.',
@@ -349,6 +350,8 @@ return [
     'viewreport' => 'Ver Reportes',
     'listahoteles' => 'Lista de Hoteles',
     'hotel' => 'Hotel',
+    'typereport' => 'Tipo de reporte',
+    'mesverif' => 'Mes verificado',
     'edititconcierge' => 'Editar asignación de concierge',
     'wlan'=> 'Wlan',
     'regwlan'=> 'Registrar Wlan',
@@ -384,7 +387,7 @@ return [
     'comment' => 'Comentarios',
     'tipo' => 'Tipo',
     'generar' => 'Generar',
-    'titulorepbasic' => 'Reporte de uso y estadisticas',
+    'titulorepbasic' => 'Reporte de uso y estadísticas',
     'subtitulorepbasic' => 'Red wifi huéspedes / colaboradores',
 
     'cuadro_unoa' => 'Antenas',
@@ -397,23 +400,33 @@ return [
     'cuadro_tresb' => 'por mes',
 
     'cuadro_cuatro' => 'Prom de usuario',
-    'cuadro_cinco' => 'Num. usuarios mensual',
+    'cuadro_cuatroa' => 'Prom de',
+    'cuadro_cuatrob' => 'Usuario',
+    'cuadro_cinco' => 'Núm. usuarios mensual',
+    'cuadro_cincoa' => 'Núm. usuarios',
+    'cuadro_cincob' => 'Mensual',
 
     'cuadro_seisa' => 'Rogue',
     'cuadro_seisb' => 'devices',
 
-    'titlewlanrgbas' => 'Numero de clientes conectados a c/u WLAN',
-    'titleclienxdiargbas' => 'Numero de clientes conectados por dia',
+    'titlewlanrgbas' => 'Número de clientes conectados en c/u WLAN',
+    'titleclienxdiargbas' => 'Número de clientes conectados por dia',
+    'titlegbxdiaconsum' => 'Número de GB consumidos por dia',
+    'titletopwlan' => 'Top 5 SSID',
     'titletopaprgbas' => 'Top AP&acute;S Más Utilizadas',
     'dirmac' => 'MAC',
     'nclientd' => 'No.Clientes',
     'comparativoantvsact' => 'Comparativo Mes Actual vs Mes Anterior',
+    'notareportes' => 'Si tienes problemas con la resolución recargar de nuevo el reporte',
+    'nota' => 'Nota',
 
     'captureindiv' => 'Captura individual',
     'gbtrans' => 'GB Transmitidos',
     'nusuario' => 'No.Usuarios',
     'importar'=> 'Importar',
     'importarfile'=>'Subir documento',
+    'importarimg'=>'Subir imagen',
+
     //Encuesta
     'quiz' => 'Encuesta',
     'questions' => 'Preguntas',
@@ -455,5 +468,37 @@ return [
     'text_eval_month' => 'Evalua el servicio del mes de',
     'text_eval_month_continue' => 'con respecto a soporte',
     'text_eval_month_general' => 'Evalua el servicio del mes seleccionado con respecto a',
+    'selectencuest' => 'Seleccione encuestado',
+    'quizedit' => 'Editar encuesta',
+    //nuevos_valores
+    'dispmes' =>  'Diversos disp.',
+    'promdisa' => 'Promedio disp.',
+    'promdisb' => 'Por hab. diario',
+    'concepto' => 'Concepto',
+    'identcambio' => 'Identificador',
+    'anchobanda' => 'Ancho de banda mensual',
+    'approval' => 'Aprobación',
+    'approvalconcierge' => 'Aprobación del Concierge',
+    'approvaladmin' => 'Aprobacion del administrador',
+    'year' => 'Año',
+    'aprobado' => 'Aprobado',
+    'pendiente' => 'Pendiente',
+    'youhave'=> 'Tu tienes',
+    'monthofapproval' => 'meses por aprobar',
+    'taskapproval' => 'Ir al apartado de aprobaciones',
+    'notification' => 'Notificaciones',
+
+    'contentimgband' => 'Apartado subir imagen de ancho de banda (Mensual)',
+    'contentgbtrans' => 'Apartado de captura para el número de Gigabytes transmitidos en 24hrs',
+    'contentnumberdevice' => 'Apartado de captura para el número de dispositivos cliente autorizados',
+    'contentapstop' => 'Apartado de captura para el top 5 de ap‘s mas utilizados',
+    'contentwlantop' => 'Apartado de captura para el top 5 de wlan‘s mas usadas',
+
+    'meansrequired' => 'Significa requerido',
+    'meansnotrequired' => 'Significa no requerido',
+    'textone' => 'Con el siguiente privilegio',
+    'texttwo' => 'podrá acceder a consultar cualquier mes a partir del 01/01/2016',
+    'textthre' => 'Algunos meses pueden no aparecer en el sistema por que no han sido capturados o aprobados.',
+
 
 ];

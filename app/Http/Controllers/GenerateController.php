@@ -38,12 +38,14 @@ class GenerateController extends Controller
             //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
             //     return view('generate.generate', compact('selectDatahotel'));
             // }
-            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
-            return view('viewreport.viewreports', compact('selectDatahotel'));
+            $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')
+            ->where('IDUsuario', '=', $ID)->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+            return view('generate.generate', compact('selectDatahotel'));
+
         }
         if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
-            //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
-            $selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+            $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')
+            ->where('IDUsuario', '!=', '38')->where('IDUsuario', '!=', '1')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
             return view('generate.generate', compact('selectDatahotel'));
         }
     }

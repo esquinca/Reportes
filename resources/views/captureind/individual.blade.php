@@ -10,6 +10,8 @@
 
   @push('scripts')
   <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <script src="/plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
+
   <script src="/js/individual/individual.js"></script>
   <style>
    .removebord {
@@ -24,10 +26,69 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
+        <!--Inicio Apartado subir ancho de banda-->
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ trans('message.contentimgband')}}.</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- row -->
+              <div class="row">
+                <div class="col-sm-12">
+                  {{ csrf_field() }}
+                  <form id="form_img_upload" name="form_img_upload" class="form-inline" enctype="multipart/form-data" action="/imagenband" method="POST">
+                    <div>
+                      <div class="form-group">
+                        <label for="select_one"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <div class="">
+                          <select class="form-control select2" id="select_one" name="select_one">
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      {{ csrf_field() }}
+
+                      <div class="form-group">
+                        <label for="month_upload"  class="control-label">{{ trans('message.fecha')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="month_upload" name="month_upload" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="upload_img"  class="control-label">{{ trans('message.importarimg')}}: </label>
+                        <div class="">
+                          <input type="file" class="form-control" id="upload_img" name="upload_img" title="{{ trans('message.importarimg')}}" onchange="control(this)">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <a id="" class="btn btn-success" type="submit" onclick="$(this).closest('form').submit()"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+            </div>
+          </div>
+        <!--Fin Apartado GB Transmitidos-->
+      </div>
+
+      <div class="col-xs-12">
         <!--Inicio Apartado GB Transmitidos-->
           <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">Apartado de captura para el número de Gigabytes transmitidos en 24hrs</h3>
+              <h3 class="box-title">{{ trans('message.contentgbtrans')}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -44,7 +105,7 @@
                           <select class="form-control select2" id="select_one">
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
-                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
                           </select>
                         </div>
@@ -65,7 +126,7 @@
                       </div>
 
                       <div class="form-group">
-                        <a id="generateGbInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateGbInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
                         <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                       </div>
 
@@ -86,7 +147,7 @@
         <!--Inicio Apartado usuarios -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Apartado de captura para el número de dispositivos cliente autorizados</h3>
+              <h3 class="box-title">{{ trans('message.contentnumberdevice')}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -102,7 +163,7 @@
                           <select class="form-control select2" id="select_two">
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
-                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
                           </select>
                         </div>
@@ -124,7 +185,7 @@
 
 
                       <div class="form-group">
-                        <a id="generateUserInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateUserInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
                         <a id="generateUserClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                       </div>
 
@@ -145,7 +206,7 @@
         <!--Inicio Apartado de top aps -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Apartado de captura para el top 5 de ap‘s mas utilizados </h3>
+              <h3 class="box-title">{{ trans('message.contentapstop')}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -162,7 +223,7 @@
                             <select class="form-control select2" id="select_three">
                               <option value="" selected>{{ trans('message.optionOne')}}</option>
                               @foreach ($selectDatahotel as $info)
-                              <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                              <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                               @endforeach
                             </select>
                           </div>
@@ -327,7 +388,7 @@
                       </div>
                     </ul>
                     <div>
-                      <a id="generateapsInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                      <a id="generateapsInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
                       <a id="generateapsClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                     </div>
                   </form>
@@ -337,7 +398,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              <strong> * Significa requerido. - Significa no requerido.</strong>
+              <strong> * {{ trans('message.meansrequired')}}. - {{ trans('message.meansnotrequired')}}.</strong>
             </div>
           </div>
         <!--Fin Apartado de top aps -->
@@ -347,7 +408,7 @@
         <!--Inicio Apartado de top de wlan -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Apartado de captura para el top 5 de wlan‘s mas usadas </h3>
+            <h3 class="box-title">{{ trans('message.contentwlantop')}}</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -364,7 +425,7 @@
                           <select class="form-control select2" id="select_four">
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
-                            <option value="{{ $info->id }}"> {{ $info->Nombre_hotel }} </option>
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
                           </select>
                         </div>
@@ -487,7 +548,7 @@
 
                   </ul>
                   <div>
-                    <a id="generatewlanInfo" class="btn btn-default"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                    <a id="generatewlanInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
                     <a id="generatewlanClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                   </div>
                 </form>
@@ -497,7 +558,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <strong> * Significa requerido. - Significa no requerido.</strong>
+            <strong> * {{ trans('message.meansrequired')}}. - {{ trans('message.meansnotrequired')}}.</strong>
           </div>
         </div>
         <!--Fin Apartado de top de wlan -->

@@ -1,10 +1,25 @@
 $(function() {
 	$(".select2").select2();
 });
-$('#fecha_ngb').datepicker({ format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
-$('#fecha_nuser').datepicker({ format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
-$('#fecha_aps').datepicker({ format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
-$('#fecha_nwlan').datepicker({ format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#fecha_ngb').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#fecha_nuser').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#fecha_aps').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#fecha_nwlan').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#month_upload').datepicker({ language: 'es', format: "yyyy-mm", viewMode: "months", minViewMode: "months", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+
+function control(f){
+        var ext=['jpg','jpeg','png'];
+        var v=f.value.split('.').pop().toLowerCase();
+        for(var i=0,n;n=ext[i];i++){
+            if(n.toLowerCase()==v)
+                return
+        }
+        var t=f.cloneNode(true);
+        t.value='';
+        f.parentNode.replaceChild(t,f);
+        //alert('Extensión no válida solo validas JPG, JPEG, PNG');
+				toastr.error('Extensión no válida solo validas JPG, JPEG, PNG.!', 'Error', {timeOut: 3000});
+    }
 
 function validarSelect(campo) {
   if (campo != '') {
