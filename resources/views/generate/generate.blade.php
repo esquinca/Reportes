@@ -10,6 +10,7 @@
 
   @push('scripts')
   <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <script src="/plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
   <script src="/js/generate/generate.js"></script>
   @endpush
 
@@ -20,7 +21,7 @@
   <!-- SELECT2 EXAMPLE -->
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">Captura</h3>
+      <h3 class="box-title">{{ trans('message.titlecapday')}}</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -64,7 +65,7 @@
           </form>
         </div>
         <div class="col-sm-12">
-          <b><span>Simbologia</span><b><br>
+          <b><span>{{ trans('message.simbologia')}}</span><b><br>
           <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-asterisk"> {{ trans('message.requerido')}}</span></button>
           <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-minus"> {{ trans('message.nrequerido')}}</span></button>
 
@@ -74,7 +75,7 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
-      <strong>Nota:</strong> Este apartado solo se utiliza cuando no se captura ninguna informacion de su hotel asignado.
+      <strong>{{ trans('message.nota')}}:</strong> {{ trans('message.titlecapdaynota')}}.
     </div>
   </div>
 

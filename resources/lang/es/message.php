@@ -420,7 +420,7 @@ return [
     'notareportes' => 'Si tienes problemas con la resolución recargar de nuevo el reporte',
     'nota' => 'Nota',
 
-    'captureindiv' => 'Captura individual',
+    'captureindiv' => 'Captura Individual',
     'gbtrans' => 'GB Transmitidos',
     'nusuario' => 'No.Usuarios',
     'importar'=> 'Importar',
@@ -499,6 +499,19 @@ return [
     'textone' => 'Con el siguiente privilegio',
     'texttwo' => 'podrá acceder a consultar cualquier mes a partir del 01/01/2016',
     'textthre' => 'Algunos meses pueden no aparecer en el sistema por que no han sido capturados o aprobados.',
-
-
+    'textasighotel' => 'Asignar Tipo de Reporte',
+    'titlecapday' => 'Requerimientos para la captura del reporte diario',
+    'simbologia' => 'Simbología ',
+    'titlecapdaynota' => 'Este apartado solo se utiliza cuando no se captura ninguna información de su hotel asignado',
+    'needfilters' => 'Se necesita aplicar un filtro para visualizar información ',
+    'approvalpend' => 'Aprobar pendientes',
+    'approvalfilt' => 'Aplicar Filtro',
+    'addapprovalfilt' => 'Añadir Filtro',
+    'typerep' => 'Tipo',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
 ];

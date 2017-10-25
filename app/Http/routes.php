@@ -195,5 +195,9 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/restartimgzd','ViewReportsController@consultrouteimg');
 
 	Route::post('/imagenband','IndividualController@update_avatar');
+	Route::get('/type_report', 'AssignTypeController@index');
+
+	Route::post('/typecreateone', 'AssignTypeController@create');
+	Route::post('/showtypehotel','AssignTypeController@show');
 
 });

@@ -65,7 +65,7 @@
   <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <small>Se necesita aplicar un filtro para visualizar informacion</small>
+          <small>{{ trans('message.needfilters')}}</small>
         </div>
       </div>
       {!! Form::open(['action' => 'QuizCommentsController@store', 'url' => '/result_filter_comments', 'method' => 'post', 'id' => 'filasasw']) !!}
@@ -117,15 +117,14 @@
 
           <button id="boton-aprobar_todopendientes" type="button" class="btn bg-olive">
             <span id="buttonpendientes" class="badge bg-teal">0</span>
-            <i class="fa fa-exclamation"></i>Aprobar pendientes
+            <i class="fa fa-exclamation"></i>{{ trans('message.approvalpend')}}
           </button>
-
           <button id="boton-aplica-filtro-visitantes" type="button" class="btn bg-orange">
-            <i class="glyphicon glyphicon-filter" aria-hidden="true"></i> Aplicar Filtro
+            <i class="glyphicon glyphicon-filter" aria-hidden="true"></i> {{ trans('message.approvalfilt')}}
           </button>
 
           <button id='boton_muestra_selectfiltro' type="button" class="btn bg-navy">
-            <i class="fa fa-plus-square" aria-hidden="true"></i> Añadir Filtro
+            <i class="fa fa-plus-square" aria-hidden="true"></i> {{ trans('message.addapprovalfilt')}}
           </button>
 
           <select id='selectfiltro'class ='selectFiltro' class="form-control">

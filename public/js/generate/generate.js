@@ -3,8 +3,8 @@ $(function() {
 	$("#formcapt").hide();
 });
 $('#fecha_nueva2').datepicker({
+		language: 'es',
     format: "yyyy-mm-dd",
-
     //startDate: '0m',
     //endDate: '0m',
     autoclose: true
@@ -52,7 +52,7 @@ $('#generateInfo').on('click', function(){
          url: './verifiCaptura',
          data: { ident : identificador, fechae: fechan, _token : _token },
          success: function (data) {
-					 console.log('Error:', data);
+					//  console.log('Error:', data);
 					 if (data == '0') {
 						 toastr.success('Dia no capturado. !!', 'Mensaje', {timeOut: 1000});
 						 $("#formcapt").show();
@@ -105,7 +105,6 @@ $('#generateClear').on('click', function(){
 function resetdiv(){
 	$("#formcapt")[0].reset();
 	$("#formcapt").hide();
-
   $("#select_one").select2("val", "");
   $('#select_one').parent().parent().attr("class", "form-group has-default");
 	$('#fecha_nueva2').parent().parent().attr("class", "form-group has-default");
