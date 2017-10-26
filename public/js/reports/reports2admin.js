@@ -838,7 +838,6 @@ function graficas_gb(){
                   // myChartfour.resize();
               }
               myChartfour.hideLoading();
-
           },200);
         }
   );
