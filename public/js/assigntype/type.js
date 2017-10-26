@@ -1,6 +1,6 @@
 $(function() {
   reset_quiz_all();
-
+  tableapproval();
 });
 
 $('#approvalInfo').on('click', function() {
@@ -20,7 +20,7 @@ $('#approvalInfo').on('click', function() {
            if (data == '1') {
              reset_quiz_all();
              toastr.success('Registrado. !!', 'Mensaje', {timeOut: 2000});
-            //  tableapproval();
+             tableapproval();
            }
            if (data == '0') {
              reset_quiz_all();
@@ -33,6 +33,13 @@ $('#approvalInfo').on('click', function() {
     });
   }
 })
+
+$('#clearinfo').on('click', function() {
+  reset_quiz_all();
+  $('#select_one').parent().parent().attr("class", "form-group has-default");
+  $('#select_two').parent().parent().attr("class", "form-group has-default");
+  $('#calendar_fecha').parent().parent().attr("class", "form-group has-default");
+});
 
 function reset_quiz_all(){
   $('#select_one').prop('selectedIndex',0);
@@ -106,6 +113,38 @@ var configTable={
       }
 }
 
+function enviar(e){
+  var valor= e.getAttribute('value');
+  $('#recibidoconf').val(valor);
+  $('#modal-deltype').modal('show');
+}
+
+$('#delete_type_rep').on('click', function() {
+  var valormodal= $('#recibidoconf').val();
+  var _token = $('input[name="_token"]').val();
+  $.ajax({
+       type: "POST",
+       url: './delete_register_tipo',
+       data: { status : valormodal, _token : _token},
+       success: function (data) {
+        // alert(data);
+         if (data == '1') {
+           toastr.success('Se ha eliminado correctamente..!!', 'Mensaje', {timeOut: 2000});
+           tableapproval();
+           $('#modal-deltype').modal('toggle');
+         }
+         else {
+           toastr.error('Error.. !!', 'Mensaje', {timeOut: 2000});
+           tableapproval();
+           $('#modal-deltype').modal('toggle');
+         }
+       },
+       error: function (data) {
+         alert('Error:', data);
+       }
+   })
+});
+
 function tableapproval()
 {
   var _token = $('input[name="_token"]').val();
@@ -114,6 +153,17 @@ function tableapproval()
     url: "./showtypehotel",
     data: { _token : _token },
     success: function (data){
+      $('#table_type_reports').DataTable().destroy();
+      var TablaTipoReportes= $('#table_type_reports').dataTable(configTable);
+      TablaTipoReportes.fnClearTable();
+
+      $.each(JSON.parse(data),function(index, objdataTable){
+          TablaTipoReportes.fnAddData([
+          objdataTable.Nombre_hotel,
+          objdataTable.Nombre,
+          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+objdataTable.id_tabla+'" class="btn btn-danger btn-xs btn-block" role="button" data-target="#EditarServicioSx"><span class="fa fa-ban" style="margin-right: 4px;"></span>Eliminar</a>',
+        ]);
+      });
 
     },
     error: function (data) {
