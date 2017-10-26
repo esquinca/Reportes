@@ -199,5 +199,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::post('/typecreateone', 'AssignTypeController@create');
 	Route::post('/showtypehotel','AssignTypeController@show');
+	Route::post('/delete_register_tipo', 'AssignTypeController@destroy');
 
 });

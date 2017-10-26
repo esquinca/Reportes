@@ -15,6 +15,36 @@
   @endpush
 
   @section('main-content')
+  <div class="modal modal-default fade" id="modal-deltype" data-backdrop="static">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><i class="fa fa-bookmark" style="margin-right: 4px;"></i>{{ trans('message.confirmacion') }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box-body table-responsive">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <input id='recibidoconf' name='recibidoconf' type="hidden" class="form-control" placeholder="">
+                  <input id='recibidoconfD' name='recibidoconfD' type="hidden" class="form-control" value="{{Auth::user()->email}}">
+                  <h4 style="font-weight: bold;">{{ trans('message.preguntaconf') }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id='delete_type_rep'><i class="fa fa-trash" style="margin-right: 4px;"></i>{{ trans('message.eliminar') }}</button>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times" style="margin-right: 4px;"></i>{{ trans('message.ccmodal') }}</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <section class="content">
     <section class="seleccion no-print">
       <div class="row">

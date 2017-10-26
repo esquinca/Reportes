@@ -81,7 +81,8 @@ class AssignTypeController extends Controller
      */
     public function show(Request $request)
     {
-        //
+        $result = DB::table('HotelTipoReporteVIEW')->get();
+        return json_encode($result);
     }
 
     /**
@@ -113,8 +114,10 @@ class AssignTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      $id_report = $request->status;
+      $sql = DB::table('hotel_tipo_reporte')->where('id', $id_report)->delete();
+      return $sql;
     }
 }
