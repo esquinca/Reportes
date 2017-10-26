@@ -347,6 +347,7 @@ return [
     'concierge' => 'Concierge',
     'asigconcierge' => 'Asignación de concierge a hoteles',
     'generatereport' => 'Generar Reporte',
+    'vtexreport' => 'Reportes',
     'viewreport' => 'Ver Reportes',
     'listahoteles' => 'Lista de Hoteles',
     'hotel' => 'Hotel',

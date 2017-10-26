@@ -55,6 +55,11 @@ class ViewReportsController extends Controller
           $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
           return view('viewreport.viewreports2', compact('selectDatahotel'));
       }
+      if ($priv == 'Encuestador') {
+          //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
+          $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+          return view('viewreport.viewreports2', compact('selectDatahotel'));
+      }
     }
 
     public function typerep(Request $request)

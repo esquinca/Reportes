@@ -111,6 +111,8 @@
             <ul class="sidebar-menu">
               <li class="header">{{ trans('message.navigation') }}</li>
               <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
+              <li class="header">{{ trans('message.vtexreport') }}</li>
+              <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
 
               <li class="header">{{ trans('message.quiz') }}</li>
               <li><a href="{{ url('survey_user') }}"><i class='fa fa-pencil-square'></i> <span>{{ trans('message.captencuesta') }}</span></a></li>

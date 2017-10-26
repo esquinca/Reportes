@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT' || Auth::user()->Privilegio == 'Cliente')
+@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT' || Auth::user()->Privilegio == 'Cliente' || Auth::user()->Privilegio == 'Encuestador')
   @section('htmlheader_title')
       {{ trans('message.viewreport') }}
   @endsection
@@ -20,7 +20,12 @@
   <!-- <script src="/js/reports/script_reports.js"></script> -->
   <script src="/plugins/echarts/echarts.js"></script>
   <!-- <script src="/js/reports/reports.js"></script> -->
+
   @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT')
+  <script src="/js/reports/reports2admin.js"></script>
+  @endif
+
+  @if (Auth::user()->Privilegio == 'Encuestador')
   <script src="/js/reports/reports2admin.js"></script>
   @endif
 
@@ -115,6 +120,13 @@
                           @endif
 
                           @if(Auth::user()->Privilegio == 'IT')
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
+                          @endif
+
+                          @if (Auth::user()->Privilegio == 'Encuestador')
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
@@ -498,7 +510,7 @@
   @endsection
 @endif
 
-@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin' || Auth::user()->Privilegio != 'IT')
+@if (Auth::user()->Privilegio != 'Programador' || Auth::user()->Privilegio != 'Admin' || Auth::user()->Privilegio != 'IT' || Auth::user()->Privilegio != 'Encuestador')
   @section('htmlheader_title')
       {{ trans('message.pagenotfound') }}
   @endsection
