@@ -271,6 +271,13 @@ function grafica_radar(){
         function (ec) {
           $("#mainwlan").css({'width' : 'width: 100%;' , 'height' : '225px', 'margin-right' : '0',  'padding-right' : '0', 'border-right-width' : '0' });
           var myChart2 = ec.init(document.getElementById('mainwlan'));
+          myChart2.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datawlangraf1 = [];
           var datawlangraf2 = [];
           var nuevos_valores= [];
@@ -306,6 +313,7 @@ function grafica_radar(){
                       trigger: 'item',
                       formatter: "{a} <br/>{b} : {c} ({d}%)"
                   },
+
                   legend: {
                       orient : 'horizontal',
                       x : 'center',
@@ -368,13 +376,16 @@ function grafica_radar(){
                       return series;
                   })()
               };
+              myChart2.clear();
               myChart2.setOption(optiongrafusuarios, true);
             },
             error: function (data) {
+              myChart2.clear();
               console.log('Error:', data);
             }
           });
           setTimeout(function (){
+
               var _ZR = myChart2.getZrender();
               var TextShape = require('zrender/shape/Text');
               _ZR.addShape(new TextShape({
@@ -401,6 +412,7 @@ function grafica_radar(){
               window.onresize = function () {
                 // myChart2.resize();
               }
+              myChart2.hideLoading();
           }, 2000);
         }
   );
@@ -426,6 +438,13 @@ function grafica_bar(){
         ],
         function (ec) {
           var myChart3 = ec.init(document.getElementById('maintopssid'));
+          myChart3.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datawbargraf1 = [];
           var datawbargraf2 = [];
           $.ajax({
@@ -445,6 +464,18 @@ function grafica_bar(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       show : false,
@@ -530,17 +561,20 @@ function grafica_bar(){
                         },
                   ]
               };
+              myChart3.clear();
               myChart3.setOption(optiongrassid);
             },
             error: function (data) {
               console.log('Error:', data);
+              myChart3.clear();
             }
           });
           setTimeout(function (){
               window.onresize = function () {
               // myChart3.resize();
               }
-          }, 2000);
+              myChart3.hideLoading();
+          }, 200);
 
         }
     );
@@ -566,6 +600,13 @@ function graficas_user(){
         ],
         function (ec) {
           var myChart = ec.init(document.getElementById('mainuser'));
+          myChart.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datausergraf1 = [];
           var datausergraf2 = [];
 
@@ -586,6 +627,18 @@ function graficas_user(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       x: 'center',
@@ -652,6 +705,7 @@ function graficas_user(){
               window.onresize = function () {
                   // myChart.resize();
               }
+              myChart.hideLoading();
           },200);
         }
   );
@@ -677,6 +731,13 @@ function graficas_gb(){
         ],
         function (ec) {
           var myChartfour = ec.init(document.getElementById('maingbdia'));
+          myChartfour.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datausergraf1 = [];
           var datausergraf2 = [];
 
@@ -697,6 +758,18 @@ function graficas_gb(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       x: 'center',
@@ -764,6 +837,8 @@ function graficas_gb(){
               window.onresize = function () {
                   // myChartfour.resize();
               }
+              myChartfour.hideLoading();
+
           },200);
         }
   );
@@ -789,6 +864,13 @@ function grafica_pie(){
         ],
         function (ec) {
           var myChartfive = ec.init(document.getElementById('mainaps'));
+          myChartfive.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datapiegraf1 = [];
           var datapiegraf2 = [];
           var cadenaspiep = [];
@@ -820,6 +902,18 @@ function grafica_pie(){
                     tooltip : {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    noDataLoadingOption: {
+                         text: 'Información no disponible',
+                         textStyle:{
+            							fontSize:20,
+            					    },
+                          effect: 'whirling',
+                          effectOption: {
+                              effect: {
+                                  n: 0
+                              }
+                          }
                     },
                     legend: {
                        orient : 'horizontal',
@@ -892,6 +986,7 @@ function grafica_pie(){
                 // myChartfive.resize();
               }
           }, 2000);
+          myChartfive.hideLoading();
 
         }
     );

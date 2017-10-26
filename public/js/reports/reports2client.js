@@ -437,6 +437,13 @@ function grafica_bar(){
         ],
         function (ec) {
           var myChart3 = ec.init(document.getElementById('maintopssid'));
+          myChart3.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datawbargraf1 = [];
           var datawbargraf2 = [];
           $.ajax({
@@ -456,6 +463,18 @@ function grafica_bar(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       show : false,
@@ -541,17 +560,20 @@ function grafica_bar(){
                         },
                   ]
               };
+              myChart3.clear();
               myChart3.setOption(optiongrassid);
             },
             error: function (data) {
               console.log('Error:', data);
+              myChart3.clear();
             }
           });
           setTimeout(function (){
               window.onresize = function () {
               // myChart3.resize();
               }
-          }, 2000);
+              myChart3.hideLoading();
+          }, 200);
 
         }
     );
@@ -577,6 +599,13 @@ function graficas_user(){
         ],
         function (ec) {
           var myChart = ec.init(document.getElementById('mainuser'));
+          myChart.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datausergraf1 = [];
           var datausergraf2 = [];
 
@@ -597,6 +626,18 @@ function graficas_user(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       x: 'center',
@@ -651,10 +692,12 @@ function graficas_user(){
                       }
                   ]
               };
+              myChart.clear();
               myChart.setOption(optiongrafusuarios);
             },
             error: function (data) {
               console.log('Error:', data);
+              myChart.clear();
             }
           });
 
@@ -663,6 +706,7 @@ function graficas_user(){
               window.onresize = function () {
                   // myChart.resize();
               }
+              myChart.hideLoading();
           },200);
         }
   );
@@ -688,6 +732,13 @@ function graficas_gb(){
         ],
         function (ec) {
           var myChartfour = ec.init(document.getElementById('maingbdia'));
+          myChartfour.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datausergraf1 = [];
           var datausergraf2 = [];
 
@@ -708,6 +759,18 @@ function graficas_gb(){
                   },
                   tooltip : {
                       trigger: 'axis'
+                  },
+                  noDataLoadingOption: {
+                       text: 'Información no disponible',
+                       textStyle:{
+          							fontSize:20,
+          					    },
+                        effect: 'whirling',
+                        effectOption: {
+                            effect: {
+                                n: 0
+                            }
+                        }
                   },
                   legend: {
                       x: 'center',
@@ -763,10 +826,12 @@ function graficas_gb(){
                       }
                   ]
               };
+              myChartfour.clear();
               myChartfour.setOption(optiongrafusuarios);
             },
             error: function (data) {
               console.log('Error:', data);
+              myChartfour.clear();
             }
           });
 
@@ -775,6 +840,7 @@ function graficas_gb(){
               window.onresize = function () {
                   // myChartfour.resize();
               }
+              myChartfour.hideLoading();
           },200);
         }
   );
@@ -800,6 +866,13 @@ function grafica_pie(){
         ],
         function (ec) {
           var myChartfive = ec.init(document.getElementById('mainaps'));
+          myChartfive.showLoading({
+              text : "Cargando...",
+              effect : 'whirling',
+              textStyle : {
+                  fontSize : 20
+              }
+          });
           var datapiegraf1 = [];
           var datapiegraf2 = [];
           var cadenaspiep = [];
@@ -831,6 +904,18 @@ function grafica_pie(){
                     tooltip : {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    noDataLoadingOption: {
+                         text: 'Información no disponible',
+                         textStyle:{
+            							fontSize:20,
+            					    },
+                          effect: 'whirling',
+                          effectOption: {
+                              effect: {
+                                  n: 0
+                              }
+                          }
                     },
                     legend: {
                        orient : 'horizontal',
@@ -892,9 +977,11 @@ function grafica_pie(){
                         }
                     ]
               };
+              myChartfive.clear();
               myChartfive.setOption(optiongrafpie);
             },
             error: function (data) {
+              myChartfive.clear();
               console.log('Error:', data);
             }
           });
@@ -902,7 +989,8 @@ function grafica_pie(){
               window.onresize = function () {
                 // myChartfive.resize();
               }
-          }, 2000);
+              myChartfive.hideLoading();
+          }, 200);
 
         }
     );

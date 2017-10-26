@@ -29,8 +29,9 @@
 
                 <li><a href="{{ url('generate') }}"><i class='fa fa-pencil-square-o'></i> <span>{{ trans('message.generatereport') }}</span></a></li>
                 <li><a href="{{ url('individual') }}"><i class='fa fa-pencil'></i> <span>{{ trans('message.captureindiv') }}</span></a></li>
-
+                @if (Auth::user()->Privilegio == 'Programador')
                 <li><a href="{{ url('approval') }}"><i class='fa fa-check-square-o'></i> <span>{{ trans('message.approval') }} {{ trans('message.concierge') }}</span></a></li>
+                @endif
                 <li><a href="{{ url('approvals') }}"><i class='fa fa-check-circle'></i> <span>{{ trans('message.approval') }} {{ trans('message.priv_one') }}</span></a></li>
 
 
