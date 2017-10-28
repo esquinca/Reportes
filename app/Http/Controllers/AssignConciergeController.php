@@ -190,6 +190,7 @@ class AssignConciergeController extends Controller
       $urlticket = "https://sitwifi.zendesk.com/api/v2/tickets/599.json";
       $urltickets = "https://sitwifi.zendesk.com/api/v2/tickets.json";
       $urlmetrics = "https://sitwifi.zendesk.com/api/v2/ticket_metrics.json";
+      $urlpipe = "https://sitwifi.pipedrive.com/v1/users?api_token=3661682acb7f64fc28517d9fa8ae9a033ba7c9da";
       //$json = json_encode(array('ticket' => array('subject' => $arr['z_subject'], 'comment' => array( "value"=> $arr['z_description']), 'requester' => array('name' => $arr['z_name'], 'email' => $arr['z_requester']))));
 
       // created>2014-08-01 created<2014-08-05
@@ -202,8 +203,7 @@ class AssignConciergeController extends Controller
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false );
       curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
-      curl_setopt($ch, CURLOPT_URL, $urlmetrics);
-      curl_setopt($ch, CURLOPT_USERPWD, "jesquinca@sitwifi.com/token:f4qs3fDR9b9J635IcP6Ce5cGXxKx32ewexk3qmvz");
+      curl_setopt($ch, CURLOPT_URL, $urlpipe);
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
       curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
       curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
@@ -226,41 +226,8 @@ class AssignConciergeController extends Controller
       //echo '   Curl error number:  ' . curl_errno($ch) . '|| Curl error message: ' . curl_error($ch);
       curl_close($ch);
       $decoded = json_decode($output);
-      // $numero = $decoded->results[0]->via->source->from->address;
-      // $source = $decoded->results[0]->via;
-      //$variable = $decoded->results[0]->url;
-      //$variable2 = $decoded->next_page;
-      //$variable3 = $decoded->previous_page;
-      // if (empty($variable3)) {
-      //   return "Es nulo o vacio";
 
-      // $tags = $decoded->results[0]->tags[0];
-      // $tagcount = count($decoded->results[0]->tags);
-
-      // $satif = $decoded->results[0]->satisfaction_rating->score;
-
-      // $custom = $decoded->results[0]->custom_fields[3]->value;
-      // }
-
-      // $colab = count($decoded->results[0]->collaborator_ids);
-      // $collaborator_ids = "";
-
-      //echo $decoded->results[0]->collaborator_ids[0];
-
-      // for ($k=0; $k < $colab; $k++) {
-      //   $collaborator_ids = $collaborator_ids . $decoded->results[0]->collaborator_ids[$k] . "&";
-      // }
-      // $collaborator_ids = substr($collaborator_ids, 0, -1);
-      // $incident = $decoded->results[0]->has_incidents;
-      //var_dump($decoded->results[0]->external_id);
-
-      // $customcount = count($decoded->results[0]->custom_fields);
-      // $custom1 = $decoded->results[0]->custom_fields[0]->value;
-
-      $variable2 = $decoded->ticket_metrics[1]->reply_time_in_minutes;
-      $variable3 = $decoded->ticket_metrics[1]->reply_time_in_minutes->business;
-      $result = DB::connection('zendesk')->table('tickets')->pluck('id_ticket');
-      dd($result);
+      dd($decoded);
       //return $output;
 
     }

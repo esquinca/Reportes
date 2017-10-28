@@ -64,7 +64,9 @@ class ImportController extends Controller
     public function subir2(Request $request)
     {
       $archivo = $request->file('documento');
+      
       DB::beginTransaction();
+
       Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
         $hoja->each(function($fila){
           $hotel= $fila->nombre_hotel;

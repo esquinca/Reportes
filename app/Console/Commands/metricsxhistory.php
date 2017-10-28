@@ -37,7 +37,8 @@ class metricsxhistory extends Command
      *
      * @return mixed
      */
-    public function handle()
+    //Nombre correcto de funcion: handle.
+    public function insercionAgentes()
     {
         $urlmetric = "https://sitwifi.zendesk.com/api/v2/ticket_metrics.json";
         $response = $this->curlZen($urlmetric);
@@ -219,8 +220,8 @@ class metricsxhistory extends Command
         }
         $this->info('Terminated Command.');
     }
-
-    public function insercionAgentes()
+    //Nombre correcto de funcion: insercionAgentes
+    public function handle()
     {
         //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2012-12-26&sort_by=created_at&sort_order=asc";
         $url2 = "https://sitwifi.zendesk.com/api/v2/users.json";
@@ -234,8 +235,13 @@ class metricsxhistory extends Command
             $regnum = count($response->users);
             //dd($next_page);
             DB::beginTransaction();
-            while (!empty($next_page)) {
+            while (!empty($regnum)) {
                 for ($i=0; $i < $regnum; $i++) {
+                    if (empty($response->users[$i]->id)) {
+                        $id_user = "";
+                    }else{
+                        $id_user = $response->users[$i]->id;
+                    }
                     if (empty($response->users[$i]->phone)) {
                         $phone = "";
                     }else{
@@ -246,10 +252,28 @@ class metricsxhistory extends Command
                     }else{
                         $shared_phone_number = $response->users[$i]->shared_phone_number;
                     }
-                    DB::connection('zendesk')->table('agentes')->insert([
-                        [
-                            'id_user' => $response->users[$i]->id,
-                            'url' => $response->users[$i]->url,
+                    $checkagent = DB::connection('zendesk')->table('agentes')->where('id_user', $id_user)->first();
+                    if(empty($checkagent)) {
+                        DB::connection('zendesk')->table('agentes')->insert([
+                            [
+                                'id_user' => $response->users[$i]->id,
+                                'url' => $response->users[$i]->url,
+                                'name' => $response->users[$i]->name,
+                                'email' => $response->users[$i]->email,
+                                'created_at' => $response->users[$i]->created_at,
+                                'updated_at' => $response->users[$i]->updated_at,
+                                'time_zone' => $response->users[$i]->time_zone,
+                                'phone' => $phone,
+                                'shared_phone_number' => $shared_phone_number,
+                                'role' => $response->users[$i]->role,
+                                'verified' => $response->users[$i]->verified,
+                                'active' => $response->users[$i]->active,
+
+                            ]
+                        ]);
+                        $this->info('Agent Inserted Correctly ' . 'id: '. $id_user . 'row: ' . $i);
+                    }else{
+                        DB::connection('zendesk')->table('agentes')->where('id_user', $id_user)->update([                            
                             'name' => $response->users[$i]->name,
                             'email' => $response->users[$i]->email,
                             'created_at' => $response->users[$i]->created_at,
@@ -260,13 +284,24 @@ class metricsxhistory extends Command
                             'role' => $response->users[$i]->role,
                             'verified' => $response->users[$i]->verified,
                             'active' => $response->users[$i]->active,
-
-                        ]
-                    ]);
-                    $this->info('Agents Inserted Correctly');
+                        ]);
+                        $this->info('Agent updated Correctly'  . ' id: '. $id_user . ' row: ' . $i);
+                    }
                 }
                 $response = $this->curlZen($next_page);
-                $next_page = $response->next_page;
+
+                if (empty($response->next_page)) {
+                    $next_page = NULL;
+                }else{
+                    $next_page = $response->next_page;
+                }
+                if (empty($response->users)) {
+                    $regnum = NULL;
+                }else{
+                    $regnum = count($response->users);
+                }
+
+
                 $this->info('Current cURL Page: ' . $next_page);
                 DB::commit();
             }

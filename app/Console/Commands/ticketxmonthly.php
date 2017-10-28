@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 
 use DB;
 
-use Log;
-
 class ticketxmonthly extends Command
 {
     /**
@@ -40,27 +38,26 @@ class ticketxmonthly extends Command
      * @return mixed
      */
     public function handle()
-    {        
+    {   
+        $url_test = "https://sitwifi.zendesk.com/api/v2/tickets.json?page=12";
         $url = "https://sitwifi.zendesk.com/api/v2/tickets.json";
-        $response = $this->curlZen($url);
+        $response = $this->curlZen($url_test);
 
         $metric_history = "https://sitwifi.zendesk.com/api/v2/tickets/";
         $apijson = "/metrics.json";
 
         if (empty($response)) {
             $this->error('cURL responded empty');
-            Logg::warning('cURL responded empty');
+            
         }else{
             $this->info('cURL successful.');
-            Logg::info('cURL successful.');
             $next_page = $response->next_page;
             $regnum = count($response->tickets);
             DB::beginTransaction();
 
-            while (!empty($next_page)) {
+            while (!empty($regnum)) {
                 for ($i=0; $i < $regnum; $i++) { 
                     $this->line('Current Iteration: '. $i);
-                    Logg::info('Current Iteration: '. $i);
                     if (empty($response->tickets[$i]->via->channel)) {
                         $channel = "";
                     }else{
@@ -229,7 +226,6 @@ class ticketxmonthly extends Command
                                 ]
                             ]);
                             $this->line('New ticket record inserted, id_ticket: ' . $id_ticket);
-                            Logg::info('New ticket record inserted (condition: email), id_ticket: ' . $id_ticket);
                         }else{
                             DB::connection('zendesk')->table('tickets')->insert([
                                 [
@@ -269,7 +265,6 @@ class ticketxmonthly extends Command
                                 ]
                             ]);
                             $this->line('New ticket record inserted, id_ticket: ' . $id_ticket);
-                            Logg::info('New ticket record inserted (else), id_ticket: ' . $id_ticket);
                         }
                     }else{
                         //Update existing DB record.
@@ -312,7 +307,6 @@ class ticketxmonthly extends Command
                                     //'agentes_id_user' => $response->tickets[$i]->assignee_id,
                             ]);
                             $this->line('Updated ticket record, id_ticket: ' . $id_ticket);
-                            Logg::info('Updated ticket record (condition: email), id_ticket: ' . $id_ticket);
                         }else{
                             DB::connection('zendesk')->table('tickets')->where('id_ticket', $id_ticket)->update([
                                     'external_id' => $external_id,
@@ -348,7 +342,6 @@ class ticketxmonthly extends Command
                                     //'agentes_id_user' => $response->tickets[$i]->assignee_id,
                             ]);
                             $this->line('Updated ticket record, id_ticket: ' . $id_ticket);
-                            Logg::info('Updated ticket record (condition: else), id_ticket: ' . $id_ticket);
                         }
                     } //end else channel
 
@@ -356,14 +349,11 @@ class ticketxmonthly extends Command
                     $urlmetric = $metric_history . $id_ticket . $apijson;
                     $metricResponse = $this->curlZen($urlmetric);
                     $this->info('Metric URL: ' . $urlmetric);
-                    Logg::info('Metric URL: ' . $urlmetric);
                     if (empty($metricResponse)) {
                         $this->error('cURL(metric) responded empty');
-                        Logg::warning('cURL(metric) responded empty');
                         continue;
                     }elseif (!empty($metricResponse->error)) {
                         $this->error('No Ticket Metric' . $metricResponse->error);
-                        Logg::warning('No Ticket Metric' . $metricResponse->error);
                         continue;
                     }else{
                         $id_metric = $metricResponse->ticket_metric->id;
@@ -549,7 +539,7 @@ class ticketxmonthly extends Command
                                 ]
                             ]);
                             $this->line('New metric record inserted, id_metric: ' . $id_metric . ' associated with id_ticket: ' . $id_ticket);
-                            Logg::info('New metric record inserted, id_metric: ' . $id_metric . ' associated with id_ticket: ' . $id_ticket);
+                            
                         }else{
                             // Metric exists, update record.
                             DB::connection('zendesk')->table('metricas')->where('id_tickets_metric', $id_metric)->update([
@@ -579,7 +569,7 @@ class ticketxmonthly extends Command
                                     'on_hold_time_in_minutes_business' => $on_hold_time_in_minutes_business,
                             ]);
                             $this->line('Updated metric record: ' . $id_metric . ' associated with id_ticket: ' . $id_ticket);
-                            Logg::info('Updated metric record: ' . $id_metric . ' associated with id_ticket: ' . $id_ticket);
+                            
                         }// end if check metric
 
                     } //end if metric response.
@@ -587,14 +577,23 @@ class ticketxmonthly extends Command
                 } // end for.
 
                 $response = $this->curlZen($next_page);
-                $next_page = $response->next_page;
+                if (empty($response->next_page)) {
+                    $next_page = NULL;
+                }else{
+                    $next_page = $response->next_page;
+                }
+                if (empty($response->tickets)) {
+                    $regnum = NULL;
+                }else{
+                    $regnum = count($response->tickets);
+                }
+                
                 $this->info('Current cURL Page: ' . $next_page);
-                Logg::info('Current cURL Page: ' . $next_page);
+                $this->info('Number of tickets on request: ' . $regnum);
             } // end While
             DB::commit();
         }
         $this->info('Command ended successfuly.');
-        Logg::notice('Command ticket:monthly ended successfuly.');
     }
 
     // Funcion cURL para consultas a la API de zendesk.

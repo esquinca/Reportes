@@ -42,6 +42,7 @@ class ticketsxhistory extends Command
         //usleep(5000);
         $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2012-12-26&sort_by=created_at&sort_order=asc";
         $url2 = "https://sitwifi.zendesk.com/api/v2/search.json?page=170&query=created%3E2012-12-26&sort_by=created_at&sort_order=asc";
+        
         $response = $this->curlZen($url2);
 
         if (empty($response)) {
