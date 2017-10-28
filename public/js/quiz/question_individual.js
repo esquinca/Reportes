@@ -184,7 +184,7 @@ function validarInput(campo) {
 $('#select_quest_one').on('change', function(e){
   var valor= $(this).val();
   if (valor != ''){
-    if( valor == 'cien'){
+    if( valor >=8){
       reset_quiz_current();
       $('#comment_cd').show();
       enabledinput('comment_c');
@@ -193,7 +193,7 @@ $('#select_quest_one').on('change', function(e){
       enableselect('select_quest_calf');
       reset_input_validar_multiselect();
     }
-    if( valor == 'cero'){
+    if( valor >=2 && valor <=7){
       reset_quiz_current();
       $('#question_tone').show();
       enablemultiselect('select_quest_two');
@@ -203,7 +203,7 @@ $('#select_quest_one').on('change', function(e){
       enableselect('select_quest_calf');
       reset_input_validar_multiselect();
     }
-    if( valor == 'ninguno'){
+    if( valor == 1){
       reset_quiz_current();
       $('#question_ttwo').show();
       enablemultiselect('select_quest_three');
@@ -315,9 +315,12 @@ $('#register_quiz').on('click', function() {
        $var_hotel = $('#select_one').val();
      $var_cliente = $('#select_two').val();
        $var_fecha = $('#calendar_fecha').val();
+
 $var_probabilidad = $('#select_quest_one').val();
   $var_inconforme = $('#select_quest_two').val();
      $var_mejorar = $('#select_quest_three').val();
+
+
    $var_comercial = $('#comment_a').val();
    $var_proyectos = $('#comment_b').val();
      $var_soporte = $('#comment_c').val();
@@ -325,513 +328,41 @@ $var_calificacion = $('#select_quest_calf').val();
        var _token = $('input[name="_token"]').val();
 
   if ($val_select_one == true) {
+    if( $("#select_quest_one").val() >= 8){
+      toastr.error('Mensaje 3', 'Mensaje', {timeOut: 2000});
 
-    if( $("#select_quest_one").val() == 'cien'){
-      $val_campo_a = validarespacioinput('comment_c');
-      $val_select_calf = validarSelect('select_quest_calf');
-      $("#check_a").val('');
-      $("#check_b").val('');
-      $("#check_c").val('');
-
-      if ($val_campo_a == true && $val_select_calf == true ){
-        $.ajax({
-          type: "POST",
-          url: "./quizencuestamanual",
-          data: {
-             var_xa : $var_hotel,
-             var_xb : $var_cliente,
-             var_xc : $var_fecha,
-             var_xd : $var_probabilidad,
-             var_xe : $var_inconforme,
-             var_xf : $var_mejorar,
-             var_xg : $var_comercial,
-             var_xh : $var_proyectos,
-             var_xi : $var_soporte,
-             var_xj : $var_calificacion,
-             _token : _token },
-          success: function (data){
-            toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-          },
-          error: function (data) {
-            console.log('Error:', data);
-          }
-        });
-        reset_quiz_all();
-      }
-      else { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
     }
-//hgffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    if( $("#select_quest_one").val() == 'cero'){
-      $val_select_calf = validarSelect('select_quest_calf');
-      var xa_a = $("#check_a").val();
-      var xa_b = $("#check_b").val();
-      var xa_c = $("#check_c").val();
-
-      if ($val_select_calf == true) {
-        if ( xa_a == '' && xa_b == '' && xa_c == '')  { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000});$('#select_quest_two').parent().parent().parent().attr("class", "form-group has-error"); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '') {
-          $val_campo_a = validarespacioinput('comment_a');
-          if ($val_campo_a == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-           }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '1' && xa_b == '1' && xa_c == ''){
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_b = validarespacioinput('comment_b');
-          if ($val_campo_a == true && $val_campo_b == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '1' && xa_b == '' && xa_c == '1'){
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_a == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '' && xa_b == '1' && xa_c == '') {
-          $val_campo_b = validarespacioinput('comment_b');
-          if ($val_campo_b == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '' && xa_b == '1' && xa_c == '1') {
-          $val_campo_b = validarespacioinput('comment_b');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_b == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '' && xa_b == '' && xa_c == '1') {
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_c == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '1' && xa_b == '1' && xa_c == '1') {
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_b = validarespacioinput('comment_b');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_a == true && $val_campo_b == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-      }
-      else {
-        $val_campo_a = validarespacioinput('comment_a');
-        $val_campo_b = validarespacioinput('comment_b');
-        $val_campo_c = validarespacioinput('comment_c');
-        if ( xa_a == '' && xa_b == '' && xa_c == '')  { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000});$('#select_quest_two').parent().parent().parent().attr("class", "form-group has-error"); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '1' && xa_b == '1' && xa_c == ''){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '1'){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '1' && xa_c == '') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '1' && xa_c == '1'){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '' && xa_c == '1') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-      if ( xa_a == '1' && xa_b == '1' && xa_c == '1') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-      }
+    if( $("#select_quest_one").val() >= 2 && $("#select_quest_one").val() <= 7){
+      toastr.error('Mensaje 2', 'Mensaje', {timeOut: 2000});
     }
-//hfffffffffffffffffffffffffffffffffffff
-    if( $("#select_quest_one").val() == 'ninguno'){
-      $val_select_calf = validarSelect('select_quest_calf');
-      var xa_a = $("#check_a").val();
-      var xa_b = $("#check_b").val();
-      var xa_c = $("#check_c").val();
-      if ($val_select_calf == true) {
-        if ( xa_a == '' && xa_b == '' && xa_c == '')  { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000});$('#select_quest_three').parent().parent().parent().attr("class", "form-group has-error"); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '') {
-          $val_campo_a = validarespacioinput('comment_a');
-          if ($val_campo_a == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-        if ( xa_a == '1' && xa_b == '1' && xa_c == ''){
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_b = validarespacioinput('comment_b');
-          if ($val_campo_a == true && $val_campo_b == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '1'){
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_a == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-        if ( xa_a == '' && xa_b == '1' && xa_c == '') {
-          $val_campo_b = validarespacioinput('comment_b');
-          if ($val_campo_b == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '' && xa_b == '1' && xa_c == '1') {
-          $val_campo_b = validarespacioinput('comment_b');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_b == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-        if ( xa_a == '' && xa_b == '' && xa_c == '1') {
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_c == true) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-
-        if ( xa_a == '1' && xa_b == '1' && xa_c == '1') {
-          $val_campo_a = validarespacioinput('comment_a');
-          $val_campo_b = validarespacioinput('comment_b');
-          $val_campo_c = validarespacioinput('comment_c');
-          if ($val_campo_a == true && $val_campo_b == true && $val_campo_c == true ) {
-            $.ajax({
-              type: "POST",
-              url: "./quizencuestamanual",
-              data: {
-                 var_xa : $var_hotel,
-                 var_xb : $var_cliente,
-                 var_xc : $var_fecha,
-                 var_xd : $var_probabilidad,
-                 var_xe : $var_inconforme,
-                 var_xf : $var_mejorar,
-                 var_xg : $var_comercial,
-                 var_xh : $var_proyectos,
-                 var_xi : $var_soporte,
-                 var_xj : $var_calificacion,
-                 _token : _token },
-              success: function (data){
-                toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
-              },
-              error: function (data) {
-                console.log('Error:', data);
-              }
-            });
-            reset_quiz_all();
-          }
-          else{ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        }
-      }
-      else{
-        $val_campo_a = validarespacioinput('comment_a');
-        $val_campo_b = validarespacioinput('comment_b');
-        $val_campo_c = validarespacioinput('comment_c');
-        if ( xa_a == '' && xa_b == '' && xa_c == '')  { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000});$('#select_quest_three').parent().parent().parent().attr("class", "form-group has-error"); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '1' && xa_b == '1' && xa_c == ''){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '1' && xa_b == '' && xa_c == '1'){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '1' && xa_c == '') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '1' && xa_c == '1'){ toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-        if ( xa_a == '' && xa_b == '' && xa_c == '1') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-      if ( xa_a == '1' && xa_b == '1' && xa_c == '1') { toastr.error('Faltan datos', 'Mensaje', {timeOut: 2000}); }
-      }
+    if( $("#select_quest_one").val() == 1){
+      toastr.error('Mensaje 1', 'Mensaje', {timeOut: 2000});
+      alert($var_mejorar);
+      // $.ajax({
+      //   type: "POST",
+      //   url: "./quizencuestamanual",
+      //   data: {
+      //      var_xa : $var_hotel,
+      //      var_xb : $var_cliente,
+      //      var_xc : $var_fecha,
+      //      var_xd : $var_probabilidad,
+      //      var_xe : $var_inconforme,
+      //      var_xf : $var_mejorar,
+      //      var_xg : $var_comercial,
+      //      var_xh : $var_proyectos,
+      //      var_xi : $var_soporte,
+      //      var_xj : $var_calificacion,
+      //      _token : _token },
+      //   success: function (data){
+      //     toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
+      //   },
+      //   error: function (data) {
+      //     console.log('Error:', data);
+      //   }
+      // });
     }
+
+
   }
   else{
     toastr.error('error', 'Mensaje', {timeOut: 2000});
