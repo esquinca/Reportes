@@ -61,6 +61,7 @@ class ImportController extends Controller
 
         return $mesyear;
     }
+
     public function subir2(Request $request)
     {
       $archivo = $request->file('documento');
@@ -68,7 +69,14 @@ class ImportController extends Controller
       DB::beginTransaction();
 
       Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
+
         $hoja->each(function($fila){
+          // if (empty($response->tickets[$i]->via->channel)) {
+          //     $channel = "";
+          // }else{
+          //     $channel = $response->tickets[$i]->via->channel;
+          // }
+
           $hotel= $fila->nombre_hotel;
 
           $fechaSin= $fila->fecha;
@@ -84,16 +92,21 @@ class ImportController extends Controller
           $auxone = $this->returnDateTwo($fechaSalida);
           $auxiliar = $hotel.' '.$auxone;
 
-          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
 
-          // echo $bytes;
-          // echo "<br>";
-          // echo $fechaSalida;
-          // echo "<br>";
-          // echo $mesyear = $this->returnDate($fechaSalida);
-          // echo "<br>";
-          // echo $selectid;
-          // echo "<br>";
+          $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+          
+          // if (empty($selectid)) {
+          //   $resultGB = DB::table('GBXDia')->insert([
+          //     ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
+          //   ]);
+
+          //   $resultUS = DB::table('UsuariosXDia')->insert([
+          //     ['NumClientes' => $nclient, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
+          //   ]);
+          // }else{
+          //   return "0";
+          // }
+
 
           $resultGB = DB::table('GBXDia')->insert([
             ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
@@ -208,8 +221,201 @@ class ImportController extends Controller
         });
       });
       DB::commit();
+      //notificationMsg('success', 'Registrados con exito. !!');
+      
+      return Redirect::back();
+    }
+
+    public function insertExcel(Request $request)
+    {
+      $archivo = $request->file('documento');
+      $gigaValues = [];
+      $nclientValues = [];
+      $MostAPValues = [];
+      $RogueValues = [];
+      $WLANValues = [];
+      // Probablemente agregar esta bandera cada vez que se hace un registro y agregar transaction para...
+      // poder hacer rollback a las inserciones por si falla alguna.
+      $flag = FALSE;
+      $flagRogue = FALSE;
+      //
+      Excel::load($archivo, function($hoja){
+        $results = $hoja->get();
+
+        $hoja1 = $results[0]->all();
+        $hoja2 = $results[1]->all();
+        $hoja3 = $results[2]->all();
+        $hoja4 = $results[3]->all();
+
+
+        if (empty($hoja1[0]->nombre_hotel)) {
+            notificationMsg('error','Esta mal el nombre del hotel, favor de revisar');
+            return Redirect::back();
+        }else{
+            $hotel = trim($hoja1[0]->nombre_hotel);
+            $mesrogue = trim($hoja1[0]->fecha);
+            try {
+              $selectid = DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
+              $selectHotel = DB::table('hotels')->select('Nombre_hotel')->where('id', '=', $selectid)->value('Nombre_hotel');
+            } catch (\Exception $e) {
+              notificationMsg('error','No se encontro el nombre del hotel en la base, favor de revisar');
+              return Redirect::back();
+            }
+        }
+        $rowNum1 = $this->countArray($hoja1);
+
+        //---Obtencion de datos HOJA Usuarios y Gigas.
+        for ($i=0; $i < $rowNum1; $i++) {
+          $fechaSin= trim($hoja1[$i]->fecha);
+          $fechaSalida = date('Y-m-d', strtotime($fechaSin));
+
+          $nclient= trim($hoja1[$i]->no_usuario);
+
+          $gb= $hoja1[$i]->cantidad_gb_24hrs;
+          $bytes = ((($gb * 1024) * 1024) * 1024);
+          $bytes = trim($bytes);
+
+          $mesyear = $this->returnDate($fechaSalida);
+          $auxone = $this->returnDateTwo($fechaSalida);
+          $auxiliar = $selectHotel.' '.$auxone;
+
+          if (empty($nclientV) && empty($gb) && empty($fechaSin)) {
+            continue;
+          }else{
+            $valuesG = [
+              'CantidadBytes' => $bytes,
+              'Fecha' => $fechaSalida,
+              'Mes' => $mesyear,
+              'hotels_id' => $selectid,
+              'Aux' => $auxiliar,
+            ];
+            $valuesnC = [
+              'NumClientes' => $nclient,
+              'Fecha' => $fechaSalida,
+              'Mes' => $mesyear,
+              'hotels_id' => $selectid,
+              'Aux' => $auxiliar,
+            ];
+            $gigaValues[] = $valuesG;
+            $nclientValues[] = $valuesnC;
+          }
+        }
+        $resultGB = DB::table('GBXDia')->insert($gigaValues);
+        $resultNC = DB::table('UsuariosXDia')->insert($nclientValues);
+
+        $rowNum2 = $this->countArray($hoja2);
+
+        //---Obtencion de datos HOJA MostAP.
+        for ($j=0; $j < $rowNum2; $j++) {
+          $aps_mac= trim($hoja2[$j]->ap_mac);
+          $aps_nclient= trim($hoja2[$j]->ap_noclientes);
+          $aps_model= trim($hoja2[$j]->ap_modelo);
+
+          $aps_fecha= trim($hoja2[$j]->ap_fecha);
+          $fechaSalidaAP = date('Y-m-d', strtotime($aps_fecha));
+
+          $mesyearAP = $this->returnDate($fechaSalidaAP);
+
+          if (empty($aps_mac) && empty($aps_model) && empty($nclientValues) && empty($aps_fecha)) {
+            continue;
+          }else{
+            $valuesMost = [
+              'Fecha' => $fechaSalidaAP,
+              'MAC' => $aps_mac,
+              'NumClientes' => $aps_nclient,
+              'Modelo' => $aps_model,
+              'Mes' => $mesyearAP,
+              'hotels_id' => $selectid
+            ];
+            $MostAPValues[] = $valuesMost;
+          }
+        }
+        $result_ap = DB::table('MostAP')->insert($MostAPValues);
+        
+        $rowNum3 = $this->countArray($hoja3);
+
+        //---Obtencion de datos HOJA Rogue Devices.
+        for ($k=0; $k < $rowNum3; $k++) {
+          $rgmac= trim($hoja3[$k]->rogue_mac);
+          $rgcanal= trim($hoja3[$k]->rogue_canal);
+          $rgssid= trim($hoja3[$k]->rogue_ssid);
+          $fechaRog= trim($hoja3[$k]->rogue_mes);
+
+          $fechaRogMod = date('Y-m', strtotime($fechaRog));
+          $mesyearRG = $this->returnDate($fechaRogMod);
+
+          $auxonerg = $this->returnDateTwo($fechaRogMod);
+          $auxiliarrg = $selectHotel.' '.$auxonerg;
+
+          if ($k === 0 && empty($rgmac)) {
+            $mesrogue2 = date('Y-m', strtotime($mesrogue));
+            $mesyearRG2 = $this->returnDate($mesrogue2);
+            $result_rg = DB::table('RogueDevices')->insert([
+              'Mes' => $mesyearRG2,
+              'hotels_id' => $selectid,
+              'valor' => 0
+            ]);
+            echo $result_rg;
+            $flagRogue = true;
+            break;
+          }
+
+          if (empty($rgmac) && empty($rgssid) && empty($fechaRog)) {
+            continue;
+          }else{
+            $valuesRogue = [
+              'MACRogue' => $rgmac,
+              'ChannelRogue' => $rgcanal,
+              'SSIDRogue' => $rgssid,
+              'Mes' => $mesyearRG,
+              'hotels_id' => $selectid,
+              'Aux' => $auxiliarrg,
+              'valor' => 1
+            ];
+            $RogueValues[] = $valuesRogue;
+          }
+        }
+
+        //if con bandera para los rogue devices.
+        // $resultRogue = DB::table('RogueDevices')->insert($RogueValues);
+
+        $rowNum4 = $this->countArray($hoja4);
+
+        //---Obtencion de datos HOJA WLAN.
+        for ($l=0; $l < $rowNum4; $l++) { 
+          $nombrewlan = trim($hoja4[$l]->wlan_nombre);
+          $nclientwlan = trim($hoja4[$l]->wlan_noclientes);
+          $fechawl = trim($hoja4[$l]->wlan_fecha);
+
+          $fechaWlan = date('Y-m-d', strtotime($fechawl));
+          $mesyearwlan = $this->returnDate($fechaWlan);
+          if (empty($nombrewlan) && empty($nclientwlan) && empty($fechawl)) {
+            continue;
+          }else{
+            $valuesWLAN = [
+              'NombreWLAN' => $nombrewlan,
+              'ClientesWLAN' => $nclientwlan,
+              'Fecha' => $fechaWlan,
+              'Mes' => $mesyearwlan,
+              'hotels_id' => $selectid
+            ];
+            $WLANValues[] = $valuesWLAN;
+          }
+
+        }
+        $resultWlan = DB::table('WLAN')->insert($WLANValues);
+      });
+
       notificationMsg('success', 'Registrados con exito. !!');
       return Redirect::back();
+
+    }
+
+    public function countArray($var)
+    {
+        $count = count($var);
+
+        return $count;
     }
 
     /**

@@ -30,7 +30,7 @@
         <div class="row">
           <div class="col-sm-12">
             <!--<form class="form-inline">-->
-              {!! Form::open(['action' => 'ImportController@subir', 'url' => '/uploaddoc', 'method' => 'post', 'id' => 'formexcel', 'class' => 'form-inline', 'enctype' => 'multipart/form-data']) !!}
+              {!! Form::open(['action' => 'ImportController@insertExcel', 'url' => '/uploaddoc', 'method' => 'post', 'id' => 'formexcel', 'class' => 'form-inline', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                   <label class="btn btn-default btn-file">
                         Seleccione el Archivo: <input type="file" id="documento" name="documento" style="display: none;" onchange="control(this)" required>

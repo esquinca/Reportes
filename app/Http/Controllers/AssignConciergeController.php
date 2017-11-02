@@ -175,27 +175,16 @@ class AssignConciergeController extends Controller
     public function curlZen()
     {
       //define("ZDURL", "https://sitwifi.zendesk.com/api/v2/tickets.json");
-      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=type:user+email:jesquinca@sitwifi.com";
-      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31+type:ticket";
-      $url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-26&type:ticket&sort_by=created_at&sort_order=asc";
-      //$url = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2016-12-31&created<2017-08-01&type:ticket&sort_by=created_at&sort_order=asc";
+
       $url2 = "https://sitwifi.zendesk.com/api/v2/search.json?page=31&query=created>2012-12-26&sort_by=created_at&sort_order=asc";
-
       $url3 = "https://sitwifi.zendesk.com/api/v2/search.json?query=created>2012-12-26&created<2017-09-01&type:ticket&sort_by=created_at&sort_order=asc";
-
-      $url4 = "https://sitwifi.zendesk.com/api/v2/search.json?page=100&query=created%3E2012-12-26&sort_by=created_at&sort_order=asc";
-
       $urlnext = "https://sitwifi.zendesk.com/api/v2/search.json?page=101&query=created%3E2012-12-26&sort_by=created_at&sort_order=asc";
 
-      $urlticket = "https://sitwifi.zendesk.com/api/v2/tickets/599.json";
       $urltickets = "https://sitwifi.zendesk.com/api/v2/tickets.json";
       $urlmetrics = "https://sitwifi.zendesk.com/api/v2/ticket_metrics.json";
+
       $urlpipe = "https://sitwifi.pipedrive.com/v1/users?api_token=3661682acb7f64fc28517d9fa8ae9a033ba7c9da";
-      //$json = json_encode(array('ticket' => array('subject' => $arr['z_subject'], 'comment' => array( "value"=> $arr['z_description']), 'requester' => array('name' => $arr['z_name'], 'email' => $arr['z_requester']))));
 
-      // created>2014-08-01 created<2014-08-05
-
-      //$json2 = json_encode(array('' => ''));
 
       $ch = curl_init();
       //echo "Inicializa la funcion .. ";
@@ -231,7 +220,6 @@ class AssignConciergeController extends Controller
       //return $output;
 
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -101,6 +101,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('/pthehe', 'AssignConciergeController@rutaestadoserver');
 	Route::get('/acm1pt', 'AssignConciergeController@curlZen');
+	Route::get('/acm1pt2', 'AssignConciergeController@sqltest');
+	//Route::post('/acm1pt3', 'ImportController@insertExcel');
 
 	//Captura individual
 	Route::get('/individual', 'IndividualController@index');
@@ -112,7 +114,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/import', 'ImportController@index');
 	//Route::post('/uploaddoc', 'ImportController@subir');
 	//Route::post('/uploaddoc', 'ImportController@create');
-	Route::post('/uploaddoc', 'ImportController@subir2');
+	//Route::post('/uploaddoc', 'ImportController@subir2');
+	Route::post('/uploaddoc', 'ImportController@importExcel');
 	//Cuestionario
 	//Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
