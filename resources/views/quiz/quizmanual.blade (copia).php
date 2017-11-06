@@ -60,7 +60,7 @@
 
 							 <div class="col-md-3 col-sm-6 col-xs-12">
 								 <div class="form-group">
-									 <label for="calendar_fecha" class="col-sm-12 control-label" style="text-align: left;">{{ trans('message.fecha') }}</label>
+									 <label for="dolar" class="col-sm-12 control-label" style="text-align: left;">{{ trans('message.fecha') }}</label>
 									 <div class="col-sm-12">
 										 <input id="calendar_fecha" name="calendar_fecha" type="text" class="form-control" style="width: 100%;" maxlength="7" title="{{ trans('message.maxcarsiete')}}">
 									 </div>
@@ -125,10 +125,10 @@
                  </div>
                </div>
 
-               <div id="question_content_ninguna" class="form-group">
-                 <label for="select_quest_ninguna" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_three') }} </label>
+               <div id="question_tone" class="form-group">
+                 <label for="select_quest_two" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_two') }} </label>
                  <div class="col-sm-4">
-                   <select id="select_quest_ninguna" name="select_quest_ninguna"  class="form-control" multiple="multiple" style="width: 100%;">
+                   <select id="select_quest_two" name="select_quest_two"  class="form-control" multiple="multiple" style="width: 100%;">
                      <option value="comment_xa">{{ trans('message.comercial') }}</option>
                      <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
                      <option value="comment_xc">{{ trans('message.soportetec') }}</option>
@@ -136,23 +136,13 @@
                  </div>
                </div>
 
-               <div id="question_content_cero" class="form-group">
-                 <label for="select_quest_cero" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_two') }} </label>
+               <div id="question_ttwo" class="form-group">
+                 <label for="select_quest_three" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_three') }} </label>
                  <div class="col-sm-4">
-                   <select id="select_quest_cero" name="select_quest_cero"  class="form-control" multiple="multiple" style="width: 100%;">
+                   <select id="select_quest_three" name="select_quest_three"  class="form-control" multiple="multiple" style="width: 100%;">
                      <option value="comment_xa">{{ trans('message.comercial') }}</option>
                      <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
                      <option value="comment_xc">{{ trans('message.soportetec') }}</option>
-                   </select>
-                 </div>
-               </div>
-
-               <div id="question_content_additional" class="form-group">
-                 <label for="select_quest_additional" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_additional') }} </label>
-                 <div class="col-sm-4">
-                   <select id="select_quest_additional" name="select_quest_additional"  class="form-control" multiple="multiple" style="width: 100%;">
-                     <option value="comment_xa">{{ trans('message.comercial') }}</option>
-                     <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
                    </select>
                  </div>
                </div>
@@ -179,10 +169,10 @@
                  </div>
                </div>
 
-               <div id="question_content_evaluation" class="form-group">
-                 <label for="select_quest_evaluation" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
+               <div id="question_tthree" class="form-group">
+                 <label for="select_quest_calf" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
                  <div class="col-sm-4">
-                   <select class="form-control" id="select_quest_evaluation" style="width: 100%;">
+                   <select class="form-control" id="select_quest_calf" style="width: 100%;">
                      <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
                      <?php
                      for ($i=1; $i <= 10 ; $i++) {

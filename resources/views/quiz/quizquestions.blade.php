@@ -17,7 +17,12 @@
     <link href="{{ asset('/plugins/bootstrap-multiselect-master/css/bootstrap-multiselect.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('/plugins/bootstrap-multiselect-master/js/bootstrap-multiselect.js') }}" type="text/javascript"></script>
 
-
+    <style>
+      .box-body span {
+        font-weight: normal;
+        font-style: oblique;
+      }
+    </style>
     @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
       <!--<script src="/js/quiz/question_enc_preview.js"></script>-->
     @endif
@@ -59,7 +64,8 @@
         <!-- Encabezado de opciones de encuestas de servicio -->
         <div class="row">
           <div class="col-sm-12">
-            <form id="xa_encuesta" name="xa_encuesta" class="form-inline">
+            {{ csrf_field() }}
+            <form id="xa_encuesta" name="xa_encuesta" class="form-inline" method="POST">
               <div class="form-group">
                 <label for="selecthotelofclient">Elija el hotel<span style="color: red;">*</span></label>
                 <select id="selecthotelofclient" name="selecthotelofclient"  class="form-control" multiple="multiple" required>
@@ -69,10 +75,10 @@
                 </select>
               </div>
 
-              <span class="button-checkbox">
+              <!-- <span class="button-checkbox">
                 <button type="button" class="btn" data-color="success">Seleccionar todos</button>
                 <input type="checkbox" class="hidden" />
-              </span>
+              </span> -->
 
               <div class="btn-group">
                 <a id="generatequizquest" class="btn btn-primary"><i class="fa fa-dot-circle-o "></i> Generar encuesta </a>
@@ -85,159 +91,154 @@
         </div>
         <!-- /.Encabezado de opciones de encuestas de servicio -->
 
-        <!-- Apartado preguntas -->
-        <div class="row col-top" id="xy_quiz">
-          <div class="col-sm-12">
-            <div class="box box-solid">
-              <!-- header quiz questions -->
-              <div class="box-header with-border">
-                <small class="pull-right">{{ trans('message.dateAct') }} <?php $now = new \DateTime();
-                echo $now->format('d-m-Y');?><i class="fa fa-comments -o"></i> </small>
-              </div>
-              <!-- /.header quiz questions -->
-              <!-- quiz questions -->
-              <div class="box-body">
-                <div class="row center">
-                  {!! Form::open(['action' => 'QuizQuestionsController@store', 'url' => '/survey_form', 'method' => 'post', 'id' => 'delta']) !!}
-                    <!-- Question One -->
-                    <input type="hidden" id="xqb" name="xqb" />
-                    <div class="col-sm-12">
-                      <h4>
+        <!---Apartado nuevo de preguntas -->
+        <section class="content">
+          <section class="seleccion no-print">
+            <div class="row">
+              <div id="content_satisfaction" class="col-xs-12">
+                <!-- SELECT2 EXAMPLE -->
+                <div id="satisfaccion_cliente" class="box box-warning">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">{{ trans('message.satisfaccioncliente') }}</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <span>
                           Con base en el servicio que le brindamos durante el mes de
                           <?php
-                          $now = new \DateTime();
-                          $date= $now->format('Y/m/d');
-                          $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                          $numMes = date ("m", strtotime($date));
-                          echo $meses[$numMes-1];
+                            $now = new \DateTime();
+                            $date= $now->format('Y/m/d');
+                            $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                            $numMes = date ("m", strtotime($date));
+                            echo $meses[$numMes-2];
                           ?>
-                          ¿Qué probabilidad existe de que usted recomiende nuestros servicios con sus familiares, colegas o amigos?
-                      </h4>
-                    </div>
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-8">
-                      <div id="answer_one" class="row">
-                        <div class="col-sm-4">
-                          <input type="radio" name="radio" id="radio1" value="100" class="radio"/>
-                          <label class="borderlistradio" for="radio1">100 %</label>
-                        </div>
-                        <div class="col-sm-4">
-                          <input type="radio" name="radio" id="radio2" value="0" class="radio"/>
-                          <label class="borderlistradio" for="radio2">0 %</label>
-                        </div>
-                        <div class="col-sm-4">
-                          <input type="radio" name="radio" id="radio3" value="ninguna" class="radio"/>
-                          <label class="borderlistradio" for="radio3">Ninguna de las anteriores</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-2"></div>
-                    <!-- Question One -->
-
-                    <!-- Question Two Detractor-->
-                    <div id="answer_two" class="col-sm-12 evaluation">
-                      <h4>
-                        ¿Cualés son lo aspectos del servicio con los que está inconforme y debemos mejorar?
-                      </h4>
-                      <div class="row">
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radiob2" id="radiob2" class="radio boxb" value='Comercial'/>
-                          <label class="borderlistradio" for="radiob2">Comercial</label>
-                        </div>
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radiob3" id="radiob3" class="radio boxb" value='ProyectoseInstalaciones'/>
-                          <label class="borderlistradio" for="radiob3">Proyectos e instalaciones</label>
-                        </div>
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radiob1" id="radiob1" class="radio boxb" value='SoporteTecnico'/>
-                          <label class="borderlistradio" for="radiob1">Soporte Tecnico</label>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.Question Two Detractor-->
-
-                    <!-- Question Three Pasivo-->
-                    <div id="answer_three" class="col-sm-12 evaluation">
-                      <h4>
-                        ¿Qué aspectos debemos mejorar para lograr la mayor probabilidad de que nos pueda recomendar?
-                      </h4>
-                      <div class="row">
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radioc2" id="radioc2" class="radio" value='Comercial'/>
-                          <label class="borderlistradio" for="radioc2">Comercial</label>
-                        </div>
-
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radioc3" id="radioc3" class="radio" value='ProyectoseInstalaciones'/>
-                          <label class="borderlistradio" for="radioc3">Proyectos e instalaciones</label>
-                        </div>
-
-                        <div class="col-sm-4">
-                          <input type="checkbox" name="radioc1" id="radioc1" class="radio" value='SoporteTecnico'/>
-                          <label class="borderlistradio" for="radioc1">Soporte Tecnico</label>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- /.Question Three Pasivo-->
-
-                    <!-- Question Four Promotor-->
-                    <div id="answer_four" class="col-sm-12 evaluation">
-                      <div class="row row-separation">
-                        <div class="col-sm-3"> <h5 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Comercial </h5></div>
-                        <div class="col-sm-9"><textarea id="comment_a" name="comment_a" cols="50" rows="5" maxlength="150"></textarea><div id="validation1"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div></div>
+                          , quisiera pedirle que respondiera a las siguientes preguntas.
+                        </span>
                       </div>
 
-                      <div class="row row-separation">
-                        <div class="col-sm-3"> <h5 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Proyectos e instalaciones </h5></div>
-                        <div class="col-sm-9"><textarea id="comment_b" name="comment_b" cols="50" rows="5" maxlength="150"></textarea><div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div></div>
+                      <div class="col-xs-12">
+                        {!! Form::open(['action' => 'QuizQuestionsController@createdata', 'url' => '/quiz_data_ifn', 'method' => 'post', 'id' => 'lambda']) !!}
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <input type="hidden" id="xqb" name="xqb" />
+                              <input type="hidden" id="check_a" name="check_a" value="">
+                              <input type="hidden" id="check_b" name="check_b" value="">
+                              <input type="hidden" id="check_c" name="check_c" value="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="select_one">1.- ¿Qué probabilidad existe de que usted recomiende nuestros servicios con sus familiares, colegas o amigos? </label>
+                            <div>
+                              <select class="form-control" id="select_one" name="select_one">
+                                  <option value="" selected>{{ trans('message.optionOne')}}</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div id="content_select_question_inconforme" class="form-group">
+                            <label for="select_question_inconforme">2.- ¿Cualés son lo aspectos del servicio con los que está inconforme y debemos mejorar? </label>
+                            <select class="form-control" id="select_question_inconforme" name="select_question_inconforme" multiple="multiple" style="width: 100%;">
+                                <option value="comment_xa">{{ trans('message.comercial') }}</option>
+                                <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
+                                <option value="comment_xc">{{ trans('message.soportetec') }}</option>
+                            </select>
+                          </div>
+                          <div id="content_select_question_mejorar" class="form-group">
+                            <label for="select_question_mejorar">2.- ¿Qué aspectos debemos mejorar para lograr la mayor probabilidad de que nos pueda recomendar? </label>
+                            <select class="form-control" id="select_question_mejorar" name="select_question_mejorar" multiple="multiple" style="width: 100%;">
+                              <option value="comment_xa">{{ trans('message.comercial') }}</option>
+                              <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
+                              <option value="comment_xc">{{ trans('message.soportetec') }}</option>
+                            </select>
+                          </div>
+                          <div id="content_select_question_add" class="form-group">
+                            <label for="select_question_add">2.- Deseas añadir un comentario adicional a </label>
+                            <select class="form-control" id="select_question_add" name="select_question_add" multiple="multiple" style="width: 100%;">
+                              <option value="comment_xa">{{ trans('message.comercial') }}</option>
+                              <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
+                            </select>
+                          </div>
+
+                          <div id="comment_ab" class="form-group">
+                            <label for="comment_a" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.comercial') }}</label>
+                            <div class="col-sm-12">
+                              <textarea id="comment_a" name="comment_a" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea>
+                              <div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                            </div>
+                          </div>
+
+                          <div id="comment_bc" class="form-group">
+                            <label for="comment_b" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.proyeceinst') }}</label>
+                            <div class="col-sm-12">
+                              <textarea id="comment_b" name="comment_b" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea>
+                              <div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                            </div>
+                          </div>
+
+
+                          <div id="comment_cd" class="form-group">
+                            <label for="comment_c" class="col-sm-12 control-label" style="text-align: left;"> {{ trans('message.text_help_question') }} {{ trans('message.soportetec') }}</label>
+                            <div class="col-sm-12">
+                              <textarea id="comment_c" name="comment_c" class='form-control' cols="50" rows="3" maxlength="150" style="width: 100%;"></textarea>
+                              <div id="validation2"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="select_evaluation">Evalua el servicio del mes de
+                              <?php
+                              $now = new \DateTime();
+                              $date= $now->format('Y/m/d');
+                              $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                              $numMes = date ("m", strtotime($date));
+                              echo $meses[$numMes-2];
+                            ?> con respecto a soporte.
+                            </label>
+                            <div>
+                              <select class="form-control select2" id="select_evaluation" name="select_evaluation">
+                                <option value="" selected>{{ trans('message.optionOne')}}</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                              </select>
+                            </div>
+                          </div>
+                          <a id="approvalInfo" class="btn btn-success"><i class="fa fa-check-square"></i> {{ trans('message.approval')}}</a>
+                          <a id="clearinfo" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                        {!! Form::close() !!}
                       </div>
-
-                      <div class="row row-separation">
-                        <div class="col-sm-3"> <h5 class="interlineado-title"> Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de Soporte Tecnico </h5></div>
-                        <div class="col-sm-9"><textarea id="comment_c" name="comment_c" cols="50" rows="5" maxlength="150"></textarea><div id="validation3"><small class="pull-right">Caracteres mínimo 4 y caracteres máximo 150.</small></div></div>
-                      </div>
                     </div>
-                    <!-- /.Question Four Promotor-->
-
-                    <!-- Question Five Calificacion-->
-                    <div id="answer_five" class="col-sm-12 evaluation">
-                      <h4>Evalua el servicio del mes de <?php
-                      $now = new \DateTime();
-                      $date= $now->format('Y/m/d');
-                      $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                      $numMes = date ("m", strtotime($date));
-                      echo $meses[$numMes-1];
-                      ?> con respecto a soporte</h4>
-                      <select id="example-1to10" name="rating" autocomplete="off">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9" selected="selected">9</option>
-                            <option value="10">10</option>
-                      </select>
-                    </div>
-                    <!-- /.Question Five Calificacion-->
-
-                    <!-- Question Button-->
-                    <div class="col-sm-12 col-top">
-                      <button id="register_quiz" type="button" class="btn bg-navy"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Evaluar</button>
-                      <button id="reload_quiz" type="button" class="btn bg-orange"><span class="fa fa-refresh" style="margin-right: 4px;"></span>Reiniciar</button>
-                    </div>
-                    <!-- ./Question Button-->
-
-
-                  {!! Form::close() !!}
+                  </div>
+                  <!-- /.box-body -->
                 </div>
               </div>
-              <!-- /.quiz questions -->
             </div>
-          </div>
-        </div>
+          </section>
+        </section>
+        <!--- Apartado nuevo de preguntas-->
+
+
+
+        <!-- Apartado preguntas -->
+
         <!-- /.Apartado preguntas -->
     <?php
       }

@@ -50,12 +50,12 @@ function validarInput(campo) {
 }
 
 $('#generateGbInfo').on('click', function(){
-  var a0=validarSelect('select_one');
+  var a0=validarSelect('select_onet');
 	var a1=validarInput('fecha_ngb');
   var a2=validarInput('valorgb_trans');
 
   var _token = $('input[name="_token"]').val();
-  var id_hotel_one= $('#select_one').val();
+  var id_hotel_one= $('#select_onet').val();
 	var cap_date= $('#fecha_ngb').val();
   var cap_value= $('#valorgb_trans').val();
 
@@ -240,28 +240,33 @@ $('#generatewlanInfo').on('click', function(){
 });
 
 
-
+$('#generateimgClear').on('click', function(){
+limp_img();
+});
 $('#generateGbClear').on('click', function(){
 limp_one();
 });
 $('#generateUserClear').on('click', function(){
 limp_two();
 });
-
 $('#generateapsClear').on('click', function(){
 limp_three();
 });
-
 $('#generatewlanClear').on('click', function(){
 limp_four();
 });
 
+function limp_img(){
+	$('#form_img_upload')[0].reset();
+	$("#select_one").select2("val", "");
+	$("#form_img_upload div.form-group").attr("class","form-group has-default");
+	$('#month_upload').val('').datepicker('update');
+}
 function limp_one(){
 	$('#form_gb')[0].reset();
-	$("#select_one").select2("val", "");
+	$("#select_onet").select2("val", "");
 	$("#form_gb div.form-group").attr("class","form-group has-default");
 	$('#fecha_ngb').val('').datepicker('update');
-
 }
 
 function limp_two(){

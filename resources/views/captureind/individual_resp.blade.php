@@ -68,7 +68,7 @@
 
                       <div class="form-group">
                         <a id="" class="btn btn-success" type="submit" onclick="$(this).closest('form').submit()"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
-                        <a id="generateimgClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                        <a id="generateGbClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
                       </div>
 
                     </div>
@@ -100,9 +100,9 @@
                     <div>
 
                       <div class="form-group">
-                        <label for="select_onet"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <label for="select_one"  class="control-label">{{ trans('message.selecthotel')}}: </label>
                         <div class="">
-                          <select class="form-control select2" id="select_onet">
+                          <select class="form-control select2" id="select_one">
                             <option value="" selected>{{ trans('message.optionOne')}}</option>
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>

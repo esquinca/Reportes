@@ -2,10 +2,10 @@
 
 @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestador')
   @section('htmlheader_title')
-      {{ trans('message.quiz') }}
+      {{ trans('message.quizedit') }}
   @endsection
   @section('contentheader_title')
-      {{ trans('message.quiztest') }}
+      {{ trans('message.quizedit') }}
   @endsection
 
   @push('scripts')
@@ -14,7 +14,7 @@
 
 	<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
 	<script src="/plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
-	<script src="/js/quiz/question_individual.js"></script>
+  <script src="/js/quiz/question_edit.js"></script>
 
   @endpush
 
@@ -28,7 +28,7 @@
 				 <!-- SELECT2 EXAMPLE -->
 				 <div class="box box-primary">
 					 <div class="box-header with-border">
-						 <h3 class="box-title">Captura la información solicitada</h3>
+						 <h3 class="box-title">Editar la información solicitada</h3>
 					 </div>
 					 <!-- /.box-header -->
 					 <div class="box-body">
@@ -42,18 +42,9 @@
 										 <select class="form-control select2" id="select_one" name="select_one" style="width: 100%;">
 											 <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
 											 @foreach ($sql as $info_enc)
-											 <option value="{{ $info_enc->id_hotels }}"> {{ $info_enc->Nombre_hotel }} </option>
+											 <option value="{{ $info_enc->id }}"> {{ $info_enc->Nombre_hotel }} </option>
 											 @endforeach
 										 </select>
-									 </div>
-								 </div>
-							 </div>
-
-							 <div class="col-md-3 col-sm-6 col-xs-12">
-								 <div class="form-group">
-									 <label for="select_two" class="col-sm-12 control-label" style="text-align: left;">Cliente</label>
-									 <div class="col-sm-12">
-										 <select class="form-control select2" id="select_two" name="select_two" style="width: 100%;"></select>
 									 </div>
 								 </div>
 							 </div>
@@ -103,6 +94,7 @@
                  <div class="col-sm-4">
                    <select class="form-control" id="select_quest_one" style="width: 100%;">
                      <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
+                     <option value="0">0</option>
                      <option value="1">1</option>
                      <option value="2">2</option>
                      <option value="3">3</option>
@@ -113,46 +105,6 @@
                      <option value="8">8</option>
                      <option value="9">9</option>
                      <option value="10">10</option>
-                   </select>
-                 </div>
-               </div>
-
-               <div class="form-group">
-                 <div class="col-sm-12">
-                   <input type="text" id="check_a" name="check_a" value="">
-                   <input type="text" id="check_b" name="check_b" value="">
-                   <input type="text" id="check_c" name="check_c" value="">
-                 </div>
-               </div>
-
-               <div id="question_content_ninguna" class="form-group">
-                 <label for="select_quest_ninguna" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_three') }} </label>
-                 <div class="col-sm-4">
-                   <select id="select_quest_ninguna" name="select_quest_ninguna"  class="form-control" multiple="multiple" style="width: 100%;">
-                     <option value="comment_xa">{{ trans('message.comercial') }}</option>
-                     <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
-                     <option value="comment_xc">{{ trans('message.soportetec') }}</option>
-                   </select>
-                 </div>
-               </div>
-
-               <div id="question_content_cero" class="form-group">
-                 <label for="select_quest_cero" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_two') }} </label>
-                 <div class="col-sm-4">
-                   <select id="select_quest_cero" name="select_quest_cero"  class="form-control" multiple="multiple" style="width: 100%;">
-                     <option value="comment_xa">{{ trans('message.comercial') }}</option>
-                     <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
-                     <option value="comment_xc">{{ trans('message.soportetec') }}</option>
-                   </select>
-                 </div>
-               </div>
-
-               <div id="question_content_additional" class="form-group">
-                 <label for="select_quest_additional" class="col-sm-8 control-label" style="text-align: left;"> {{ trans('message.text_questions_additional') }} </label>
-                 <div class="col-sm-4">
-                   <select id="select_quest_additional" name="select_quest_additional"  class="form-control" multiple="multiple" style="width: 100%;">
-                     <option value="comment_xa">{{ trans('message.comercial') }}</option>
-                     <option value="comment_xb">{{ trans('message.proyeceinst') }}</option>
                    </select>
                  </div>
                </div>
@@ -179,19 +131,22 @@
                  </div>
                </div>
 
-               <div id="question_content_evaluation" class="form-group">
-                 <label for="select_quest_evaluation" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
+               <div id="question_tthree" class="form-group">
+                 <label for="select_quest_calf" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
                  <div class="col-sm-4">
-                   <select class="form-control" id="select_quest_evaluation" style="width: 100%;">
+                   <select class="form-control" id="select_quest_calf" style="width: 100%;">
                      <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
-                     <?php
-                     for ($i=1; $i <= 10 ; $i++) {
-                       # code...
-                    ?>
-                     <option value="<?php echo $i ?>"><?php echo $i ?></option>
-                    <?php
-                     }
-                    ?>
+                     <option value="0">0</option>
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                     <option value="6">6</option>
+                     <option value="7">7</option>
+                     <option value="8">8</option>
+                     <option value="9">9</option>
+                     <option value="10">10</option>
                    </select>
                  </div>
                </div>
@@ -209,6 +164,7 @@
            </div>
          </div>
      </div>
+
 
 	 </section>
 

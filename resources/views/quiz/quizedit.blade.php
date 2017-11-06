@@ -63,7 +63,7 @@
 									 <div class="col-sm-12">
 										 <div class="btn-group" style="margin-top: 23px;">
 											 <a id="generateInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.generar')}}</a>
-											 <a id="generateClear" class="btn btn-danger"><i class="fa fa-trash"></i> {{ trans('message.limpiar')}} todo</a>
+											 <a id="generateClear" class="btn btn-danger"><i class="fa fa-trash"></i> {{ trans('message.cancelar')}}</a>
 										 </div>
 									 </div>
 								 </div>
@@ -74,7 +74,7 @@
 					 </div>
 					 <!-- /.box-body -->
 					 <div class="box-footer">
-						 <small><b>Nota: </b> Solo aparecen los hoteles que tengan asignado uno o mas encuestados</small>
+						 <small><b>Nota: </b> Solo aparecen los hoteles que tengan contestado la encuesta</small>
 					 </div>
 				 </div>
 
@@ -90,7 +90,7 @@
              <div class="box-body">
             {!! Form::open(['method' => 'post', 'id' => 'delta']) !!}
                <div class="form-group">
-                 <label for="select_quest_one" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_title_questions') }} {{ trans('message.text_questions_one') }}</label>
+                 <label for="select_quest_one" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_title_questions') }} {{ trans('message.text_questions_one') }}<span style="color: red;">*</span></label>
                  <div class="col-sm-4">
                    <select class="form-control" id="select_quest_one" style="width: 100%;">
                      <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
@@ -132,7 +132,7 @@
                </div>
 
                <div id="question_tthree" class="form-group">
-                 <label for="select_quest_calf" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}</label>
+                 <label for="select_quest_calf" class="col-sm-8 control-label" style="text-align: left;">{{ trans('message.text_eval_month_general') }} {{ trans('message.soportetec') }}<span style="color: red;">*</span></label>
                  <div class="col-sm-4">
                    <select class="form-control" id="select_quest_calf" style="width: 100%;">
                      <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
@@ -151,6 +151,11 @@
                  </div>
                </div>
 
+               <div class="form-group">
+                 <div class="col-sm-12">
+                   <b><span>{{trans('message.nota')}}:</span></b> <span>{{trans('message.notaeditquiz')}}</span>
+                 </div>
+               </div>
 
 
                <div class="col-sm-12 col-top">

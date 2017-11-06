@@ -462,6 +462,7 @@ return [
 
     'text_questions_three' => '¿Qué aspectos debemos mejorar para lograr la mayor probabilidad de que nos pueda recomendar?',
 
+    'text_questions_additional' => 'Deseas añadir un comentario adicional a',
 
     'text_help_question' => 'Por favor ayúdanos con un comentario sobre tu experiencia con el servicio de',
 
@@ -509,8 +510,8 @@ return [
     'approvalfilt' => 'Aplicar Filtro',
     'addapprovalfilt' => 'Añadir Filtro',
     'typerep' => 'Tipo',
-    '' => '',
-    '' => '',
+    'notaeditquiz' => 'Se tomará en cuenta cualquier cambio que se realice. Tanto los comentarios ',
+    'satisfaccioncliente' => 'Satisfacción cliente',
     '' => '',
     '' => '',
     '' => '',

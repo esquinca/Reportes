@@ -203,5 +203,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/typecreateone', 'AssignTypeController@create');
 	Route::post('/showtypehotel','AssignTypeController@show');
 	Route::post('/delete_register_tipo', 'AssignTypeController@destroy');
+	//Nuevas rutas
+	Route::post('/info_recargar_calif', 'QuizEditController@update');
+	Route::post('/quiz_data_ifn', 'QuizQuestionsController@createdata');
 
 });

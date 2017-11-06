@@ -10,7 +10,7 @@
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/select2/select2.full.min.js') }}" type="text/javascript"></script>
-
+@if (Auth::user()->Privilegio != 'Encuestado' )
 <script type="application/javascript">
 $(document).ready(function() {
     function pendientesactivos(){
@@ -30,6 +30,7 @@ $(document).ready(function() {
     }
     setInterval(pendientesactivos, 3000);
 });
+@endif
 </script>
 
 @stack('scripts')

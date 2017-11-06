@@ -22,7 +22,7 @@ function initialization_page(){
       viewMode: "months",
       minViewMode: "months",
       startDate: '01-2016',
-      endDate: '-1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
+      endDate: '1m', //Esto indica que aparecera el mes hasta que termine el ultimo dia del mes.
       autoclose: true
   });
 }

@@ -111,9 +111,209 @@ class QuizQuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createdata(Request $request)
     {
-        //
+           $correo = Auth::user()->email;
+          $var_ids = $request->xqb;
+        $var_probd = $request->select_one;
+$permiso_obligar_a = $request->check_a;
+$permiso_obligar_b = $request->check_b;
+$permiso_obligar_c = $request->check_c;
+      $valor_com_a = $request->comment_a;
+      $valor_com_b = $request->comment_b;
+      $valor_com_c = $request->comment_c;
+        $var_calif = $request->select_evaluation;
+
+          $var_nps = "";
+    if ($var_calif >= 9) { $var_nps = "PR"; }
+    if ($var_calif >= 7) { $var_nps = "PS"; }
+    if ($var_calif <= 6) { $var_nps = "D"; }
+
+      $array_calif = explode(",", $var_ids);
+ $size_array_calif = count($array_calif);
+
+   $monthName = date('F', strtotime('-1 month')) ;
+   $yearactual = date('Y') ;
+  $fecha_new_format=  $yearactual.'-'.$monthName.'-28';
+
+    for ($i=0; $i < $size_array_calif; $i++) {
+       $id_hotel_calificando = $array_calif[$i];
+       $consulta_nomb_hotel= DB::table('HotelUserReport')->select('Nombre_hotel')->where('IDHotels', '=', $id_hotel_calificando)->value('Nombre_hotel');
+       $auxiliar_calif = $consulta_nomb_hotel.' 28 '.$monthName.' '.$yearactual;
+
+       if($var_calif >= 8){
+         if ($var_checka == 1 && $var_checkb == 1) {
+           $sql= DB::table('calificaciones')->insert([
+             ['Calificacion' => $var_calif,
+             'Mes' => $monthName,
+             'Year1' => $yearactual,
+             'Probabilidad' =>  $var_nps,
+             'ProbabilidadNumero' =>  $var_probd,
+             'Comentario1' =>  $valor_com_a,
+             'Comentario2' =>  $valor_com_b,
+             'Comentario3' =>  $valor_com_c,
+             'Cadena' => $correo,
+             'Aux' => $auxiliar_calif,
+             'Fecha' =>  $fecha_new_format,
+             'hotels_id' =>  $id_hotel_calificando]
+           ]);
+         }
+         if ($var_checka == 1 && $var_checkb == '') {
+           $sql= DB::table('calificaciones')->insert([
+             ['Calificacion' => $var_calif,
+             'Mes' => $monthName,
+             'Year1' => $yearactual,
+             'Probabilidad' =>  $var_nps,
+             'ProbabilidadNumero' =>  $var_probd,
+             'Comentario1' =>  $valor_com_a,
+             'Comentario3' =>  $valor_com_c,
+             'Cadena' => $correo,
+             'Aux' => $auxiliar_calif,
+             'Fecha' =>  $fecha_new_format,
+             'hotels_id' =>  $id_hotel_calificando]
+           ]);
+         }
+         if ($var_checka == '' && $var_checkb == 1) {
+           $sql= DB::table('calificaciones')->insert([
+             ['Calificacion' => $var_calif,
+             'Mes' => $monthName,
+             'Year1' => $yearactual,
+             'Probabilidad' =>  $var_nps,
+             'ProbabilidadNumero' =>  $var_probd,
+             'Comentario2' =>  $valor_com_b,
+             'Comentario3' =>  $valor_com_c,
+             'Cadena' => $correo,
+             'Aux' => $auxiliar_calif,
+             'Fecha' =>  $fecha_new_format,
+             'hotels_id' =>  $id_hotel_calificando]
+           ]);
+         }
+         if($var_checka == '' && $var_checkb == '') {
+           $sql= DB::table('calificaciones')->insert([
+             ['Calificacion' => $var_calif,
+             'Mes' => $monthName,
+             'Year1' => $yearactual,
+             'Probabilidad' =>  $var_nps,
+             'ProbabilidadNumero' =>  $var_probd,
+             'Comentario3' =>  $valor_com_c,
+             'Cadena' => $correo,
+             'Aux' => $auxiliar_calif,
+             'Fecha' =>  $fecha_new_format,
+             'hotels_id' =>  $id_hotel_calificando],
+           ]);
+         }
+       }
+       else {
+          if ($var_checka == 1 && $var_checkb == ''&& $var_checkc == ''){
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario1' =>  $valor_com_a,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == ''&& $var_checkb == 1 && $var_checkc == ''){
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario2' =>  $valor_com_b,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == ''&& $var_checkb == ''&& $var_checkc == 1){
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario3' =>  $valor_com_c,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == 1 && $var_checkb == 1 && $var_checkc == ''){
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario1' =>  $valor_com_a,
+              'Comentario2' =>  $valor_com_b,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == 1 && $var_checkb == ''&& $var_checkc == 1) {
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario1' =>  $valor_com_a,
+              'Comentario3' =>  $valor_com_c,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == ''&& $var_checkb == 1 && $var_checkc == 1) {
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario2' =>  $valor_com_b,
+              'Comentario3' =>  $valor_com_c,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+          if ($var_checka == 1 && $var_checkb == 1 && $var_checkc == 1) {
+            $sql= DB::table('calificaciones')->insert([
+              ['Calificacion' => $var_calif,
+              'Mes' => $monthName,
+              'Year1' => $yearactual,
+              'Probabilidad' =>  $var_nps,
+              'ProbabilidadNumero' =>  $var_probd,
+              'Comentario1' =>  $valor_com_a,
+              'Comentario2' =>  $valor_com_b,
+              'Comentario3' =>  $valor_com_c,
+              'Cadena' => $correo,
+              'Aux' => $auxiliar_calif,
+              'Fecha' =>  $fecha_new_format,
+              'hotels_id' =>  $id_hotel_calificando]
+            ]);
+          }
+       }
+       notificationMsg('success', 'Registrados con exito. !!');
+       return Redirect::back();
+     }
+
+        // notificationMsg('success', 'Registro completado!!');
+        // return Redirect::back();
     }
 
     /**
@@ -124,298 +324,7 @@ class QuizQuestionsController extends Controller
      */
     public function store(Request $request)
     {
-        $correo = Auth::user()->email;
 
-        $calificar_hotel_id = $request->xqb;
-
-        $req_radio = $request->radio;
-
-        $req_com_a = $request->comment_a;
-        $req_com_b = $request->comment_b;
-        $req_com_c = $request->comment_c;
-
-        $req_radb1 = $request->radiob1;
-        $req_radb2 = $request->radiob2;
-        $req_radb3 = $request->radiob3;
-
-        $req_radc1= $request->radioc1;
-        $req_radc2= $request->radioc2;
-        $req_radc3= $request->radioc3;
-
-        $req_rating = $request->rating;
-        $var_nps = "";
-        if ($req_rating >= 9) { $var_nps = "PR"; }
-        if ($req_rating >= 7) { $var_nps = "PS"; }
-        if ($req_rating <= 6) { $var_nps = "D"; }
-
-        $fechain = date("Y-m-d");
-        $fecha_format= date("d F Y");
-        $mes = date("F");
-        $year = date("Y");
-
-        $array_calif = explode(",", $calificar_hotel_id);
-        $size_array_calif= count($array_calif);
-        for ($i=0; $i < $size_array_calif; $i++) {
-           $id_hotel_calificando = $array_calif[$i];
-           # Base code...
-           $consulta_nomb_hotel= DB::table('listarhoteles')->select('Nombre_hotel')->where('id', '=', $id_hotel_calificando)->value('Nombre_hotel');
-           $auxiliar_calif = $consulta_nomb_hotel.' '.$fecha_format;
-
-           if($req_radio === '100'){
-             $sql= DB::table('calificaciones')->insert([
-               ['Calificacion' => $req_rating,
-                'Mes' => $mes,
-                'Year1' => $year,
-                'Pregunta1' => 'SoporteTecnico',
-                'Probabilidad' =>  $var_nps,
-                'Comentario3' =>  $req_com_c,
-                'Cadena' => $correo,
-                'Fecha' =>  $fechain,
-                'hotels_id' =>  $id_hotel_calificando,
-                'Aux' => $auxiliar_calif]
-             ]);
-           }
-           if($req_radio === '0'){
-             #Comercial       #Proyectos e Instalaciones     #Soporte tecnico
-             #Condicion uno - Todos los comentarios
-             if (!empty($req_com_a) && !empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radb2 . "|" . $req_radb3 . "|" . $req_radb1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                    'Mes' => $mes,
-                    'Year1' => $year,
-                    'Pregunta1' => $valores,
-                    'Probabilidad' =>  $var_nps,
-                    'Comentario1' =>  $req_com_a,
-                    'Comentario2' =>  $req_com_b,
-                    'Comentario3' =>  $req_com_c,
-                    'Cadena' => $correo,
-                    'Fecha' =>  $fechain,
-                    'hotels_id' =>  $id_hotel_calificando,
-                    'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion dos - Solo el comentario negativo comercial
-             if (!empty($req_com_a) && empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radb2;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta1' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario1' =>  $req_com_a,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion tres - Solo el comentario negativo a comercial y proyectos e instalaciones
-             if (!empty($req_com_a) && !empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radb2 . "|" . $req_radb3;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                     'Mes' => $mes,
-                     'Year1' => $year,
-                     'Pregunta1' => $valores,
-                     'Probabilidad' =>  $var_nps,
-                     'Comentario1' =>  $req_com_a,
-                     'Comentario2' =>  $req_com_b,
-                     'Cadena' => $correo,
-                     'Fecha' =>  $fechain,
-                     'hotels_id' =>  $id_hotel_calificando,
-                     'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion cuatro - Solo el comentario negativo a comercial y soporte
-             if (!empty($req_com_a) && empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radb2 . "|" . $req_radb1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta1' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario1' =>  $req_com_a,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion cinco - Solo el comentario negativo a proyectos e instalaciones
-             if (empty($req_com_a) && !empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radb3;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta1' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario2' =>  $req_com_b,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion seis - Solo el comentario negativo a soporte
-             if (empty($req_com_a) && empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radb1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta1' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion siete - Solo el comentario negativo a proyectos e instalaciones y soporte
-             if (empty($req_com_a) && !empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radb3 . "|" . $req_radb1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta1' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario2' =>  $req_com_b,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-           }
-           if($req_radio === 'ninguna'){
-             #Comercial       #Proyectos e Instalaciones     #Soporte tecnico
-             #Condicion uno - Todos los comentarios
-             if (!empty($req_com_a) && !empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radc2 . "|" . $req_radc3 . "|" . $req_radc1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                    'Mes' => $mes,
-                    'Year1' => $year,
-                    'Pregunta2' => $valores,
-                    'Probabilidad' =>  $var_nps,
-                    'Comentario1' =>  $req_com_a,
-                    'Comentario2' =>  $req_com_b,
-                    'Comentario3' =>  $req_com_c,
-                    'Cadena' => $correo,
-                    'Fecha' =>  $fechain,
-                    'hotels_id' =>  $id_hotel_calificando,
-                    'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion dos - Solo el comentario negativo comercial
-             if (!empty($req_com_a) && empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radc2;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta2' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario1' =>  $req_com_a,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion tres - Solo el comentario negativo a comercial y proyectos e instalaciones
-             if (!empty($req_com_a) && !empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radc2 . "|" . $req_radc3;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                     'Mes' => $mes,
-                     'Year1' => $year,
-                     'Pregunta2' => $valores,
-                     'Probabilidad' =>  $var_nps,
-                     'Comentario1' =>  $req_com_a,
-                     'Comentario2' =>  $req_com_b,
-                     'Cadena' => $correo,
-                     'Fecha' =>  $fechain,
-                     'hotels_id' =>  $id_hotel_calificando,
-                     'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion cuatro - Solo el comentario negativo a comercial y soporte
-             if (!empty($req_com_a) && empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radc2 . "|" . $req_radc1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta2' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario1' =>  $req_com_a,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion cinco - Solo el comentario negativo a proyectos e instalaciones
-             if (empty($req_com_a) && !empty($req_com_b) && empty($req_com_c)) {
-                 $valores = $req_radc3;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta2' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario2' =>  $req_com_b,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion seis - Solo el comentario negativo a soporte
-             if (empty($req_com_a) && empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radc1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta2' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-             #Condicion siete - Solo el comentario negativo a proyectos e instalaciones y soporte
-             if (empty($req_com_a) && !empty($req_com_b) && !empty($req_com_c)) {
-                 $valores = $req_radc3 . "|" . $req_radc1;
-                 $sql= DB::table('calificaciones')->insert([
-                   ['Calificacion' => $req_rating,
-                   'Mes' => $mes,
-                   'Year1' => $year,
-                   'Pregunta2' => $valores,
-                   'Probabilidad' =>  $var_nps,
-                   'Comentario2' =>  $req_com_b,
-                   'Comentario3' =>  $req_com_c,
-                   'Cadena' => $correo,
-                   'Fecha' =>  $fechain,
-                   'hotels_id' =>  $id_hotel_calificando,
-                   'Aux' => $auxiliar_calif]
-                 ]);
-             }
-           }
-        }
       notificationMsg('success', 'Se guardó correctamente la calificación.. !!');
       return Redirect::back();
     }

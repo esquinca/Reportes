@@ -1,91 +1,9 @@
 /**................... Boton checked  .......................................**/
 $(function () {
   initialization_page();
-  clearmultiselectpraloption('selecthotelofclient');
-  enablemultiselect('selecthotelofclient');
-  show_element('generatequizquest');
 })
-function clearmultiselectpraloption(campo){
-  $('#'+campo).multiselect({
-    // buttonWidth: '100%',
-    nonSelectedText: 'Elija uno o más',
-    allSelectedText: 'Todos seleccionados',
-    enableClickableOptGroups: true,
-    enableCollapsibleOptGroups: false,
-    enableFiltering: false,
-    includeSelectAllOption: true,
-    onSelectAll: function () {
-          $('#xqb').val($('#'+campo).val());
-    },
-    onDeselectAll: function () {
-          $('#xqb').val('');
-    },
-    onChange: function(option, checked, select) {
-      var opselected = $(option).val();
-      if(checked == true) {
-        $('#xqb').val($('#'+campo).val());
-      }
-      else if(checked == false){
-        $('#xqb').val($('#'+campo).val());
-      }
-    }
-  });
-  $('#'+campo).multiselect('deselectAll', false);
-  $('#'+campo).multiselect('updateButtonText');
-}
-function validate_multiselect(campo) {
-  if (campo != '') {
-    select=$('#'+campo).val();
-    if( select == null || select == 0 ) {
-       return false;
-    }
-    else {
-      return true;
-    }
-  };
-}
-function enablemultiselect(campo) {
-  $('#'+campo).multiselect('enable');
-}
-function disabledmultiselect(campo){
-  $('#'+campo).multiselect('disable');
-}
-$("#generatequizquest").click(function(event) {
-    var rec_xa = $('#xqb').val();
-    var rec_xb = $('#selecthotelofclient').val();
-    var val_sel = validate_multiselect('selecthotelofclient');
 
-    if( val_sel == false){
-      toastr.error('Selecciona uno o más hoteles a calificar. !!', 'Mensaje', {timeOut: 2000});
-    }
-    else{
-      toastr.success('Pasamos la seleccion. !!', 'Mensaje', {timeOut: 2000});
-      disabledmultiselect('selecthotelofclient');
-      hide_element('generatequizquest');
-      show_element('content_satisfaction');
-    }
-  });
-  $("#clearquizquest").click(function(event) {
-    initialization_page();
-    clearmultiselectpraloption('selecthotelofclient');
-    enablemultiselect('selecthotelofclient');
-    show_element('generatequizquest');
-  });
-
-  $("#clearinfo").click(function(event) {
-    initialization_page();
-    clearmultiselectpraloption('selecthotelofclient');
-    enablemultiselect('selecthotelofclient');
-    show_element('generatequizquest');
-  });
-/**................... Funciones style checkall ............................**/
 function initialization_page(){
-  hide_element('content_satisfaction');
-  hide_element('xqb');
-  hide_element('check_a');
-  hide_element('check_b');
-  hide_element('check_c');
-  $("#xqb").val('');
   reset_select_pral('select_one');
   reset_data_current();
   reset_input_validar_multiselect();
@@ -284,16 +202,12 @@ $("#approvalInfo").click(function(event) {
     $var_probd = $('#select_one').val();
     $var_calif = $('#select_evaluation').val();
 
-    $var_ids= $('#xqb').val();
-    $permiso_obligar_a = $('#check_a').val();
-    $permiso_obligar_b = $('#check_b').val();
-    $permiso_obligar_c = $('#check_c').val();
     $valor_com_a = $('#comment_a').val();
     $valor_com_b = $('#comment_b').val();
     $valor_com_c = $('#comment_c').val();
-
-    var _token = $('input[name="_token"]').val();
-
+    $permiso_obligar_a = $('#check_a').val();
+    $permiso_obligar_b = $('#check_b').val();
+    $permiso_obligar_c = $('#check_c').val();
 
     if( $var_probd >=8){
       if ($permiso_obligar_a == '1' && $permiso_obligar_b == '') {
@@ -301,7 +215,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_b = validarSelect('select_evaluation');
         $obligatorio_adicional_a = validarespacioinput('comment_a');
         if ($obligatorio_a == true && $obligatorio_b == true && $obligatorio_adicional_a == true) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -310,7 +223,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_b = validarSelect('select_evaluation');
         $obligatorio_adicional_b = validarespacioinput('comment_b');
         if ($obligatorio_a == true && $obligatorio_b == true && $obligatorio_adicional_b == true) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -320,7 +232,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_adicional_a = validarespacioinput('comment_a');
         $obligatorio_adicional_b = validarespacioinput('comment_b');
         if ($obligatorio_a == true && $obligatorio_b == true && $obligatorio_adicional_a == true && $obligatorio_adicional_b == true) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -328,7 +239,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_a = validarespacioinput('comment_c');
         $obligatorio_b = validarSelect('select_evaluation');
         if ($obligatorio_a == true && $obligatorio_b == true) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -341,7 +251,38 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_a = validarespacioinput('comment_a');
         $obligatorio_d = validarSelect('select_evaluation');
         if ($obligatorio_a == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
+          // $.ajax({
+          //   type: "POST",
+          //   url: "./quizencuestamanual",
+          //   data: {
+          //     var_xa : $var_hotel,
+          //     var_xb : $var_cliente,
+          //     var_xc : $var_fecha,
+          //     var_xd : $var_recomienda,//1-10
+          //     var_xe : $var_ninguna,
+          //     var_xf : $var_cero,
+          //     var_xg : $var_adicional,
+          //     var_xh : $var_com_a,
+          //     var_xi : $var_com_b,
+          //     var_xj : $var_com_c,
+          //     var_xk : $var_calif,
+          //     var_xl : $var_checka,
+          //     var_xm : $var_checkb,
+          //     var_xn : $var_checkc,
+          //     _token : _token },
+          //     success: function (data){
+          //       if (data == 1) {
+          //         toastr.success('Registro completado.!', 'Mensaje', {timeOut: 2000});
+          //         reset_quiz_all();
+          //       }
+          //       else{
+          //         toastr.error('Intentar nuevamente..!', 'Mensaje', {timeOut: 2000});
+          //       }
+          //     },
+          //     error: function (data) {
+          //       console.log('Error:', data);
+          //     }
+          //   });
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -349,7 +290,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_b = validarespacioinput('comment_b');
         $obligatorio_d = validarSelect('select_evaluation');
         if ($obligatorio_b == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -357,7 +297,6 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_c = validarespacioinput('comment_c');
         $obligatorio_d = validarSelect('select_evaluation');
         if ($obligatorio_c == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
         }
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
@@ -365,27 +304,21 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_a = validarespacioinput('comment_a');
         $obligatorio_b = validarespacioinput('comment_b');
         $obligatorio_d = validarSelect('select_evaluation');
-        if ($obligatorio_a == true && $obligatorio_b == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
-        }
+        if ($obligatorio_a == true && $obligatorio_b == true && $obligatorio_d == true ) {}
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
       if ($permiso_obligar_a == '1'&& $permiso_obligar_b == '' && $permiso_obligar_c == '1'){
         $obligatorio_a = validarespacioinput('comment_a');
         $obligatorio_c = validarespacioinput('comment_c');
         $obligatorio_d = validarSelect('select_evaluation');
-        if ($obligatorio_a == true && $obligatorio_c == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
-        }
+        if ($obligatorio_a == true && $obligatorio_c == true && $obligatorio_d == true ) {}
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
       if ($permiso_obligar_a == '' && $permiso_obligar_b == '1'&& $permiso_obligar_c == '1'){
         $obligatorio_b = validarespacioinput('comment_b');
         $obligatorio_c = validarespacioinput('comment_c');
         $obligatorio_d = validarSelect('select_evaluation');
-        if ($obligatorio_b == true && $obligatorio_c == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
-        }
+        if ($obligatorio_b == true && $obligatorio_c == true && $obligatorio_d == true ) {}
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
       if ($permiso_obligar_a == '1'&& $permiso_obligar_b == '1'&& $permiso_obligar_c == '1'){
@@ -393,9 +326,7 @@ $("#approvalInfo").click(function(event) {
         $obligatorio_b = validarespacioinput('comment_b');
         $obligatorio_c = validarespacioinput('comment_c');
         $obligatorio_d = validarSelect('select_evaluation');
-        if ($obligatorio_a == true && $obligatorio_b == true  && $obligatorio_c == true && $obligatorio_d == true ) {
-          $("#lambda").submit();
-        }
+        if ($obligatorio_a == true && $obligatorio_b == true  && $obligatorio_c == true && $obligatorio_d == true ) {}
         else { toastr.error('Completa los requerimientos.', 'Mensaje', {timeOut: 2000}); }
       }
     }
