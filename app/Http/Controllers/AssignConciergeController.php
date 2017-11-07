@@ -154,15 +154,22 @@ class AssignConciergeController extends Controller
 
       $host15="187.157.182.98:1161";
       $host16="187.157.182.98:2161";
+      $host17 = "189.240.197.4:1161";
+      $host18 =  "187.237.104.164"; // Beach Palace
+      $host19 = "177.237.72.62:162";
+      $host20 = "189.240.197.4"; // Dorado Maroma.
 
       $boolean = 0;
       //187.157.151.52
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host3, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host20, "public");
       try {
         $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
+        // Walk ? pruebas "1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4"
+        // walk "1.3.6.1.4.1.25053.1.2.1.1.1.15.6" //WlanTotalRxB Recibidos.
+        // walk "1.3.6.1.4.1.25053.1.2.1.1.1.15.9" //WlanTotalTxB Transmitidos.
         var_dump($res);
       } catch (\Exception $e) {
         $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
@@ -184,7 +191,7 @@ class AssignConciergeController extends Controller
       $urlmetrics = "https://sitwifi.zendesk.com/api/v2/ticket_metrics.json";
 
       $urlpipe = "https://sitwifi.pipedrive.com/v1/users?api_token=3661682acb7f64fc28517d9fa8ae9a033ba7c9da";
-
+      $icomera = "https://www.moovmanage.com/public_api/devices?api_key=0a42192efb4d18aea7a9fad2ddd82e4a";
 
       $ch = curl_init();
       //echo "Inicializa la funcion .. ";
@@ -192,7 +199,7 @@ class AssignConciergeController extends Controller
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false );
       curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
-      curl_setopt($ch, CURLOPT_URL, $urlpipe);
+      curl_setopt($ch, CURLOPT_URL, $icomera);
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
       curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
       curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
@@ -216,7 +223,7 @@ class AssignConciergeController extends Controller
       curl_close($ch);
       $decoded = json_decode($output);
 
-      dd($decoded);
+      dd($output);
       //return $output;
 
     }

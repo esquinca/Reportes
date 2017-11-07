@@ -39,7 +39,7 @@ class ticketxmonthly extends Command
      */
     public function handle()
     {   
-        $url_test = "https://sitwifi.zendesk.com/api/v2/tickets.json?page=12";
+        $url_test = "https://sitwifi.zendesk.com/api/v2/tickets.json?page=17";
         $url = "https://sitwifi.zendesk.com/api/v2/tickets.json";
         $response = $this->curlZen($url_test);
 
