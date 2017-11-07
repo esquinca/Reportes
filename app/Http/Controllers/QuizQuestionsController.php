@@ -38,7 +38,7 @@ class QuizQuestionsController extends Controller
       $shell_session = Auth::user()->shell;
       $id_session = Auth::user()->id;
 
-      $mes = date("F");
+      $mes = date('F', strtotime('-1 month')) ;
       $year = date("Y");
 
       if ( $id_session != $sin_encriptar || $shell_session != $id_encriptado ) {
@@ -72,9 +72,6 @@ class QuizQuestionsController extends Controller
           $selecdatanew= array();
 
           $resp_data_size= count($selectdata);
-
-          $dataew = array('name' => 'San Juan',
-                 'date' => date('Y-m-d'));
 
           if ( $resp_data_size == 0 ) {
             return view('quiz.quizquestions',compact('selecdatanew'));
@@ -113,33 +110,35 @@ class QuizQuestionsController extends Controller
      */
     public function createdata(Request $request)
     {
-           $correo = Auth::user()->email;
+           $correo = Auth::user()->email;//BIEN
           $var_ids = $request->xqb;
-        $var_probd = $request->select_one;
-$permiso_obligar_a = $request->check_a;
-$permiso_obligar_b = $request->check_b;
-$permiso_obligar_c = $request->check_c;
-      $valor_com_a = $request->comment_a;
-      $valor_com_b = $request->comment_b;
-      $valor_com_c = $request->comment_c;
+        $var_probd = $request->select_one;//BIEN
+       $var_checka = $request->check_a;
+       $var_checkb = $request->check_b;
+       $var_checkc = $request->check_c;
+      $valor_com_a = $request->comment_a;//BIEN
+      $valor_com_b = $request->comment_b;//BIEN
+      $valor_com_c = $request->comment_c;//BIEN
         $var_calif = $request->select_evaluation;
 
-          $var_nps = "";
-    if ($var_calif >= 9) { $var_nps = "PR"; }
-    if ($var_calif >= 7) { $var_nps = "PS"; }
-    if ($var_calif <= 6) { $var_nps = "D"; }
+          $var_nps = "";//BIEN
+    if ($var_calif >= 9) { $var_nps = "PR"; }//BIEN
+    if ($var_calif >= 7) { $var_nps = "PS"; }//BIEN
+    if ($var_calif <= 6) { $var_nps = "D"; }//BIEN
 
       $array_calif = explode(",", $var_ids);
  $size_array_calif = count($array_calif);
 
    $monthName = date('F', strtotime('-1 month')) ;
+   $monthNumber = date('m', strtotime('-1 month')) ;
    $yearactual = date('Y') ;
-  $fecha_new_format=  $yearactual.'-'.$monthName.'-28';
 
     for ($i=0; $i < $size_array_calif; $i++) {
        $id_hotel_calificando = $array_calif[$i];
        $consulta_nomb_hotel= DB::table('HotelUserReport')->select('Nombre_hotel')->where('IDHotels', '=', $id_hotel_calificando)->value('Nombre_hotel');
        $auxiliar_calif = $consulta_nomb_hotel.' 28 '.$monthName.' '.$yearactual;
+       $fecha_new_format=  $yearactual.'-'.$monthNumber.'-28';
+       //echo  $auxiliar_calif."\n";
 
        if($var_calif >= 8){
          if ($var_checka == 1 && $var_checkb == 1) {
@@ -308,11 +307,13 @@ $permiso_obligar_c = $request->check_c;
             ]);
           }
        }
-       notificationMsg('success', 'Registrados con exito. !!');
-       return Redirect::back();
      }
-
+     notificationMsg('success', 'Registrados con exito. !!');
+     return Redirect::back();
+    //echo $size_array_calif;
+    //echo  $var_checka."<br>".$var_checkb."<br>".$var_checkc. "<br>".$fecha_new_format."<br>".$fecha_new_format;
         // notificationMsg('success', 'Registro completado!!');
+        //dd($request);
         // return Redirect::back();
     }
 

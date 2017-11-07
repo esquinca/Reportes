@@ -122,10 +122,10 @@
                         {!! Form::open(['action' => 'QuizQuestionsController@createdata', 'url' => '/quiz_data_ifn', 'method' => 'post', 'id' => 'lambda']) !!}
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <input type="hidden" id="xqb" name="xqb" />
-                              <input type="hidden" id="check_a" name="check_a" value="">
-                              <input type="hidden" id="check_b" name="check_b" value="">
-                              <input type="hidden" id="check_c" name="check_c" value="">
+                              <input type="text" id="xqb" name="xqb" />
+                              <input type="text" id="check_a" name="check_a" value="">
+                              <input type="text" id="check_b" name="check_b" value="">
+                              <input type="text" id="check_c" name="check_c" value="">
                             </div>
                           </div>
                           <div class="form-group">
