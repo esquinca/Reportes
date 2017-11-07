@@ -46,7 +46,10 @@ class bytesxdia extends Command
         $boolean = 0;
         $session = new SNMP(SNMP::VERSION_2C, $ip, "public");
         try {
-          $res = $session->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+          // walk "1.3.6.1.4.1.25053.1.2.1.1.1.15.9" //WlanTotalTxB Transmitidos.
+
+          //$res = $session->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+          $res = $session->walk('1.3.6.1.4.1.25053.1.2.1.1.1.15.9'); //Transmitted Bytes
         } catch (\Exception $e) {
           $boolean = $session->getErrno() == SNMP::ERRNO_TIMEOUT;
           return $boolean;
@@ -72,29 +75,43 @@ class bytesxdia extends Command
       for ($i=0; $i < $contar_ip ; $i++) {
         $host=$zoneDirect_sql[$i]->ip;
         $boolean = $this->trySNMP($host);
-
+      //  $consulta_dia_ant= DB::table('GBXDia')->select('Nombre_hotel')->where('hotels_id', '=', $host)->value('Nombre_hotel');
+       //Select MAX(ConsumoReal) From GBXDia Where hotels_id =
         if ($boolean === 0){
 
           $sessionA = new SNMP(SNMP::VERSION_2C, $zoneDirect_sql[$i]->ip, "public");
-          ${"snmp_bytes_trans_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
-
-          //${"snmp_bytes_trans_a".$i}= snmp2_real_walk($zoneDirect_sql[$i]->ip, 'public', '1.3.6.1.4.1.25053.1.2.2.1.1.2.2.1.14'); //Transmitted Bytes
+          ${"snmp_bytes_trans_a".$i}= $sessionA->walk('1.3.6.1.4.1.25053.1.2.1.1.1.15.9'); //Transmitted Bytes
           $contar_aps_act= count(${"snmp_bytes_trans_a".$i}); //Cuento el tamaño del array anterior
 
           DB::beginTransaction();
           for ($j=1; $j <= $contar_aps_act; $j++) {
-          //echo key(${"snmp_aps_a".$i});
-
           //Para el Transmitted Bytes
+          $consulta_dia_ant= DB::table('GBXDia')->select('ConsumoReal')
+          ->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)
+          ->where( DB::raw('MONTH(GBXDia.Fecha)') , '=', DB::raw('MONTH(curdate())') )
+          ->where( DB::raw('YEAR(GBXDia.Fecha)') , '=', DB::raw('YEAR(curdate())') )
+          ->orderBy('id', 'desc')
+          ->take(1)
+          ->value('ConsumoReal');
+
           ${"snmp_bytes_transm_a".$i}= explode(': ', ${"snmp_bytes_trans_a".$i} [key(${"snmp_bytes_trans_a".$i})]) ;
+
+          if (${"snmp_bytes_transm_a".$i}[1] > $consulta_dia_ant  ) {
+            $nuevo= ${"snmp_bytes_transm_a".$i}[1] - $consulta_dia_ant;
+          }
+          else {
+            $nuevo= ${"snmp_bytes_transm_a".$i}[1];
+          }
           //echo ${"snmp_bytes_transm_a".$i}[1];
+
           next(${"snmp_bytes_trans_a".$i}); //Este es para que avance la key en el array
-          //echo '-';
 
           $sql = DB::table('GBXDia')->insertGetId([
-            'CantidadBytes' => ${"snmp_bytes_transm_a".$i}[1],
+            'CantidadBytes' => $nuevo,
+            'ConsumoReal' => ${"snmp_bytes_transm_a".$i}[1],
             'Fecha' => date('Y-m-d'),
             'Mes' => $fmeses,
+            'Captura' => '1',
             'hotels_id' => $zoneDirect_sql[$i]->id_hotel]);
           }
           DB::commit();
@@ -113,10 +130,8 @@ class bytesxdia extends Command
             'mensaje' => 'Favor de capturar el número de Gigabytes transmitidos en 24hrs de manera manual en el sistema de reportes. Los datos a capturar son pertenecientes al '
           ];
           $this->enviarC($correoit, $nombreit, $data);
-          //echo $host;
         }
       }
-      //return $contar_ip;
       $this->info('Successfull registered bytes!');
     }
 }
