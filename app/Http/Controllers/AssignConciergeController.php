@@ -157,7 +157,7 @@ class AssignConciergeController extends Controller
       $host17 = "189.240.197.4:1161";
       $host18 =  "187.237.104.164"; // Beach Palace
       $host19 = "177.237.72.62:162";
-      $host20 = "189.240.197.4"; // Dorado Maroma.
+      $host20 = "189.240.197.4:1161"; // Dorado Maroma.
 
       $boolean = 0;
       //187.157.151.52

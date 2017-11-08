@@ -39,6 +39,7 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       @if(Auth::check())
+      {{ csrf_field() }}
             @if (Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Programador' ||
             Auth::user()->Privilegio == 'Helpdesk' || Auth::user()->Privilegio == 'Cliente' ||
             Auth::user()->Privilegio == 'IT' || Auth::user()->Privilegio == 'Encuestado' || Auth::user()->Privilegio == 'Encuestador' )

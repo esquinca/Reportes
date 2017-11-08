@@ -512,7 +512,7 @@ return [
     'typerep' => 'Tipo',
     'notaeditquiz' => 'Se tomará en cuenta cualquier cambio que se realice. Tanto los comentarios ',
     'satisfaccioncliente' => 'Satisfacción cliente',
-    '' => '',
+    'editreport' => 'Editar Reportes',
     '' => '',
     '' => '',
     '' => '',

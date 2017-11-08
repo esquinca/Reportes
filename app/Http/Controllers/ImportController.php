@@ -65,7 +65,7 @@ class ImportController extends Controller
     public function subir2(Request $request)
     {
       $archivo = $request->file('documento');
-      
+
       DB::beginTransaction();
 
       Excel::selectSheetsByIndex(0)->load($archivo, function($hoja){
@@ -94,7 +94,7 @@ class ImportController extends Controller
 
 
           $selectid= DB::table('listarhoteles')->select('id')->where('Nombre_hotel', '=', $hotel)->value('id');
-          
+
           // if (empty($selectid)) {
           //   $resultGB = DB::table('GBXDia')->insert([
           //     ['CantidadBytes' => $bytes, 'Fecha' => $fechaSalida, 'Mes' => $mesyear, 'hotels_id' => $selectid, 'Aux'=> $auxiliar]
@@ -222,7 +222,7 @@ class ImportController extends Controller
       });
       DB::commit();
       //notificationMsg('success', 'Registrados con exito. !!');
-      
+
       return Redirect::back();
     }
 
@@ -331,7 +331,7 @@ class ImportController extends Controller
           }
         }
         $result_ap = DB::table('MostAP')->insert($MostAPValues);
-        
+
         $rowNum3 = $this->countArray($hoja3);
 
         //---Obtencion de datos HOJA Rogue Devices.
@@ -382,7 +382,7 @@ class ImportController extends Controller
         $rowNum4 = $this->countArray($hoja4);
 
         //---Obtencion de datos HOJA WLAN.
-        for ($l=0; $l < $rowNum4; $l++) { 
+        for ($l=0; $l < $rowNum4; $l++) {
           $nombrewlan = trim($hoja4[$l]->wlan_nombre);
           $nclientwlan = trim($hoja4[$l]->wlan_noclientes);
           $fechawl = trim($hoja4[$l]->wlan_fecha);

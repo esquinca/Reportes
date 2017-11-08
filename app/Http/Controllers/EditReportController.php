@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class ViewReportController extends Controller
+class EditReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ViewReportController extends Controller
      */
     public function index()
     {
-      return view('viewreport.viewreports');
+        return view('editreport.editreport');
     }
 
     /**
@@ -23,25 +23,9 @@ class ViewReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-
-    }
-    public function table_one(Request $request)
-    {
-      return 0;
-    }
-    public function table_two(Request $request)
-    {
-      return 0;
-    }
-    public function table_three(Request $request)
-    {
-      return 0;
-    }
-    public function table_four(Request $request)
-    {
-      return 0;
+        //
     }
 
     /**

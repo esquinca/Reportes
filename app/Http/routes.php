@@ -115,7 +115,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//Route::post('/uploaddoc', 'ImportController@subir');
 	//Route::post('/uploaddoc', 'ImportController@create');
 	//Route::post('/uploaddoc', 'ImportController@subir2');
-	Route::post('/uploaddoc', 'ImportController@importExcel');
+	Route::post('/uploaddoc', 'ImportController@insertExcel');
 	//Cuestionario
 	//Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
@@ -206,5 +206,6 @@ Route::group(['middleware' => ['auth']], function() {
 	//Nuevas rutas
 	Route::post('/info_recargar_calif', 'QuizEditController@update');
 	Route::post('/quiz_data_ifn', 'QuizQuestionsController@createdata');
-
+	//Editar Reporte
+	Route::get('/edit_report', 'EditReportController@index');
 });

@@ -454,7 +454,7 @@
                 <div class="media-body">
                     <h4>{{ trans('message.comparativoantvsact') }}</h4>
                 </div>
-            </div2>
+            </div>
             <table class="table table-striped table-bordered" id="table_detalle" name="table_detalle">
               <thead style="background-color: #0091EB; color: white;">
                 <tr >
