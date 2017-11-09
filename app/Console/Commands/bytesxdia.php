@@ -85,23 +85,74 @@ class bytesxdia extends Command
 
           DB::beginTransaction();
           for ($j=1; $j <= $contar_aps_act; $j++) {
-          //Para el Transmitted Bytes
-          $consulta_dia_ant= DB::table('GBXDia')->select('ConsumoReal')
-          ->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)
-          ->where( DB::raw('MONTH(GBXDia.Fecha)') , '=', DB::raw('MONTH(curdate())') )
-          ->where( DB::raw('YEAR(GBXDia.Fecha)') , '=', DB::raw('YEAR(curdate())') )
-          ->orderBy('id', 'desc')
-          ->take(1)
-          ->value('ConsumoReal');
+            ${"snmp_bytes_transm_a".$i}= explode(': ', ${"snmp_bytes_trans_a".$i} [key(${"snmp_bytes_trans_a".$i})]) ;
 
-          ${"snmp_bytes_transm_a".$i}= explode(': ', ${"snmp_bytes_trans_a".$i} [key(${"snmp_bytes_trans_a".$i})]) ;
+            // Para el Transmitted Bytes
+            $consulta_dia_ant= DB::table('GBXDia')->select('ConsumoReal')
+            ->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)
+            ->where( DB::raw('MONTH(GBXDia.Fecha)') , '=', DB::raw('MONTH(curdate())') )
+            ->where( DB::raw('YEAR(GBXDia.Fecha)') , '=', DB::raw('YEAR(curdate())') )
+            ->where( 'Captura' , '=', '1')
+            ->orderBy('id', 'desc')
+            ->take(1)
+            ->value('ConsumoReal');
 
-          if (${"snmp_bytes_transm_a".$i}[1] > $consulta_dia_ant  ) {
-            $nuevo= ${"snmp_bytes_transm_a".$i}[1] - $consulta_dia_ant;
+          //
+          if ($consulta_dia_ant == '') {
+            $ultima_fecha= DB::table('GBXDia')->select('Fecha')->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)->where( 'Captura' , '=', '1')->orderBy('id', 'desc')->take(1)->value('Fecha');
+            $date_bd_year = date("Y", strtotime($ultima_fecha));
+            $date_bd_mes = date("m", strtotime($ultima_fecha));
+            $date_year_act=date("Y");
+            $date_mes_act=date("M");
+
+            if ($date_year_act > $date_bd_year) {
+              if ($date_bd_mes > $date_mes_act) {
+                $nueva_consulta_dia_ant= DB::table('GBXDia')->select('ConsumoReal')
+                ->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)
+                ->where( DB::raw('MONTH(GBXDia.Fecha)') , '=', $date_bd_mes )
+                ->where( DB::raw('YEAR(GBXDia.Fecha)') , '=', $date_bd_year)
+                ->where( 'Captura' , '=', '1')
+                ->orderBy('id', 'desc')
+                ->take(1)
+                ->value('ConsumoReal');
+
+                if (${"snmp_bytes_transm_a".$i}[1] > $nueva_consulta_dia_ant  ) {
+                  $nuevo= ${"snmp_bytes_transm_a".$i}[1] - $nueva_consulta_dia_ant;
+                }
+                else {
+                  $nuevo= ${"snmp_bytes_transm_a".$i}[1];
+                }
+              }
+            }
+            if ($date_year_act == $date_bd_year) {
+              if ($date_mes_act > $date_bd_mes) {
+                $nueva_consulta_dia_ant= DB::table('GBXDia')->select('ConsumoReal')
+                ->where('hotels_id', '=',$zoneDirect_sql[$i]->id_hotel)
+                ->where( DB::raw('MONTH(GBXDia.Fecha)') , '=', $date_bd_mes )
+                ->where( DB::raw('YEAR(GBXDia.Fecha)') , '=', DB::raw('YEAR(curdate())') )
+                ->where( 'Captura' , '=', '1')
+                ->orderBy('id', 'desc')
+                ->take(1)
+                ->value('ConsumoReal');
+                if (${"snmp_bytes_transm_a".$i}[1] > $nueva_consulta_dia_ant  ) {
+                  $nuevo= ${"snmp_bytes_transm_a".$i}[1] - $nueva_consulta_dia_ant;
+                }
+                else {
+                  $nuevo= ${"snmp_bytes_transm_a".$i}[1];
+                }
+              }
+            }
           }
-          else {
-            $nuevo= ${"snmp_bytes_transm_a".$i}[1];
+          else{
+            $nueva_consulta_dia_ant=$consulta_dia_ant;
+            if (${"snmp_bytes_transm_a".$i}[1] > $nueva_consulta_dia_ant  ) {
+              $nuevo= ${"snmp_bytes_transm_a".$i}[1] - $nueva_consulta_dia_ant;
+            }
+            else {
+              $nuevo= ${"snmp_bytes_transm_a".$i}[1];
+            }
           }
+
           //echo ${"snmp_bytes_transm_a".$i}[1];
 
           next(${"snmp_bytes_trans_a".$i}); //Este es para que avance la key en el array
@@ -118,18 +169,18 @@ class bytesxdia extends Command
           $sessionA->close();
         }
         else {
-          //Datos para el correo
-          $hostcorreo = DB::table('CorreosZD')->select('Nombre_hotel', 'Correo', 'nombre_itc')->where('ip' , '=', $host)->get();
-          $nombrehotel = $hostcorreo[0]->Nombre_hotel;
-          $nombreit = $hostcorreo[0]->nombre_itc;
-          $correoit = $hostcorreo[0]->Correo;
-          $data = [
-            'ip' => $host,
-            'hotel' => $nombrehotel,
-            'nombre' => $nombreit,
-            'mensaje' => 'Favor de capturar el número de Gigabytes transmitidos en 24hrs de manera manual en el sistema de reportes. Los datos a capturar son pertenecientes al '
-          ];
-          $this->enviarC($correoit, $nombreit, $data);
+          // //Datos para el correo
+          // $hostcorreo = DB::table('CorreosZD')->select('Nombre_hotel', 'Correo', 'nombre_itc')->where('ip' , '=', $host)->get();
+          // $nombrehotel = $hostcorreo[0]->Nombre_hotel;
+          // $nombreit = $hostcorreo[0]->nombre_itc;
+          // $correoit = $hostcorreo[0]->Correo;
+          // $data = [
+          //   'ip' => $host,
+          //   'hotel' => $nombrehotel,
+          //   'nombre' => $nombreit,
+          //   'mensaje' => 'Favor de capturar el número de Gigabytes transmitidos en 24hrs de manera manual en el sistema de reportes. Los datos a capturar son pertenecientes al '
+          // ];
+          // $this->enviarC($correoit, $nombreit, $data);
         }
       }
       $this->info('Successfull registered bytes!');
