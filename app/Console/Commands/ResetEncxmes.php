@@ -39,6 +39,8 @@ class ResetEncxmes extends Command
      */
     public function handle()
     {
+        $sql = DB::table('user_reportes')->where('Privilegio', '=', 'Encuestado')
+        ->update(['password' => '', 'temp_pass' => '', 'shell' => '']);
         $this->info('Successfully restored survey url!');
     }
 }

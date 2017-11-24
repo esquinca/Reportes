@@ -65,7 +65,7 @@ class ViewReportsController extends Controller
     public function typerep(Request $request)
     {
       $value= $request->numero;
-//      $selectnivel= DB::table('NivelesReportes')->select('ReporteID','Nivel')->where('HotelID', '=', $value)->get();
+      //$selectnivel= DB::table('NivelesReportes')->select('ReporteID','Nivel')->where('HotelID', '=', $value)->get();
       $selectnivel= DB::table('tipos_reporte_new')->select('fk_tiporeportenew','Nombre')->where('fk_hotel', '=', $value)->get();
       return json_encode($selectnivel);
 
@@ -209,11 +209,10 @@ class ViewReportsController extends Controller
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
-      $resultados = DB::table('cant_client_usuario')->select('NumClientes','Dia','Fecha')
-                    ->where('id', '=' , $numero_hotel)
-                    ->where('Fecha', '=' , $date)
-                    ->orderBy('Dia', 'asc')
-                    ->get();
+      $fechaC =  explode('-', $date);
+      $fechaMes= $fechaC[0];
+      $fechayear= $fechaC[1];
+      $resultados = DB::select('CALL User(?,?,?)', array($fechayear, $fechaMes, $numero_hotel));
       return json_encode($resultados);
     }
     public function show_graf_gb(Request $request)
@@ -227,38 +226,26 @@ class ViewReportsController extends Controller
       $fechayear= $fechaC[1];
       $mesyear = $meses[$fechaMes-1].' '. $fechayear;
 
-      $resultados = DB::table('Consumos')->select('GBxDia','FechaCaptura','IDHotel')
-                    ->where('IDHotel', '=' , $numero_hotel)
-                    ->where('Mes', '=' , $mesyear)
-                    ->orderBy('FechaCaptura', 'asc')
-                    ->get();
+      $resultados = DB::select('CALL GB(?,?,?)', array($fechayear, $fechaMes, $numero_hotel));
       return json_encode($resultados);
     }
     public function show_graf_two(Request $request)
     {
       $numero_hotel= $request->number;
       $date= $request->mes;
-      $resultados = DB::table('SSIDCliente')->select('id', 'NombreWLAN',  DB::raw('SUM(ClientesWLAN) as ClientesWLAN'), 'Fecha' )
-      ->where('Fecha', '=', $date)
-      ->where('id', '=', $numero_hotel)
-      ->groupBy('NombreWLAN')
-      ->orderBy('ClientesWLAN', 'desc')
-
-      ->take(5)
-      ->get();
+      $fechaC =  explode('-', $date);
+      $fechaMes= $fechaC[0];
+      $fechayear= $fechaC[1];
+      $resultados = DB::select('CALL WLAN(?,?,?)', array($fechayear, $fechaMes, $numero_hotel));
       return json_encode($resultados);
     }
-    public function show_graf_three (Request $request)
-    {
+    public function show_graf_three (Request $request){
       $numero_hotel= $request->number;
       $date= $request->mes;
-      $resultados = DB::table('TopSSIDWLAN')->select('NombreWLAN',DB::raw('SUM(ClientesWLAN) as ClientesWLAN') )
-                    ->where('id', '=' , $numero_hotel)
-                    ->where('Fecha', '=' , $date)
-                    ->groupBy('NombreWLAN')
-                    ->orderBy('ClientesWLAN', 'desc')
-                    ->limit(5)
-                    ->get();
+      $fechaC =  explode('-', $date);
+      $fechaMes= $fechaC[0];
+      $fechayear= $fechaC[1];
+      $resultados = DB::select('CALL WLAN(?,?,?)', array($fechayear, $fechaMes, $numero_hotel));
       return json_encode($resultados);
     }
     public function show_graf_four(Request $request)
@@ -301,25 +288,56 @@ class ViewReportsController extends Controller
       $numero_hotel= $request->number;
       $type= $request->type;
       $datenum= $request->mes;
+      $fechaC =  explode('-', $datenum);
+      $fechaMes= $fechaC[0];
+      $fechayear= $fechaC[1];
+
       $date = $this->returnDate($datenum);
 
+      $resultadosOnea = DB::select('CALL Cuadros(?,?,?)', array($numero_hotel, $fechaMes, $fechayear));
+      return json_encode($resultadosOnea);
 
-      $resultadosOne = DB::table('NewClientesDashboard')
-            ->join('NewGbDashboard', 'NewClientesDashboard.ID', '=', 'NewGbDashboard.hotels_id')
-            ->join('NewRogueAPDashboard', 'NewClientesDashboard.ID', '=', 'NewRogueAPDashboard.IDHOTEL')
-            ->select('NewGbDashboard.MAXGB','NewGbDashboard.MINGB', 'NewGbDashboard.AVGGB','NewGbDashboard.Total',
-            'NewClientesDashboard.MaxClientes','NewClientesDashboard.MinClientes', 'NewClientesDashboard.TotalClientes','NewClientesDashboard.AVGClientes',
-            'NewRogueAPDashboard.CantidadRogue','NewRogueAPDashboard.AP')
-            ->where('NewGbDashboard.hotels_id', '=' , $numero_hotel)
-            ->where('NewGbDashboard.Mes', '=' , $date)
-            ->where('NewClientesDashboard.ID', '=' , $numero_hotel)
-            ->where('NewClientesDashboard.Mes', '=' , $date)
-            ->where('NewRogueAPDashboard.IDHOTEL', '=' , $numero_hotel)
-            ->where('NewRogueAPDashboard.Mes', '=' , $date)
-            ->get();
+    }
+    public function consultypeimg (Request $request)
+    {
+      $number_hotel= $request->aa1;
+      $type= $request->aa2;
+      $date_without_format= $request->aa3;
 
-      return json_encode($resultadosOne);
+      $dateNumber =  explode('-', $date_without_format);
+      $dateMonth= $dateNumber[0];
+      $dateYear= $dateNumber[1];
+      $datewithformat=$dateYear.'-'.$dateMonth.'-01';
 
+      $result = DB::table('report_hotel_tipo')
+                ->where('id_hotel', '=' , $number_hotel)
+                ->where('fecha', '=' , $datewithformat)
+                ->count();
+
+      if ($result == 0) {
+          return '0';
+      } else {
+          return '1';
+      }
+    }
+    public function consultrouteimgtype(Request $request)
+    {
+      $number_hotel= $request->aa1;
+      $type= $request->aa2;
+      $date_without_format= $request->aa3;
+
+      $dateNumber =  explode('-', $date_without_format);
+      $dateMonth= $dateNumber[0];
+      $dateYear= $dateNumber[1];
+      $datewithformat=$dateYear.'-'.$dateMonth.'-01';
+
+      $result = DB::table('report_hotel_tipo')
+                ->select('img')
+                ->where('id_hotel', '=' , $number_hotel)
+                ->where('fecha', '=' , $datewithformat)
+                ->value('img');
+
+      return $result;
     }
 
     public function table_month_vs_month_previous(Request $request){

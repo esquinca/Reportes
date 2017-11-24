@@ -254,6 +254,18 @@
 						</div>
 					</div>
         </div>
+        <div class="col-sm-2 invoice-col bloque">
+          <div class="comments">
+						<div class="information-icon">
+								<i class="fa fa-database "></i>
+						</div>
+						<div class="information-info">
+              <h3 id="gb_avg_dia" name="gb_avg_dia"></h3>
+              <strong id="gbavgdia">{{ trans('message.cuadro_cuatroa') }}</strong><br>
+              <strong>{{ trans('message.gb_info') }}</strong>
+						</div>
+					</div>
+        </div>
         <!-- /.col -->
         <div class="col-sm-2 invoice-col bloque">
           <div class="comments">
@@ -263,6 +275,19 @@
 						<div class="information-info">
               <h3 id="gb_min_dia" name="gb_min_dia"></h3>
               <strong id="gbminid">{{ trans('message.cuadro_tresa') }}</strong><br>
+              <strong>{{ trans('message.cuadro_tresb') }}</strong>
+						</div>
+					</div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-2 invoice-col bloque">
+          <div class="comments">
+						<div class="information-icon">
+								<i class="fa fa-level-up"></i><i class="fa fa-user"></i>
+						</div>
+						<div class="information-info">
+              <h3 id="max_usuario" name="max_usuario" ></h3>
+              <strong>{{ trans('message.cuadro_cuatroc') }}</strong><br>
               <strong>{{ trans('message.cuadro_tresb') }}</strong>
 						</div>
 					</div>
@@ -443,6 +468,19 @@
           </div>
           <div class="contentanchobanda">
             <img id='anchobanda' name='anchobanda'src="{{ asset ('../img/anchobanda/123456.png') }}" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-lg-6" id="content_img_type_device">
+          <div class="media service-box">
+              <div class="pull-left">
+                  <i class="fa fa-pie-chart"></i>
+              </div>
+              <div class="media-body">
+                  <h4>{{ trans('message.clienttype') }}</h4>
+              </div>
+          </div>
+          <div class="contenttypedevice">
+            <img id='typedevice' name='typedevice'src="{{ asset ('../img/devicetype/1511276883.png') }}" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive">
           </div>
         </div>
 

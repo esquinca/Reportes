@@ -116,6 +116,44 @@ class IndividualController extends Controller
        return redirect('/individual');
    }
 
+   public function update_type_avatar(Request $request)
+   {
+     if($request->hasFile('upload_img_type')){
+       $hotel= $request->select_one_type;
+       $date= $request->month_upload_type;
+       $dateNew=$date.'-01';
+
+        $exist = DB::table('report_hotel_tipo')->select('img')
+        ->where('id_hotel', '=', $hotel)
+        ->where('fecha', '=', $dateNew)
+        ->count();
+
+        $val_exist = DB::table('report_hotel_tipo')->select('img')
+        ->where('id_hotel', '=', $hotel)
+        ->where('fecha', '=', $dateNew)
+        ->value('img');
+
+        if( $exist != 0){
+          $file = public_path('img/devicetype/' . $val_exist);
+          if (File::exists($file)) {  unlink($file);  }
+          notificationMsg('danger', 'Existe registro.!!');
+        }
+        else {
+          $avatar = $request->file('upload_img_type');
+          $filename = time() . '.' . $avatar->getClientOriginalExtension();
+          Image::make($avatar)->resize(380,220)->save( public_path('/img/devicetype/' . $filename ) );
+
+          $updates = DB::table('report_hotel_tipo')->insert([
+            ['id_hotel' => $hotel,
+            'fecha' => $dateNew,
+            'img' => $filename]
+          ]);
+          notificationMsg('success', 'Imagen registrada.!!');
+        }
+     }
+     return redirect('/individual');
+   }
+
     /**
      * Store a newly created resource in storage.
      *

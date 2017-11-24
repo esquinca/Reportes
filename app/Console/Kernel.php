@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('estado:server')->dailyAt('20:10');
         $schedule->command('usuario:dia')->dailyAt('20:13');
-        $schedule->command('rebytes:dia')->dailyAt('20:20');
+        //$schedule->command('rebytes:dia')->dailyAt('20:20');
         $schedule->command('bytes:dia')->dailyAt('20:30');
         $schedule->command('ap:dia')->dailyAt('20:40');
         $schedule->command('wlan:dia')->dailyAt('20:50');

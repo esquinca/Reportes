@@ -6,6 +6,7 @@ $('#fecha_nuser').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: 
 $('#fecha_aps').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
 $('#fecha_nwlan').datepicker({ language: 'es', format: "yyyy-mm-dd", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
 $('#month_upload').datepicker({ language: 'es', format: "yyyy-mm", viewMode: "months", minViewMode: "months", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
+$('#month_upload_type').datepicker({ language: 'es', format: "yyyy-mm", viewMode: "months", minViewMode: "months", autoclose: true /*startDate: '0m', endDate: '0m',*/ });
 
 function control(f){
         var ext=['jpg','jpeg','png'];
@@ -239,6 +240,9 @@ $('#generatewlanInfo').on('click', function(){
   }
 });
 
+$('#generateimgtypeClear').on('click', function(){
+limp_img_two();
+});
 
 $('#generateimgClear').on('click', function(){
 limp_img();
@@ -255,7 +259,12 @@ limp_three();
 $('#generatewlanClear').on('click', function(){
 limp_four();
 });
-
+function limp_img_two(){
+	$('#form_img_upload_type')[0].reset();
+	$("#select_one_type").select2("val", "");
+	$("#form_img_upload_type div.form-group").attr("class","form-group has-default");
+	$('#month_upload_type').val('').datepicker('update');
+}
 function limp_img(){
 	$('#form_img_upload')[0].reset();
 	$("#select_one").select2("val", "");

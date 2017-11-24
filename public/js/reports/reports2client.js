@@ -31,7 +31,9 @@ function reset_quiz_current(){
   $("#client_hotel").css({'width' : '160px' , 'height' : '80px'});
   $("#total_aps").text('0');
   $("#gb_max_dia").text('0');
+  $("#gb_avg_dia").text('0');
   $("#gb_min_dia").text('0');
+  $("#max_usuario").text('0');
   $("#prom_usuario").text('0');
   $("#total_usuario").text('0');
   $("#rogue_mes").text('0');
@@ -48,12 +50,13 @@ function reset_quiz_current(){
   $("#maingbdia").empty();
   $("#mainaps").empty();
   $("#anchobanda").empty();
-
+  $("#typedevice").empty();
 
   $('#table_det_aps').DataTable().destroy();
   $('#table_det_aps').DataTable(configTableAps).clear().draw();
 
   $("#anchobanda").attr("src","../img/hoteles/Sin_imagen.png");
+  $("#typedevice").attr("src","../img/hoteles/Sin_imagen.png");
 
   $('#table_detalle').DataTable().destroy();
   $('#table_detalle').DataTable(configTableAps).clear().draw();
@@ -197,6 +200,42 @@ function obtenerAncho(){
     }
   });
 }
+function obtenertypedevice(){
+  var ax1= $('#select_one').val();
+  var ax2= $('#select_two').val();
+  var ax3= $('#calendar_fecha').val();
+  var _token = $('input[name="_token"]').val();
+
+  $.ajax({
+    type: "POST",
+    url: "./consultimgtype",
+    data: { aa1 : ax1,  aa2 : ax2,  aa3 : ax3,  _token : _token },
+    success: function (data){
+      if (data == '0') {
+        $("#content_img_type_device").css({'display' : 'none' , 'visibility' : 'hidden'});
+        $("#typedevice").attr("src","../img/hoteles/Sin_imagen.png");
+      }
+      if (data == '1') {
+        $.ajax({
+          type: "POST",
+          url: "./restartimgtype",
+          data: { aa1 : ax1,  aa2 : ax2,  aa3 : ax3, _token : _token },
+          success: function (data){
+            var imagen = '../img/devicetype/'+data;
+            $("#typedevice").attr("src",imagen);
+            $("#content_img_type_device").css({'display' : 'block' , 'visibility' : 'visible'});
+          },
+          error: function (data) {
+            console.log('Error:', data);
+          }
+        });
+      }
+    },
+    error: function (data) {
+      console.log('Error:', data);
+    }
+  });
+}
 
 $('#generateInfo').on('click', function() {
     var ax1= $('#select_one').val();
@@ -233,6 +272,7 @@ $('#generateInfo').on('click', function() {
               $("#basico").show();
               setTimeout((function() {
                 obtenerAncho();
+                obtenertypedevice();
                 infohotel();
                 info_cuadros();
                 grafica_radar();
@@ -292,7 +332,7 @@ function grafica_radar(){
             success: function (data){
               $.each(JSON.parse(data),function(index, objdata){
                 datawlangraf1.push(objdata.NombreWLAN);
-                datawlangraf2.push(objdata.ClientesWLAN);
+                datawlangraf2.push(objdata.Cantidad);
               });
               //alert(datawlangraf2);
               var datass2 = [];
@@ -453,7 +493,7 @@ function grafica_bar(){
             success: function (data){
               $.each(JSON.parse(data),function(index, objdata){
                 datawbargraf1.push(objdata.NombreWLAN);
-                datawbargraf2.push(objdata.ClientesWLAN);
+                datawbargraf2.push(objdata.Cantidad);
               });
               var optiongrassid= {
                   title : {
@@ -748,8 +788,8 @@ function graficas_gb(){
             data: { number : hotel, mes: calendario,  _token : _token },
             success: function (data){
               $.each(JSON.parse(data),function(index, objdata){
-                datausergraf1.push(objdata.FechaCaptura);
-                datausergraf2.push(objdata.GBxDia);
+                datausergraf1.push(objdata.Dia);
+                datausergraf2.push(objdata.GBXDia);
               });
               var optiongrafusuarios= {
                   title : {
@@ -1104,17 +1144,17 @@ function info_cuadros(){
     url: "./consultshowinfo",
     data: { number : hotel, mes: calendario,  _token : _token },
     success: function (data){
-      $.each(JSON.parse(data),function(index, objdata){
-        $("#total_aps").text(objdata.AP);
-        $("#gb_max_dia").text(objdata.MAXGB);
-        $("#gb_min_dia").text(objdata.MINGB);
-        $("#prom_usuario").text(objdata.AVGClientes);
-        $("#total_usuario").text(objdata.MaxClientes);
-        $("#rogue_mes").text(objdata.CantidadRogue);
-        $("#diversos_mes").text('10');
-        $("#prom_dia").text('10');
-
-      });
+        var parse =JSON.parse(data);
+        $("#gb_max_dia").text(parse[0].Cantidad);
+        $("#gb_avg_dia").text(parse[1].Cantidad);
+        $("#gb_min_dia").text(parse[2].Cantidad);
+        $("#max_usuario").text(parse[3].Cantidad);
+        $("#prom_usuario").text(parse[4].Cantidad);
+        $("#total_usuario").text(parse[6].Cantidad);
+        $("#total_aps").text(parse[7].Cantidad);
+        $("#diversos_mes").text(parse[8].Cantidad);
+        $("#prom_dia").text(parse[9].Cantidad);
+        $("#rogue_mes").text(parse[10].Cantidad);
     },
     error: function (data) {
       console.log('Error:', data);

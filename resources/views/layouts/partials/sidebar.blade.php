@@ -39,6 +39,7 @@
 
                 <!-- <li><a href="{{ url('observation') }}"><i class='fa fa-search'></i> <span>{{ trans('message.observation') }}</span></a></li> -->
                 <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
+                <li><a href="{{ url('testzone') }}"><i class='fa fa-code-fork'></i> <span>{{{ trans('message.testzd') }}}</span></a></li>
                 <!-- <li><a href="{{ url('import') }}"><i class='fa fa-upload'></i> <span>{{{ trans('message.importar') }}}</span></a></li> -->
 
                 <li class="header">{{ trans('message.quiz') }}</li>
@@ -74,7 +75,7 @@
 
                 <!-- <li><a href="{{ url('observation') }}"><i class='fa fa-search'></i> <span>{{ trans('message.observation') }}</span></a></li> -->
                 <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
-
+                <li><a href="{{ url('testzone') }}"><i class='fa fa-code-fork'></i> <span>{{{ trans('message.testzd') }}}</span></a></li>
 
                 <li class="header">{{ trans('message.page') }}</li>
 

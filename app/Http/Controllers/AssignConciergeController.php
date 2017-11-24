@@ -135,10 +135,9 @@ class AssignConciergeController extends Controller
       $host3 = '177.237.78.98:1161'; //Ibero-Paraiso ZD2
       $host4 = '177.237.78.100:1161'; //Ibero-Paraiso ZD3- MAL
       $host5 = '189.206.2.209:1161'; //Ibero-Cancun
-      $host6 = '200.56.193.10:1161'; //Ibero playamita zd1 no hay info
-      $host7 = '200.56.193.10:1162'; //Ibero playamita pendiente
+      $host6 = '200.56.193.10:1161'; //Ibero playamita zd
 
-      $host8 = '187.157.233.30:1161'; //Ibero cozumel
+      $host8 = '187.157.233.30:1161'; //Ibero cozumel ---
 
       $host9 = '177.237.79.186:1161'; //Ibero playacar si responde
 
@@ -158,15 +157,35 @@ class AssignConciergeController extends Controller
       $host18 =  "187.237.104.164"; // Beach Palace
       $host19 = "177.237.72.62:162";
       $host20 = "189.240.197.4:1161"; // Dorado Maroma.
+      $host21a = '179.51.74.43:1161'; //hardrock punta cana
+      $host21b = '179.51.74.43:2161'; //hardrock punta cana
+      $host21 = '179.51.74.43:3161'; //hardrock punta cana
+      $host21d = '179.51.74.43:4161'; //hardrock punta cana
+      $host22='209.236.43.3:161'; //jamaica
+      $host23='187.157.182.98:1161'; //MOON GRAND no esta
+      $host23a='187.157.182.98:2161'; //MOON GRAND no esta
+      $host24="187.130.75.26";//moon nizuc si esta
+      $host25="187.130.75.27:161";//moon sunrise 1
+      $host26="187.130.75.27:1161";//moon sunrise 2
+      $host27="187.130.75.28";//moon arena
+      $host28='177.237.72.62:162'; //porto
+
+      $host29= '187.189.195.200'; //H10 OCEAN CORARL TURQUEZA--ya
+      $host30= '189.240.197.4:1161'; //Dorado maroma -no JL
+      $host31= '177.237.78.210:1161'; //Ocean Dream -no
+      $host32= '201.140.187.157'; //Hyatt Zilara --si
+      $host33='187.185.71.234:2161';
+
+
 
       $boolean = 0;
       //187.157.151.52
       //201.161.132.22
       //187.252.50.79
 
-      $session = new SNMP(SNMP::VERSION_2C, $host20, "public");
+      $session = new SNMP(SNMP::VERSION_2C, $host5, "public");
       try {
-        $res = $session->walk("1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4");
+        $res = $session->walk("1.3.6.1.4.1.25053.3.1.5.3.4");
         // Walk ? pruebas "1.3.6.1.4.1.25053.1.2.2.1.1.2.1.1.4"
         // walk "1.3.6.1.4.1.25053.1.2.1.1.1.15.6" //WlanTotalRxB Recibidos.
         // walk "1.3.6.1.4.1.25053.1.2.1.1.1.15.9" //WlanTotalTxB Transmitidos.

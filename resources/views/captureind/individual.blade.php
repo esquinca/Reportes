@@ -27,6 +27,66 @@
     <div class="row">
       <div class="col-xs-12">
         <!--Inicio Apartado subir ancho de banda-->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ trans('message.clienttype')}}.</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- row -->
+              <div class="row">
+                <div class="col-sm-12">
+                  {{ csrf_field() }}
+                  <form id="form_img_upload_type" name="form_img_upload_type" class="form-inline" enctype="multipart/form-data" action="/imagentypeband" method="POST">
+                    <div>
+                      <div class="form-group">
+                        <label for="select_one_type"  class="control-label">{{ trans('message.selecthotel')}}: </label>
+                        <div class="">
+                          <select class="form-control select2" id="select_one_type" name="select_one_type">
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                            @foreach ($selectDatahotel as $info)
+                            <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      {{ csrf_field() }}
+
+                      <div class="form-group">
+                        <label for="month_upload_type"  class="control-label">{{ trans('message.fecha')}}: </label>
+                        <div class="">
+                          <input type="text" class="form-control" id="month_upload_type" name="month_upload_type" placeholder=" " maxlength="10" title="{{ trans('message.maxcardiez')}}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="upload_img_type"  class="control-label">{{ trans('message.importarimg')}}: </label>
+                        <div class="">
+                          <input type="file" class="form-control" id="upload_img_type" name="upload_img_type" title="{{ trans('message.importarimg')}}" onchange="control(this)">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <a id="" class="btn btn-success" type="submit" onclick="$(this).closest('form').submit()"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateimgtypeClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <strong>Resolución Recomendada: Anchura: 380 píxeles. Altura: 220 píxeles.</strong>
+            </div>
+          </div>
+        <!--Fin Apartado GB Transmitidos-->
+      </div>
+
+      <div class="col-xs-12">
+        <!--Inicio Apartado subir ancho de banda-->
           <div class="box box-default">
             <div class="box-header with-border">
               <h3 class="box-title">{{ trans('message.contentimgband')}}.</h3>
@@ -79,6 +139,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
+                <strong>Resolución Recomendada: Anchura: 600 píxeles. Altura: 200 píxeles.</strong>
             </div>
           </div>
         <!--Fin Apartado GB Transmitidos-->

@@ -208,4 +208,19 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/quiz_data_ifn', 'QuizQuestionsController@createdata');
 	//Editar Reporte
 	Route::get('/edit_report', 'EditReportController@index');
+	Route::post('/obt_gb_report', 'EditReportController@searchone');
+	Route::post('/obt_user_report', 'EditReportController@searchtwo');
+	Route::post('/gb_edit_report', 'EditReportController@create');
+	Route::post('/user_edit_report', 'EditReportController@creates');
+	Route::post('/editimagentypeband','EditReportController@update_edit_type_avatar');
+	Route::post('/resetimagenband','EditReportController@update_edit_band_avatar');
+
+	Route::post('/imagentypeband','IndividualController@update_type_avatar');
+	//Type device
+	Route::post('/consultimgtype','ViewReportsController@consultypeimg');
+	Route::post('/restartimgtype','ViewReportsController@consultrouteimgtype');
+	//TESTEO ZD
+	Route::get('/testzone', 'TestIpController@index');
+	Route::post('/testzonedir', 'TestIpController@store');
+
 });
