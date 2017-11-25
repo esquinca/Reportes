@@ -10,7 +10,7 @@
 
   @push('scripts')
   <link href="{{ asset('/css/viewreports0.css') }}" rel="stylesheet" type="text/css" />
-  <script src="/plugins/moment/moment-with-locales.js"></script>
+  <script src="/plugins/momentupdate/moment-with-locales.js"></script>
   <!--DataTables-->
   <link href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
   <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
@@ -503,7 +503,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+          <!--  <tr>
                   <td>USUARIOS MÁXIMOS POR HORA</td>
                   <td>dd</td>
                   <td>dd</td>
@@ -532,7 +532,7 @@
                   <td>dd</td>
                   <td>dd</td>
                   <td>(Y)</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
         </div>

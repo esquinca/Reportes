@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 use DB;
 
+use DateTime;
+
+use DateInterval;
+
 use Auth;
 
 class ViewReportsController extends Controller
@@ -481,6 +485,26 @@ class ViewReportsController extends Controller
                   ->value('Descripcion');
 
       return $resultados;
+    }
+
+    public function CompareTable(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $hotel_name = trim($request->nameh);
+
+      //$dateaux = date('F', strtotime($date));
+
+      $dateObj = DateTime::createFromFormat('m-Y', $date);
+      $monthyear = $dateObj->format('F Y');
+      $monthyearminus = $dateObj->sub(new DateInterval('P1M'))->format('F Y');
+
+      $auxnow = $hotel_name . " " . $monthyear;
+      $auxminus = $hotel_name . " " . $monthyearminus;
+
+      $result = DB::select('CALL Comparativo(?, ?)', array($auxminus, $auxnow));
+
+      return json_encode($result);
     }
 
     /**

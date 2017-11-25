@@ -270,6 +270,7 @@ $('#generateInfo').on('click', function() {
                 graficas_gb();
                 grafica_pie();
                 table_graf_pie();
+                table_comparativo();
               }), 300);
 
               // info_observation();
@@ -1160,6 +1161,129 @@ function info_cuadros(){
   });
 
 }
+
+function table_comparativo() {
+  var hotel= $('#select_one').val();
+  var hotel_name = $('#select_one option:selected').text();
+  var calendario= $('#calendar_fecha').val();
+  var _token = $('input[name="_token"]').val();
+
+  var splitdate = calendario.split("-");
+  var goodFormat = splitdate[1] + "-" + splitdate[0];
+  moment.locale('es');
+  var dateMoment = moment(goodFormat).format('MMMM');
+  var dateMomentMinus = moment(goodFormat).subtract(1, 'M').format('MMMM');
+  var ind1 = "";
+  var ind2 = "";
+  var ind3 = "";
+  var ind4 = "";
+  var ind5 = "";
+  var ind6 = "";
+
+  $.ajax({
+    type: "POST",
+    url: "/TabComparativo",
+    data: { number : hotel, nameh : hotel_name, mes: calendario,  _token : _token },
+    success: function (data){
+      console.log(data);
+      var parsedata = JSON.parse(data);
+      //GB Max
+      if (parsedata[0].MES1 < parsedata[0].MES2) {
+        ind1 = '<i class="fa fa-arrow-up"></i>';
+      }else if(parsedata[0].MES1 > parsedata[0].MES2){
+        ind1 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind1 = '<i class="fa fa-arrow-right"></i>';
+      }
+      //GB Avg
+      if (parsedata[1].MES1 < parsedata[1].MES2) {
+        ind2 = '<i class="fa fa-arrow-up"></i>';
+      }else if(parsedata[1].MES1 > parsedata[1].MES2){
+        ind2 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind2 = '<i class="fa fa-arrow-right"></i>';
+      }
+      //GB Minimo
+      var gbmin1 = parseInt(parsedata[2].MES1);
+      var gbmin2 = parseInt(parsedata[2].MES2);
+      //console.log('valor gbmin 1: ' + gbmin1 + ' valor gbmin 2: ' + gbmin2);
+
+      if (gbmin1 < gbmin2) {
+        ind3 = '<i class="fa fa-arrow-up"></i>';
+      }else if(gbmin1 > gbmin2){
+        ind3 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind3 = '<i class="fa fa-arrow-right"></i>';
+      }
+
+      if (parsedata[3].MES1 < parsedata[3].MES2) {
+        ind4 = '<i class="fa fa-arrow-up"></i>';
+      }else if(parsedata[3].MES1 > parsedata[3].MES2){
+        ind4 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind4 = '<i class="fa fa-arrow-right"></i>';
+      }
+
+      if (parsedata[4].MES1 < parsedata[4].MES2) {
+        ind5 = '<i class="fa fa-arrow-up"></i>';
+      }else if(parsedata[4].MES1 > parsedata[4].MES2){
+        ind5 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind5 = '<i class="fa fa-arrow-right"></i>';
+      }
+
+      if (parsedata[5].MES1 < parsedata[5].MES2) {
+        ind6 = '<i class="fa fa-arrow-up"></i>';
+      }else if(parsedata[5].MES1 > parsedata[5].MES2){
+        ind6 = '<i class="fa fa-arrow-down"></i>';
+      }else{
+        ind6 = '<i class="fa fa-arrow-right"></i>';
+      }
+
+      var dataset = [
+        [   'GB Max',
+            parsedata[0].MES1,
+            parsedata[0].MES2,
+            ind1
+        ],
+        [   'GB Avg',
+            parsedata[1].MES1,
+            parsedata[1].MES2,
+            ind2
+        ],
+        [   'GB Min',
+            parsedata[2].MES1,
+            parsedata[2].MES2,
+            ind3
+        ],
+        [   'User Max',
+            parsedata[3].MES1,
+            parsedata[3].MES2,
+            ind4
+        ],
+        [   'User Avg',
+            parsedata[4].MES1,
+            parsedata[4].MES2,
+            ind5
+        ],
+        [   'User Min',
+            parsedata[5].MES1,
+            parsedata[5].MES2,
+            ind6
+        ],
+      ];
+      $('#dato_two').text(dateMomentMinus);
+      $('#dato_three').text(dateMoment);
+      $('#table_detalle').DataTable().destroy();
+      var TablaComp= $('#table_detalle').dataTable(configTableAps);
+      TablaComp.fnAddData(dataset);
+    },
+    error: function (data) {
+      console.log('Error:', data);
+    }
+  });
+}
+
 
 $('#generatePdf').on('click', function() {
   //$("body").addClass('sidebar-collapse'); //Comprimir siderbar
