@@ -1170,9 +1170,11 @@ function table_comparativo() {
 
   var splitdate = calendario.split("-");
   var goodFormat = splitdate[1] + "-" + splitdate[0];
-  moment.locale('es');
-  var dateMoment = moment(goodFormat).format('MMMM');
-  var dateMomentMinus = moment(goodFormat).subtract(1, 'M').format('MMMM');
+
+  moment.locale('en');
+  var dateNowController = moment(goodFormat).format('MMMM YYYY');
+  var dateMinusController = moment(goodFormat).subtract(1, 'M').format('MMMM YYYY');
+  console.log('momentdate: ' + dateNowController + ' momentdateL: ' + dateMinusController);
   var ind1 = "";
   var ind2 = "";
   var ind3 = "";
@@ -1183,7 +1185,7 @@ function table_comparativo() {
   $.ajax({
     type: "POST",
     url: "/TabComparativo",
-    data: { number : hotel, nameh : hotel_name, mes: calendario,  _token : _token },
+    data: { number : hotel, nameh : hotel_name, mes: calendario, mesnow: dateNowController, meslast: dateMinusController,  _token : _token },
     success: function (data){
       console.log(data);
       var parsedata = JSON.parse(data);
@@ -1272,6 +1274,11 @@ function table_comparativo() {
             ind6
         ],
       ];
+
+      moment.locale('es');
+      var dateMoment = moment(goodFormat).format('MMMM');
+      var dateMomentMinus = moment(goodFormat).subtract(1, 'M').format('MMMM');
+
       $('#dato_two').text(dateMomentMinus);
       $('#dato_three').text(dateMoment);
       $('#table_detalle').DataTable().destroy();

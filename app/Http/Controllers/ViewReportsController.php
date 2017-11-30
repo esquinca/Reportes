@@ -492,6 +492,8 @@ class ViewReportsController extends Controller
       $numero_hotel= $request->number;
       $date= $request->mes;
       $hotel_name = trim($request->nameh);
+      $datenow = $request->mesnow;
+      $datelast = $request->meslast;
 
       //$dateaux = date('F', strtotime($date));
 
@@ -501,8 +503,10 @@ class ViewReportsController extends Controller
 
       $auxnow = $hotel_name . " " . $monthyear;
       $auxminus = $hotel_name . " " . $monthyearminus;
+      $auxnow2 = $hotel_name . " " . $datenow;
+      $auxminus2 = $hotel_name . " " . $datelast;
 
-      $result = DB::select('CALL Comparativo(?, ?)', array($auxminus, $auxnow));
+      $result = DB::select('CALL Comparativo(?, ?)', array($auxminus2, $auxnow2));
 
       return json_encode($result);
     }
