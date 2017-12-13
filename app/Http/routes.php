@@ -120,7 +120,8 @@ Route::group(['middleware' => ['auth']], function() {
 	//Cuestionario
 	//Route::get('/survey_questions', 'QuizQuestionsController@index');
 	Route::get('/survey_results', 'QuizResultsController@index');
-	Route::post('/survey_viewresult', 'QuizResultsController@view');
+	//Route::post('/survey_viewresult', 'QuizResultsController@view'); LISTA CON METODO LOCOCHON
+	Route::post('/survey_viewresult', 'QuizResultsController@viewgabo');
 	Route::post('/show_comments', 'QuizResultsController@store');
 
 	Route::post('/survey_form', 'QuizQuestionsController@store');

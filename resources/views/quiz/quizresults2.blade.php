@@ -26,7 +26,6 @@
       //table();
       $("#selectfiltro").hide();
       $("#filter_year").hide();
-      $("#filter_month").hide();
       $("#filter_vertical").hide();
       $("#filter_operation").hide();
       $("#filter_average").hide();
@@ -37,10 +36,12 @@
 
     $('#boton_muestra_selectfiltro').on('click', function() {
      	$("#selectfiltro").show(10);
+      //console.log('corre el show de id selectfiltro');
     });
 
     $(".selectFiltro").change(function() {
   		mostraryreordenar($( this).val(), $("#filtration_container") );
+      //console.log('verifico y mando al metodo');
   	});
 
     function mostraryreordenar(identifier, contentElements)
@@ -49,6 +50,9 @@
     	$('#'+identifier).show(300);
       $("#selectfiltro").hide(100);
       $('#selectfiltro').prop('selectedIndex',0);
+
+      //console.log(contentElements);
+      //console.log('#'+identifier);
     }
     $(".boton-mini").click(function(event) {
 	     var identifier = $(this).closest( $( ".control-filter" ) );
@@ -93,26 +97,6 @@
            }
        });
     });
-
-    function searchfechas (identificador){
-      switch (identificador) {
-        case '1':
-          return $fecha = '<i class = "fa fa-arrow-up"></i>';
-        break;
-        case '2':
-          return $fecha = '<i class = "fa fa-arrow-down"></i>';
-        break;
-        case '3':
-          return $fecha = '<i class = "fa fa-arrow-right"></i>';
-        break;
-        case '4':
-          return $fecha = '<i class = "fa fa-pause-circle-o"></i>';
-        break;
-        case '5':
-          return $fecha = '<i class = "fa fa-window-close"></i>';
-        break;
-      }
-    }
 
     function tablaEnc(datajson, table, order){
       //console.log(table);
@@ -192,27 +176,28 @@
       });
 
       vartable.fnClearTable();
-      $.each(JSON.parse(datajson), function(index, status){//dd(status);
+      $.each(JSON.parse(datajson), function(index, status){
         vartable.fnAddData([
-          status.Vertical,
-          status.Nombre_hotel,
-          status.Mes12,//Enero
-          status.Mes11,
-          status.Mes10,
-          status.Mes9,
-          status.Mes8,
-          status.Mes7,
-          status.Mes6,
-          status.Mes5,
-          status.Mes4,
-          status.Mes3,
-          status.Mes2,
-          status.Mes1,//Diciembre
-          status.anio,
+          status.vertical,
+          status.hotel,
+          status.January,
+          status.February,
+          status.March,
+          status.April,
+          status.May,
+          status.June,
+          status.July,
+          status.August,
+          status.September,
+          status.October,
+          status.November,
+          status.December,
+          status.years,
           status.Promedio,
-          searchfechas(status.Indicador),
+          status.indicador,
           status.IT,
-          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.idcomentario+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
+          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.identificador+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
+          //status.UltimoComentario
           ]);
         });
 
@@ -357,23 +342,20 @@ $("#example1").on('search.dt', function() {
           {
           "targets": 0,
             "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData === 'Aeropuerto' ) {
-                $(td).css('background-color', '#7030A0').css('color', 'white').css('font-weight', 'bold');
-              }
               if ( cellData === 'Educación' ) {
                 $(td).css('background-color', '#0070C0').css('color', 'white').css('font-weight', 'bold');
               }
-              if ( cellData === 'Eventos' ) {
-                $(td).css('background-color', '#2e4053').css('color', 'white').css('font-weight', 'bold');
+              if ( cellData === 'Aereopuerto' ) {
+                $(td).css('background-color', '#7030A0').css('color', 'white').css('font-weight', 'bold');
               }
               if ( cellData === 'Hospitalidad' ) {
                 $(td).css('background-color', '#008081').css('color', 'white').css('font-weight', 'bold');
               }
-              if ( cellData === 'MB' ) {
-                $(td).css('background-color', '#a93226').css('color', 'white').css('font-weight', 'bold');
-              }
               if ( cellData === 'Oficinas' ) {
                 $(td).css('background-color', '#333F4F').css('color', 'white').css('font-weight', 'bold');
+              }
+              if ( cellData === 'Retail' ) {
+                $(td).css('background-color', '#F7AC25').css('color', 'white').css('font-weight', 'bold');
               }
               if ( cellData === 'Parques' ) {
                 $(td).css('background-color', '#92D050').css('color', 'white').css('font-weight', 'bold');
@@ -381,17 +363,8 @@ $("#example1").on('search.dt', function() {
               if ( cellData === 'Plaza' ) {
                 $(td).css('background-color', '#757171').css('color', 'white').css('font-weight', 'bold');
               }
-              if ( cellData === 'Restaurantes' ) {
-                $(td).css('background-color', '#B40431').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Retail' ) {
-                $(td).css('background-color', '#F7AC25').css('color', 'white').css('font-weight', 'bold');
-              }
               if ( cellData === 'Kidzania' ) {
                 $(td).css('background-color', '#FFD966').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Transporte' ) {
-                $(td).css('background-color', '#FF4000').css('color', 'white').css('font-weight', 'bold');
               }
             }
           },
@@ -771,19 +744,19 @@ $("#example1").on('search.dt', function() {
                        //nCells[3].innerHTML =  nregister;
                        //nCells[4].innerHTML =  monto_ene;
                        //nCells[2].innerHTML = parseFloat( monto_ene / (nregister - count_ene) ).toFixed(2);
-                       if (monto_ene != 0) { nCells[2].innerHTML = parseFloat( monto_ene / (nregister - count_ene) ).toFixed(1); } else { nCells[2].innerHTML =0; }
-                       if (monto_feb != 0) { nCells[3].innerHTML = parseFloat( monto_feb / (nregister - count_feb) ).toFixed(1); } else { nCells[3].innerHTML =0; }
-                       if (monto_mzo != 0) { nCells[4].innerHTML = parseFloat( monto_mzo / (nregister - count_mzo) ).toFixed(1); } else { nCells[4].innerHTML =0; }
-                       if (monto_abr != 0) { nCells[5].innerHTML = parseFloat( monto_abr / (nregister - count_abr) ).toFixed(1); } else { nCells[5].innerHTML =0; }
-                       if (monto_myo != 0) { nCells[6].innerHTML = parseFloat( monto_myo / (nregister - count_myo) ).toFixed(1); } else { nCells[6].innerHTML =0; }
-                       if (monto_jun != 0) { nCells[7].innerHTML = parseFloat( monto_jun / (nregister - count_jun) ).toFixed(1); } else { nCells[7].innerHTML =0; }
-                       if (monto_jul != 0) { nCells[8].innerHTML = parseFloat( monto_jul / (nregister - count_jul) ).toFixed(1); } else { nCells[8].innerHTML =0; }
-                       if (monto_agto != 0){ nCells[9].innerHTML = parseFloat( monto_agto /(nregister -count_agto) ).toFixed(1); } else { nCells[9].innerHTML =0; }
-                       if (monto_sept != 0){ nCells[10].innerHTML= parseFloat( monto_sept /(nregister -count_sept) ).toFixed(1); } else { nCells[10].innerHTML =0; }
-                       if (monto_oct != 0) { nCells[11].innerHTML = parseFloat( monto_oct / (nregister - count_oct) ).toFixed(1); } else { nCells[11].innerHTML =0; }
-                       if (monto_nov != 0) { nCells[12].innerHTML = parseFloat( monto_nov / (nregister - count_nov) ).toFixed(1); } else { nCells[12].innerHTML =0; }
-                       if (monto_div != 0) { nCells[13].innerHTML = parseFloat( monto_div / (nregister - count_dic) ).toFixed(1); } else { nCells[13].innerHTML =0; }
-                       if (monto_average != 0) { nCells[15].innerHTML = parseFloat( monto_average / (nregister - count_average) ).toFixed(1); } else { nCells[15].innerHTML =0; }
+                       if (monto_ene != 0) { nCells[2].innerHTML = parseFloat( monto_ene / (nregister - count_ene) ).toFixed(2); } else { nCells[2].innerHTML =0; }
+                       if (monto_feb != 0) { nCells[3].innerHTML = parseFloat( monto_feb / (nregister - count_feb) ).toFixed(2); } else { nCells[3].innerHTML =0; }
+                       if (monto_mzo != 0) { nCells[4].innerHTML = parseFloat( monto_mzo / (nregister - count_mzo) ).toFixed(2); } else { nCells[4].innerHTML =0; }
+                       if (monto_abr != 0) { nCells[5].innerHTML = parseFloat( monto_abr / (nregister - count_abr) ).toFixed(2); } else { nCells[5].innerHTML =0; }
+                       if (monto_myo != 0) { nCells[6].innerHTML = parseFloat( monto_myo / (nregister - count_myo) ).toFixed(2); } else { nCells[6].innerHTML =0; }
+                       if (monto_jun != 0) { nCells[7].innerHTML = parseFloat( monto_jun / (nregister - count_jun) ).toFixed(2); } else { nCells[7].innerHTML =0; }
+                       if (monto_jul != 0) { nCells[8].innerHTML = parseFloat( monto_jul / (nregister - count_jul) ).toFixed(2); } else { nCells[8].innerHTML =0; }
+                       if (monto_agto != 0){ nCells[9].innerHTML = parseFloat( monto_agto /(nregister -count_agto) ).toFixed(2); } else { nCells[9].innerHTML =0; }
+                       if (monto_sept != 0){ nCells[10].innerHTML= parseFloat( monto_sept /(nregister -count_sept) ).toFixed(2); } else { nCells[10].innerHTML =0; }
+                       if (monto_oct != 0) { nCells[11].innerHTML = parseFloat( monto_oct / (nregister - count_oct) ).toFixed(2); } else { nCells[11].innerHTML =0; }
+                       if (monto_nov != 0) { nCells[12].innerHTML = parseFloat( monto_nov / (nregister - count_nov) ).toFixed(2); } else { nCells[12].innerHTML =0; }
+                       if (monto_div != 0) { nCells[13].innerHTML = parseFloat( monto_div / (nregister - count_dic) ).toFixed(2); } else { nCells[13].innerHTML =0; }
+                       if (monto_average != 0) { nCells[15].innerHTML = parseFloat( monto_average / (nregister - count_average) ).toFixed(2); } else { nCells[15].innerHTML =0; }
                     }
                     else {
                       nCells[2].innerHTML = 0;
@@ -807,25 +780,26 @@ $("#example1").on('search.dt', function() {
       vartable.fnClearTable();
       $.each(JSON.parse(datajson), function(index, status){
         vartable.fnAddData([
-          status.Vertical,
-          status.Nombre_hotel,
-          status.Mes12,//Enero
-          status.Mes11,
-          status.Mes10,
-          status.Mes9,
-          status.Mes8,
-          status.Mes7,
-          status.Mes6,
-          status.Mes5,
-          status.Mes4,
-          status.Mes3,
-          status.Mes2,
-          status.Mes1,//Diciembre
-          status.anio,
+          status.vertical,
+          status.hotel,
+          status.January,
+          status.February,
+          status.March,
+          status.April,
+          status.May,
+          status.June,
+          status.July,
+          status.August,
+          status.September,
+          status.October,
+          status.November,
+          status.December,
+          status.years,
+          //'<span class="fa '+status.indicador+'"></span>'
           status.Promedio,
-          status.Indicador,
+          status.indicador,
           status.IT,
-          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.idcomentario+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
+          '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.identificador+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
           ]);
         });
 
@@ -966,28 +940,6 @@ $("#example1").on('search.dt', function() {
             </div>
           </div>
 
-          <div id="filter_month" name="filter_month" class="row row-separation control-filter">
-            <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
-  						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Mes</strong>
-  					</div>
-            <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
-              <select id="searchmonth" name="searchmonth" class="form-control">
-                <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
-                <!-- @foreach ($selectYear as $infoY)
-                  <option value="{{ $infoY->Year1 }}"> {{ $infoY->Year1 }} </option>
-                @endforeach -->
-                @for ($i = 1; $i <=12; $i++)
-                    <option value="{{ $i }}">
-                      <?php
-                      $mes = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                      echo $mes = $mes[$i-1];
-                      ?>
-                    </option>
-                @endfor
-              </select>
-            </div>
-          </div>
-
           <div id="filter_vertical" name="filter_vertical" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
   						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Vertical</strong>
@@ -1045,7 +997,6 @@ $("#example1").on('search.dt', function() {
           <select id='selectfiltro'class ='selectFiltro' class="form-control">
             <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
             <option value="filter_year">Año</option>
-            <option value="filter_month">Mes</option>
             <option value="filter_vertical">Vertical</option>
             <option value="filter_operation">Operación</option>
             <option value="filter_average">Promedio General * Mes</option>

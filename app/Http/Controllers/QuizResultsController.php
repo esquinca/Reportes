@@ -25,6 +25,20 @@ class QuizResultsController extends Controller
       return view('quiz.quizresults', compact('selectYear', 'selectVertical'));
        //return view('quiz.quizresults');
     }
+    public function viewgabo(Request $request)
+    {
+      //$year= $request->searchyear;
+      $year ='2017';
+      $month = '12';
+      $fechaMes =$year.'-'.$month.'-01';
+      $vertical= 'Aeropuerto';
+      $operation= '1';
+      //$vertical= $request->searchvertical;
+      //$operation= $request->searchoperation;
+
+      $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($year,$month,$fechaMes,$vertical,$operation));
+      return json_encode($resultados);
+    }
 
     public function view(Request $request)
     {
