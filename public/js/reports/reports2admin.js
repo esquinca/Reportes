@@ -1073,11 +1073,40 @@ function table_graf_pie(){
   var hotel= $('#select_one').val();
   var calendario= $('#calendar_fecha').val();
   var _token = $('input[name="_token"]').val();
+  // Funcion deprecada, busca a una vista
+  // $.ajax({
+  //   type: "POST",
+  //   url: "./consultshowdetaps",
+  //   data: { number : hotel, mes: calendario,  _token : _token },
+  //   success: function (data){
+  //     console.log(data);
+  //     if (data == '[]'){
+
+  //     }
+  //     else {
+  //       $('#table_det_aps').DataTable().destroy();
+  //       var TablaDetallesAps= $('#table_det_aps').dataTable(configTableAps);
+  //       TablaDetallesAps.fnClearTable();
+  //       $.each(JSON.parse(data),function(index, objdataTable){
+  //         TablaDetallesAps.fnAddData([
+  //           objdataTable.Descripcion,
+  //           objdataTable.MAC,
+  //           objdataTable.NumClientes
+  //         ]);
+  //       });
+  //     }
+  //   },
+  //   error: function (data) {
+  //     console.log('Error:', data);
+  //   }
+  // });
+  // Función nueva, call procedure.
   $.ajax({
     type: "POST",
-    url: "./consultshowdetaps",
+    url: "./getMostAp",
     data: { number : hotel, mes: calendario,  _token : _token },
     success: function (data){
+      //console.log(data);
       if (data == '[]'){
 
       }
@@ -1089,13 +1118,13 @@ function table_graf_pie(){
           TablaDetallesAps.fnAddData([
             objdataTable.Descripcion,
             objdataTable.MAC,
-            objdataTable.NumClientes
+            objdataTable.Clientes
           ]);
         });
       }
     },
     error: function (data) {
-      console.log('Error:', data);
+      console.log('Error: ', data);
     }
   });
 }
@@ -1174,7 +1203,7 @@ function table_comparativo() {
   moment.locale('en');
   var dateNowController = moment(goodFormat).format('MMMM YYYY');
   var dateMinusController = moment(goodFormat).subtract(1, 'M').format('MMMM YYYY');
-  console.log('momentdate: ' + dateNowController + ' momentdateL: ' + dateMinusController);
+  //console.log('momentdate: ' + dateNowController + ' momentdateL: ' + dateMinusController);
   var ind1 = "";
   var ind2 = "";
   var ind3 = "";
@@ -1187,7 +1216,7 @@ function table_comparativo() {
     url: "/TabComparativo",
     data: { number : hotel, nameh : hotel_name, mes: calendario, mesnow: dateNowController, meslast: dateMinusController,  _token : _token },
     success: function (data){
-      console.log(data);
+      //console.log(data);
       var parsedata = JSON.parse(data);
       //GB Max
       if (parsedata[0].MES1 < parsedata[0].MES2) {

@@ -278,6 +278,21 @@ class ViewReportsController extends Controller
                     ->get();
       return json_encode($resultados);
     }
+
+    public function GetMostAp(Request $request)
+    {
+      $numero_hotel= $request->number;
+      $date= $request->mes;
+      $splitdate = explode("-", $date);
+
+      $mes = $splitdate[0];
+      $year = $splitdate[1];
+
+      $resultados = DB::select('CALL GetMostAp(?, ?, ?)', array($numero_hotel, $year, $mes));
+
+      return json_encode($resultados);
+    }
+
     public function returnDate($date)
     {
         $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
