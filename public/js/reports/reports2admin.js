@@ -1219,17 +1219,21 @@ function table_comparativo() {
       //console.log(data);
       var parsedata = JSON.parse(data);
       //GB Max
-      if (parsedata[0].MES1 < parsedata[0].MES2) {
+      var gbmax1 = parseInt(parsedata[0].MES1);
+      var gbmax2 = parseInt(parsedata[0].MES2);
+      if (gbmax1 < gbmax2) {
         ind1 = '<i class="fa fa-arrow-up"></i>';
-      }else if(parsedata[0].MES1 > parsedata[0].MES2){
+      }else if(gbmax1 > gbmax2){
         ind1 = '<i class="fa fa-arrow-down"></i>';
       }else{
         ind1 = '<i class="fa fa-arrow-right"></i>';
       }
       //GB Avg
-      if (parsedata[1].MES1 < parsedata[1].MES2) {
+      var gbavg1 = parseInt(parsedata[1].MES1);
+      var gbavg2 = parseInt(parsedata[1].MES2);
+      if (gbavg1 < gbavg2) {
         ind2 = '<i class="fa fa-arrow-up"></i>';
-      }else if(parsedata[1].MES1 > parsedata[1].MES2){
+      }else if(gbavg1 > gbavg2){
         ind2 = '<i class="fa fa-arrow-down"></i>';
       }else{
         ind2 = '<i class="fa fa-arrow-right"></i>';
@@ -1246,26 +1250,32 @@ function table_comparativo() {
       }else{
         ind3 = '<i class="fa fa-arrow-right"></i>';
       }
-
-      if (parsedata[3].MES1 < parsedata[3].MES2) {
+      //Usr Max
+      var usrmax1 = parseInt(parsedata[3].MES1);
+      var usrmax2 = parseInt(parsedata[3].MES2);
+      if (usrmax1 < usrmax2) {
         ind4 = '<i class="fa fa-arrow-up"></i>';
-      }else if(parsedata[3].MES1 > parsedata[3].MES2){
+      }else if(usrmax1 > usrmax2){
         ind4 = '<i class="fa fa-arrow-down"></i>';
       }else{
         ind4 = '<i class="fa fa-arrow-right"></i>';
       }
-
-      if (parsedata[4].MES1 < parsedata[4].MES2) {
+      //Usr avg
+      var usravg1 = parseInt(parsedata[4].MES1);
+      var usravg2 = parseInt(parsedata[4].MES2);
+      if (usravg1 < usravg2) {
         ind5 = '<i class="fa fa-arrow-up"></i>';
-      }else if(parsedata[4].MES1 > parsedata[4].MES2){
+      }else if(usravg1 > usravg2){
         ind5 = '<i class="fa fa-arrow-down"></i>';
       }else{
         ind5 = '<i class="fa fa-arrow-right"></i>';
       }
-
-      if (parsedata[5].MES1 < parsedata[5].MES2) {
+      //Usr min
+      var usrmin1 = parseInt(parsedata[5].MES1);
+      var usrmin2 = parseInt(parsedata[5].MES2);
+      if (usrmin1 < usrmin2) {
         ind6 = '<i class="fa fa-arrow-up"></i>';
-      }else if(parsedata[5].MES1 > parsedata[5].MES2){
+      }else if(usrmin1 > usrmin2){
         ind6 = '<i class="fa fa-arrow-down"></i>';
       }else{
         ind6 = '<i class="fa fa-arrow-right"></i>';
