@@ -30,6 +30,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <form id="form_gb" name="form_gb" class="form-inline">
+                    {{ csrf_field() }}
                     <div>
                       <div class="form-group">
                         <label for="fecha_ngb"  class="control-label">{{ trans('message.fecha')}}: </label>
@@ -45,6 +46,14 @@
                             @foreach ($selectDatahotel as $info)
                             <option value="{{ $info->IDHotels }}"> {{ $info->Nombre_hotel }} </option>
                             @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="select_typezd"  class="control-label">{{ trans('message.selectzoned')}}: </label>
+                        <div class="">
+                          <select class="form-control" id="select_typezd" >
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
                           </select>
                         </div>
                       </div>

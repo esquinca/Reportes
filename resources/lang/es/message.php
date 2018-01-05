@@ -523,7 +523,7 @@ return [
     'dir_ip_format' => 'Formato de Direccion IP. Ejemplo: 192.168.10.158',
     'puerto' => 'Puerto',
     'comprobar' => 'Comprobar',
-    '' => '',
+    'selectzoned' => 'Seleccionar ZD',
     '' => '',
     '' => '',
     '' => '',

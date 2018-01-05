@@ -225,5 +225,8 @@ Route::group(['middleware' => ['auth']], function() {
 	//TESTEO ZD
 	Route::get('/testzone', 'TestIpController@index');
 	Route::post('/testzonedir', 'TestIpController@store');
+	//change 4 enero
+	Route::post('/obt_type_zd', 'EditReportController@searchzd');
+
 
 });

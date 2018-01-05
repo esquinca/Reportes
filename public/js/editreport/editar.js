@@ -42,43 +42,121 @@ function habilitarnuevo(campo) {
   $('#'+campo).prop("readOnly", false);
   $('#'+campo).val('');
 }
-$('#select_onet').on('change', function(e){
-  var id= $(this).val();
-  var date_current= $('#fecha_ngb').val();
-  var _token = $('input[name="_token"]').val();
-  if (id != ''){
-      if (date_current != '' ) {
-        $.ajax({
-          type: "POST",
-          url: './obt_gb_report',
-          data: { valora: id, d_cur: date_current,  _token : _token },
-          success: function (data) {
-            if (data == '') {
-              mensajetoast('Mensaje', '3', 'Sin datos', 1000);
-              inputcantone();
-            }
-            else{
-              inputcantone();
-              $('#fecha_ngb').prop("disabled", true);
-              $('#valorgb_trans').val(data);
-              habilitarnuevo('new_valorgb_tran');
-            }
-          },
-          error: function (data) {
-            console.log('Error:', data);
+
+  $('#select_onet').on('change', function(e){
+    var id= $(this).val();
+    var _token = $('input[name="_token"]').val();
+    if (id!='') {
+      inputcantone();
+      $.ajax({
+        type: "POST",
+        url: './obt_type_zd',
+        data: { val: id,  _token : _token },
+        success: function (data) {
+          if (data == '') {
+            mensajetoast('Mensaje', '3', 'Sin datos', 1000);
+            $('#select_typezd').empty();
+            $('#select_typezd').append('<option value="" selected>Elije</option>');
           }
-        });
+          else {
+            // alert(data);
+            $('#select_typezd').empty();
+            $('#select_typezd').append('<option value="" selected>Elije</option>');
+            if (data == '[]') {
+              $('#select_typezd').append('<option value="manual">Manual</option>');
+            }
+            else {
+              $.each(JSON.parse(data),function(index, objdata){
+                $("#select_typezd option").prop("selected", false);
+                $('#select_typezd').append('<option value="'+objdata.id_zone+'">'+ objdata.ip +'</option>');
+              });
+            }
+          }
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+    }
+    else {
+          mensajetoast('Mensaje', '3', 'Elija un hotel de la lista', 1000);
+          $('#select_typezd').empty();
+          $('#select_typezd').append('<option value="" selected>Elije</option>');
+          inputcantone();
+    }
+  });
+  $('#select_typezd').on('change', function(e){
+      var id= $(this).val();
+      var _token = $('input[name="_token"]').val();
+      var date_current= $('#fecha_ngb').val();
+      var hotel= $('#select_onet').val();
+      if (id != ''){
+        if (date_current != '' ) {
+          $.ajax({
+            type: "POST",
+            url: './obt_gb_report',
+            data: { valzd: id, valht: hotel, d_cur: date_current,  _token : _token },
+            success: function (data) {
+              if (data == '') {
+                mensajetoast('Mensaje', '3', 'Sin datos', 1000);
+                inputcantone();
+                $("#select_typezd").prop('selectedIndex',0);
+                $("#select_onet").prop('selectedIndex',0);
+
+              }
+              else {
+                inputcantone();
+                $('#fecha_ngb').prop("disabled", true);
+                $('#valorgb_trans').val(data);
+                habilitarnuevo('new_valorgb_tran');
+              }
+            },
+            error: function (data) {
+              console.log('Error:', data);
+            }
+          });
+        }
+        else { $("#select_typezd").prop('selectedIndex',0); mensajetoast('Mensaje', '3', 'Ingresa una fecha', 1000); }
       }
-      else{
-        $("#select_onet").prop('selectedIndex',0);
-        mensajetoast('Mensaje', '3', 'Ingresa una fecha', 1000);
-      }
-  }
-  else {
-    mensajetoast('Mensaje', '3', 'Elija un hotel de la lista', 1000);
-    inputcantone();
-  }
-});
+      else {  mensajetoast('Mensaje', '3', 'Elija un ZD de la lista', 1000); inputcantone(); }
+  });
+// $('#select_onet').on('change', function(e){
+//   var id= $(this).val();
+//   var date_current= $('#fecha_ngb').val();
+//   var _token = $('input[name="_token"]').val();
+//   if (id != ''){
+//       if (date_current != '' ) {
+//         $.ajax({
+//           type: "POST",
+//           url: './obt_gb_report',
+//           data: { valora: id, d_cur: date_current,  _token : _token },
+//           success: function (data) {
+//             if (data == '') {
+//               mensajetoast('Mensaje', '3', 'Sin datos', 1000);
+//               inputcantone();
+//             }
+//             else{
+//               inputcantone();
+//               $('#fecha_ngb').prop("disabled", true);
+//               $('#valorgb_trans').val(data);
+//               habilitarnuevo('new_valorgb_tran');
+//             }
+//           },
+//           error: function (data) {
+//             console.log('Error:', data);
+//           }
+//         });
+//       }
+//       else{
+//         $("#select_onet").prop('selectedIndex',0);
+//         mensajetoast('Mensaje', '3', 'Ingresa una fecha', 1000);
+//       }
+//   }
+//   else {
+//     mensajetoast('Mensaje', '3', 'Elija un hotel de la lista', 1000);
+//     inputcantone();
+//   }
+// });
 
 $('#select_two').on('change', function(e){
   var id= $(this).val();
@@ -135,6 +213,8 @@ $('#generateGbClear').on('click', function(e){
   $('#fecha_ngb').val('').datepicker('update');
   $('#fecha_ngb').prop("disabled", false);
   $("#select_onet").prop('selectedIndex',0);
+  $('#select_typezd').empty();
+  $('#select_typezd').append('<option value="" selected>Elije</option>');
   inputcantone();
 });
 $('#generateUserClear').on('click', function(e){
@@ -182,27 +262,32 @@ $('#generateGbInfo').on('click', function(){
   var id= $('#select_onet').val();
   var date_current= $('#fecha_ngb').val();
   var new_cant= $('#new_valorgb_tran').val();
+  var id_zoned= $('#select_typezd').val();
   var _token = $('input[name="_token"]').val();
 
   var a0=validarSelect('select_onet');
 	var a1=validarInput('fecha_ngb');
   var a2=validarInput('new_valorgb_tran');
+  var a3=validarSelect('select_typezd');
 
-  if (a0 == false || a1 == false || a2 == false) {
+  if (a0 == false || a1 == false || a2 == false || a3 == false) {
 		mensajetoast('Mensaje', '3', 'Datos Requeridos. !!', 1000);
 	}
 
-  if (a0 === true && a1 === true && a2 === true) {
+  if (a0 === true && a1 === true && a2 === true && a3 === true) {
     //mensajetoast('Mensaje', '3', 'cumplio', 1000);
     $.ajax({
       type: "POST",
       url: './gb_edit_report',
-      data: { valora: id, d_cur: date_current, d_cant: new_cant, _token : _token },
+      data: { valora: id, d_cur: date_current, d_cant: new_cant, d_zd: id_zoned ,_token : _token },
       success: function (data) {
+        // alert(data);
         if (data == '1') {
           $('#fecha_ngb').val('').datepicker('update');
           $('#fecha_ngb').prop("disabled", false);
           $("#select_onet").prop('selectedIndex',0);
+          $('#select_typezd').empty();
+          $('#select_typezd').append('<option value="" selected>Elije</option>');
           inputcantone();
           mensajetoast('Mensaje', '1', 'Se actualizo con exito.', 1000);
         }

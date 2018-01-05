@@ -48,19 +48,47 @@ class EditReportController extends Controller
           return view('editreport.editreport', compact('selectDatahotel'));
       }
     }
+    public function searchzd(Request $request)
+    {
+      $id_hotel = $request->val;
+      $resultado= DB::table('zonedirect_ip')->select('id_zone', 'ip')->where('id_hotel', '=', $id_hotel)->get();
+      return json_encode($resultado);
+    }
     public function searchone(Request $request)
     {
-      $id_hotel = $request->valora;
+      $id_hotel = $request->valht;
       $id_date = $request->d_cur;
-      $resultado= DB::table('GBXDia')->select('CantidadBytes')->where('hotels_id', '=', $id_hotel)->where('Fecha', '=', $id_date)->value('CantidadBytes');
-      if ($resultado == '') {
-        $result='';
+      $id_zd=$request->valzd;
+
+      if ($id_zd != 'manual') {
+        $resultado= DB::table('GBXDia')->select('CantidadBytes')
+        ->where('hotels_id', '=', $id_hotel)
+        ->where('Fecha', '=', $id_date)
+        ->where('ZD', '=', $id_zd)
+        ->value('CantidadBytes');
+
+        if ($resultado == '') { $result=''; }
+        else {
+          $resultbytes=$resultado;
+          $result = round(((($resultbytes / 1024) / 1024) / 1024) , 2);
+        }
+        return $result;
       }
       else {
-        $resultbytes=$resultado;
-        $result = round(((($resultbytes / 1024) / 1024) / 1024) , 2);
+        $resultado= DB::table('GBXDia')->select('CantidadBytes')
+        ->where('hotels_id', '=', $id_hotel)
+        ->where('Fecha', '=', $id_date)
+        ->value('CantidadBytes');
+
+        if ($resultado == '') { $result=''; }
+        else {
+          $resultbytes=$resultado;
+          $result = round(((($resultbytes / 1024) / 1024) / 1024) , 2);
+        }
+        return $result;
       }
-      return $result;
+
+
     }
     public function searchtwo(Request $request)
     {
@@ -89,35 +117,68 @@ class EditReportController extends Controller
        $newgb = $request->d_cant;
        $valor = 1073741824;
        $newbytes = $newgb * $valor;
+       $newzd = $request->d_zd;
 
        $nuevafecha = strtotime ( '-1 day' , strtotime ( $fecha ) ) ;
-       $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+       $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
        $nuevafecha;
 
-       $sql_type_capture= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $fecha)->value('Captura');
-       if ($sql_type_capture == '0') {
-         $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
-         return $sql;
+       if ($newzd != 'manual') {
+         ////////////////////////////////////////////////////////////////////////////////
+         $sql_type_capture= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $fecha)->where('ZD', $newzd)->value('Captura');
+         if ($sql_type_capture == '0') {
+           $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->where('ZD', $newzd)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
+           return $sql;
+         }
+         else if ($sql_type_capture == '1') {
+           $sql_t_yesterday= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->where('ZD', $newzd)->value('Captura');
+           if ($sql_t_yesterday == '0' || $sql_t_yesterday == '') {
+             $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->where('ZD', $newzd)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
+             return $sql;
+           }
+           else if ($sql_t_yesterday == '1') {
+             $sql_consumo_yesterday= DB::table('GBXDia')->select('ConsumoReal')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->where('ZD', $newzd)->value('ConsumoReal');
+             if ($sql_consumo_yesterday < $newbytes) {//$newbytes < $sql_consumo_yesterday
+               $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->where('ZD', $newzd)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
+               return $sql;
+             }
+             else  if ($sql_consumo_yesterday > $newbytes) {
+               $consumoreal = $sql_consumo_yesterday + $newbytes;
+               $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->where('ZD', $newzd)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $consumoreal]);
+               return $sql;
+             }
+           }
+         }
+
+         ///////////////////////////////////////////////////////////////////////////////
        }
-       else if ($sql_type_capture == '1') {
-         $sql_t_yesterday= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->value('Captura');
-         if ($sql_t_yesterday == '0' || $sql_t_yesterday == '') {
+       else {
+         $sql_type_capture= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $fecha)->value('Captura');
+         if ($sql_type_capture == '0') {
            $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
            return $sql;
          }
-         else if ($sql_t_yesterday == '1') {
-           $sql_consumo_yesterday= DB::table('GBXDia')->select('ConsumoReal')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->value('ConsumoReal');
-           if ($sql_consumo_yesterday < $newbytes) {//$newbytes < $sql_consumo_yesterday
+         else if ($sql_type_capture == '1') {//PENDIENTE
+           $sql_t_yesterday= DB::table('GBXDia')->select('Captura')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->value('Captura');
+           if ($sql_t_yesterday == '0' || $sql_t_yesterday == '') {
              $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
              return $sql;
            }
-           else  if ($sql_consumo_yesterday > $newbytes) {
-             $consumoreal = $sql_consumo_yesterday + $newbytes;
-             $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $consumoreal]);
-             return $sql;
+           else if ($sql_t_yesterday == '1') {
+             $sql_consumo_yesterday= DB::table('GBXDia')->select('ConsumoReal')->where('hotels_id', $hotel)->where('Fecha', $nuevafecha)->value('ConsumoReal');
+             if ($sql_consumo_yesterday < $newbytes) {//$newbytes < $sql_consumo_yesterday
+               $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $newbytes]);
+               return $sql;
+             }
+             else  if ($sql_consumo_yesterday > $newbytes) {
+               $consumoreal = $sql_consumo_yesterday + $newbytes;
+               $sql = DB::table('GBXDia')->where('hotels_id', $hotel)->where('Fecha', $fecha)->update(['CantidadBytes' => $newbytes, 'ConsumoReal' => $consumoreal]);
+               return $sql;
+             }
            }
          }
        }
+
     }
     public function creates(Request $request)
     {
