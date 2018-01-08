@@ -227,6 +227,6 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/testzonedir', 'TestIpController@store');
 	//change 4 enero
 	Route::post('/obt_type_zd', 'EditReportController@searchzd');
-
+	Route::post('/obt_type_zd_ind', 'IndividualController@searchzd');
 
 });

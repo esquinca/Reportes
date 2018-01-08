@@ -47,65 +47,25 @@ class QuizCommentsController extends Controller
       $year= $request->searchyear;
       $hotel= $request->searchhotel;
       $user= $request->searchuser;
-      if ($year == '' && $hotel == '' && $user == '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->get();
-      }
-      if ($year != '' && $hotel != '' && $user != '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('Year1', '=', $year)
-              ->where('hotels_id', '=', $hotel)
-              ->where('user_reportes_id', '=', $user)
-              ->get();
-      }
+      $mes = '12';
+      $now= date("Y");
 
-      if ($year != '' && $hotel == '' && $user == '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('Year1', '=', $year)
-              ->get();
-      }
-      if ($year == '' && $hotel != '' && $user == '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('hotels_id', '=', $hotel)
-              ->get();
-      }
-      if ($year == '' && $hotel == '' && $user != '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('user_reportes_id', '=', $user)
-              ->get();
-      }
+      //TODOS no vacio
+      if(!empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?,?)', array($year,$hotel,$user));}//sio
+      //no hay filtro del año actual
+      if(empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($now)); }//sio
+      //año, hotel, user vacio
+      if(!empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($year)); }//sio
+      if(empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($hotel)); }//sio
+      if(empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($user)); }//sio
 
-      if ($year != '' && $hotel != '' && $user == '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('Year1', '=', $year)
-              ->where('hotels_id', '=', $hotel)
-              ->get();
-      }
-      if ($year != '' && $hotel == '' && $user != '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('Year1', '=', $year)
-              ->where('user_reportes_id', '=', $user)
-              ->get();
-      }
-      if ($year == '' && $hotel != '' && $user != '') {
-        $sql= DB::table('DashboardComentarios')
-              ->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha','Nombre_hotel','nombrecomp')
-              ->where('hotels_id', '=', $hotel)
-              ->where('user_reportes_id', '=', $user)
-              ->get();
-      }
+      if(!empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$hotel)); }//sio
+      if(!empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$user)); }//sio
+
+      if(empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($hotel,$user)); }//sio
+      if(!empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$user)); }
 
       return json_encode($sql);
-
-
-
     }
 
     /**

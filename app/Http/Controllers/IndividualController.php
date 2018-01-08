@@ -175,12 +175,58 @@ class IndividualController extends Controller
        }
        return $capt_r_sql;
      }
-      public function storegb(Request $request)
+     public function vdatagb($id, $date, $nzd, $tabla)
+     {
+       $sql = DB::table($tabla)->where('Fecha', '=', $date)->where('hotels_id', '=', $id)->where('ZD', '=', $nzd)->count();
+       $capt_r_sql = 0;
+
+       if($sql == 0){
+         //no hay registros
+         $capt_r_sql = 0;
+       }
+       if($sql != 0){
+         //si hay
+         $capt_r_sql = 1;
+       }
+       return $capt_r_sql;
+     }
+     public function namehotel($id, $tabla)
+     {
+       $sql = DB::table($tabla)->where('id', '=', $id)->value('Nombre_hotel');
+       return $sql;
+     }
+     public function FormatAuxName1($id_hotel, $date)
+     {
+       $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+       $numMes = date ("m", strtotime($date));
+       $year = date ("Y", strtotime($date));
+
+       $hotel_name= $this -> namehotel($id_hotel, 'hotels');
+
+       $aux1 = $hotel_name.' '.$meses[$numMes-1].' '. $year;
+       return $aux1;
+     }
+     public function FormatAuxName2($id_hotel, $date)
+     {
+       $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+       $numdia = date ("d", strtotime($date));
+       $numMes = date ("m", strtotime($date));
+       $year = date ("Y", strtotime($date));
+
+       $hotel_name= $this -> namehotel($id_hotel, 'hotels');
+
+       $aux2 = $hotel_name.' '.$meses[$numMes-1].' '.$numdia.' '. $year;
+       return $aux2;
+     }
+      public function storegb(Request $request)//pendiente
       {
         $id_hotel = $request->get('ident');
         $fechaInput = $request->input('date');
 
-        $validacionRegistro= $this -> vdata($id_hotel, $fechaInput, 'GBXDia');
+        if ($request->zd == 'manual') { $id_zd = NULL; }
+        else { $id_zd = $request->zd; }
+
+        $validacionRegistro= $this -> vdatagb($id_hotel, $fechaInput, $id_zd, 'GBXDia');
 
         if($validacionRegistro == 1){
           return $validacionRegistro;//si hay registro mando 1 error esta registrado ese dia
@@ -192,9 +238,19 @@ class IndividualController extends Controller
           $bytes = ((($giga * 1024) * 1024) * 1024);
 
           $mesyear = $this->returnDate($fechaInput);
+          $auxiliarn1 = $this->FormatAuxName1($id_hotel, $fechaInput);
+          $auxiliarn2 = $this->FormatAuxName2($id_hotel, $fechaInput);
 
           $result = DB::table('GBXDia')->insert([
-            ['CantidadBytes' => $bytes, 'Fecha' => $fechaInput, 'Mes' => $mesyear, 'hotels_id' => $id_hotel]
+            ['CantidadBytes' => $bytes,
+             'ConsumoReal'=> $bytes,
+             'Fecha' => $fechaInput,
+             'Mes' => $mesyear,
+             'hotels_id' => $id_hotel,
+             'Aux' => $auxiliarn1,
+             'Aux2' => $auxiliarn2,
+             'Captura' => '0',
+             'ZD' => $id_zd]
           ]);
 
           return $validacionRegistro;//no hay registro mando 0
@@ -348,15 +404,11 @@ class IndividualController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function searchzd(Request $request)
     {
-        //
+      $id_hotel = $request->val;
+      $resultado= DB::table('zonedirect_ip')->select('id_zone', 'ip')->where('id_hotel', '=', $id_hotel)->get();
+      return json_encode($resultado);
     }
 
     /**

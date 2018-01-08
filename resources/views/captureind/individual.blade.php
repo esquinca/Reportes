@@ -171,6 +171,14 @@
                           </select>
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label for="select_typezd"  class="control-label">{{ trans('message.selectzoned')}}: </label>
+                        <div class="">
+                          <select class="form-control" id="select_typezd" >
+                            <option value="" selected>{{ trans('message.optionOne')}}</option>
+                          </select>
+                        </div>
+                      </div>
 
                       <div class="form-group">
                         <label for="fecha_ngb"  class="control-label">{{ trans('message.fecha')}}: </label>

@@ -59,7 +59,7 @@ function ocultaryreordenar(element)
 
 
 var configTable={
-      "order": [[ 2, "asc" ]],
+      "order": [[ 3, "desc" ]],
       paging: true,
       //"pagingType": "simple",
       Filter: true,

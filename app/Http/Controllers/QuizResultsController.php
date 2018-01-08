@@ -27,17 +27,101 @@ class QuizResultsController extends Controller
     }
     public function viewgabo(Request $request)
     {
-      //$year= $request->searchyear;
-      $year ='2017';
-      $month = '12';
-      $fechaMes =$year.'-'.$month.'-01';
-      $vertical= 'Aeropuerto';
-      $operation= '1';
-      //$vertical= $request->searchvertical;
-      //$operation= $request->searchoperation;
 
-      $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($year,$month,$fechaMes,$vertical,$operation));
-      return json_encode($resultados);
+      $year= $request->searchyear;
+      $month= $request->searchmonth;
+      $vertical= $request->searchvertical;
+      $operation= $request->searchoperation;
+
+      #Default
+      $mes = '12';
+      $now= date("Y");
+
+      //TODOS
+        if(!empty($year) && !empty($month) && !empty($vertical) && !empty($operation)) {
+          $fechaMes =$year.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($year,$month,$fechaMes,$vertical,$operation));
+          return json_encode($resultados);
+        }
+      //Año
+        if(empty($year) && !empty($month) && !empty($vertical) && !empty($operation)) {
+          $fechaMes =$now.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($now,$month,$fechaMes,$vertical,$operation));
+          return json_encode($resultados);
+        }
+      //Mes
+        if(!empty($year) && empty($month) && !empty($vertical) && !empty($operation)) {
+          $fechaMes =$year.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($year,$mes,$fechaMes,$vertical,$operation));
+          return json_encode($resultados);
+        }
+      //Vertical
+        if(!empty($year) && !empty($month) && empty($vertical) && !empty($operation)) {
+          $fechaMes =$year.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses1(?,?,?,?)', array($year,$month,$fechaMes,$operation));
+          return json_encode($resultados);
+        }
+      //operation
+        if(!empty($year) && !empty($month) && !empty($vertical) && empty($operation)) {
+          $fechaMes =$year.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses2(?,?,?,?)', array($year,$month,$fechaMes,$vertical));
+          return json_encode($resultados);
+        }
+      //Año Mes
+        if(empty($year) && empty($month) && !empty($vertical) && !empty($operation)) {
+          $fechaMes =$now.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses(?,?,?,?,?)', array($now,$mes,$fechaMes,$vertical,$operation));
+          return json_encode($resultados);
+        }
+      //Año vertical
+        if(empty($year) && !empty($month) && empty($vertical) && !empty($operation)) {
+          $fechaMes =$now.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses1(?,?,?,?)', array($now,$month,$fechaMes,$operation));
+          return json_encode($resultados);
+        }
+      //Año operation
+        if(empty($year) && !empty($month) && !empty($vertical) && empty($operation)) {
+          $fechaMes =$year.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses2(?,?,?,?)', array($year,$month,$fechaMes,$vertical));
+          return json_encode($resultados);
+        }
+      //Mes vertical
+        if(!empty($year) && empty($month) && empty($vertical) && !empty($operation)) {
+          $fechaMes =$year.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses1(?,?,?,?)', array($year,$mes,$fechaMes,$operation));
+          return json_encode($resultados);
+        }
+      //Mes operation
+        if(!empty($year) && empty($month) && !empty($vertical) && empty($operation)) {
+          $fechaMes =$year.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12meses2(?,?,?,?)', array($year,$mes,$fechaMes,$vertical));
+          return json_encode($resultados);
+        }
+      //Vertical operation
+        if(!empty($year) && !empty($month) && empty($vertical) && empty($operation)) {
+          $fechaMes =$year.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12mesesall(?,?,?)', array($year,$month,$fechaMes));
+          return json_encode($resultados);
+        }
+      //Ninguno
+        if(empty($year) && empty($month) && empty($vertical) && empty($operation)) {
+          $fechaMes =$now.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12mesesall(?,?,?)', array($now,$mes,$fechaMes));
+          return json_encode($resultados);
+        }
+      //Mes vertical operation
+        if(!empty($year) && empty($month) && empty($vertical) && empty($operation)) {
+          $fechaMes =$year.'-'.$mes.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12mesesall(?,?,?)', array($year,$mes,$fechaMes));
+          return json_encode($resultados);
+        }
+      //Año vertical operation
+        if(empty($year) && !empty($month) && empty($vertical) && empty($operation)) {
+          $fechaMes =$now.'-'.$month.'-01';
+          $resultados = DB::select('CALL GetCalificaciones12mesesall(?,?,?)', array($now,$month,$fechaMes));
+          return json_encode($resultados);
+        }
+
     }
 
     public function view(Request $request)
@@ -1588,10 +1672,9 @@ class QuizResultsController extends Controller
     public function store(Request $request)
     {
         $id= $request->sector;
-        $data = DB::table('calificaciones')->where('hotels_id', '=', $id)->max('Fecha');
+        // $data = DB::table('calificaciones')->where('hotels_id', '=', $id)->max('Fecha');
         $sql= DB::table('calificaciones')->select('Mes','Year1', 'Comentario1', 'Comentario2', 'Comentario3','Aux','Fecha')
-              ->where('Fecha', '=', $data)
-              ->where('hotels_id', '=', $id)
+              ->where('id', '=', $id)
               ->get();
         return json_encode($sql);
     }

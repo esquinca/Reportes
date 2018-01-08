@@ -19,12 +19,11 @@
   <script src="/js/datatable/vfs_fonts.js"></script>
   <script src="/js/datatable/buttons.html5.min.js"></script>
   <script src="/js/datatable/buttons.print.min.js"></script>
-  <script src="/plugins/momentupdate/moment-with-locales.js"></script>
+
 
   <script type="text/javascript">
     $(function() {
       //table();
-      moment.locale('es');
       $("#selectfiltro").hide();
       $("#filter_year").hide();
       $("#filter_month").hide();
@@ -79,15 +78,14 @@
            type: "POST",
            data: objData,
            success: function (data) {
+             //alert(data)
              if ($('#searchaverage').val()=== '0') {
                tablaEnc(data, $("#example1") , 0);
                $("#tfoot_average").hide();
-               modTableCali();
              }
              else {
                tablaEnctwo(data, $("#example1") , 0);
                $("#tfoot_average").show();
-               modTableCali();
              }
            },
            error: function (data) {
@@ -95,6 +93,7 @@
            }
        });
     });
+
     function searchfechas (identificador){
       switch (identificador) {
         case '1':
@@ -107,20 +106,45 @@
           return $fecha = '<i class = "fa fa-arrow-right"></i>';
         break;
         case '4':
-          return $fecha = '<i class = "fa fa-arrow-right"></i>';
+          return $fecha = '<i class = "fa fa-pause-circle-o"></i>';
         break;
         case '5':
           return $fecha = '<i class = "fa fa-window-close"></i>';
         break;
       }
     }
+
     function tablaEnc(datajson, table, order){
+      //console.log(table);
+      //console.log(order);
+      //console.log(datajson);
       table.DataTable().destroy();
+
       var vartable = table.dataTable({
         dom: "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
               "<'row'<'col-sm-12'tr>>" +
               "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        //
+        // dom: "<'row'<'form-inline' <'col-sm-offset-0'B >l>>"
+        //       +"<'row' <'form-inline' <'toolbar'> <'col-sm-10'f>>>"
+        //       +"<rt>" +"<'row'<'form-inline'"
+        //       +" <'col-sm-6 col-md-6 col-lg-6'l>dssd"
+        //       +"<'col-sm-6 col-md-6 col-lg-6'p>>>",
+
+        // dom: "<'row'<'form-inline' <'col-sm-offset-5'B>>>"
+        //       +"<'row' <'form-inline' <'toolbar'> <'col-sm-10'f>>>"
+        //       +"<rt>" +"<'row'<'form-inline'"
+        //       +" <'col-sm-6 col-md-6 col-lg-6'l>dssd"
+        //       +"<'col-sm-6 col-md-6 col-lg-6'p>>>",
         buttons: [
+          // {
+          //   text: '<i class="fa fa-user-plus"></i>',
+          //   titleAttr: 'Agregar',
+          //   className: 'btn btn-success',
+          //   action: function(){
+          //     agregar_nuevo_usuario();
+          //     }
+          // },
           {
             extend: 'excelHtml5',
             text: '<i class="fa fa-file-excel-o"></i> Extraer a Excel',
@@ -133,6 +157,12 @@
             titleAttr: 'CSV',
             className: 'btn btn-danger',
           }
+          // ,{
+          //   extend: 'pdfHtml5',
+          //   text: '<i class="fa fa-file-pdf-o"></i>',
+          //   titleAttr: 'PDF',
+          //   className: 'btn btn-success',
+          // }
         ],
         "order": [[ order, "asc" ]],
         language:{
@@ -158,305 +188,11 @@
             "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
           }
-        },
-        "columnDefs": [
-          {
-          "targets": 0,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData === 'Aeropuerto' ) {
-                $(td).css('background-color', '#7030A0').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Educación' ) {
-                $(td).css('background-color', '#0070C0').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Eventos' ) {
-                $(td).css('background-color', '#2e4053').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Hospitalidad' ) {
-                $(td).css('background-color', '#008081').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'MB' ) {
-                $(td).css('background-color', '#a93226').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Oficinas' ) {
-                $(td).css('background-color', '#333F4F').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Parques' ) {
-                $(td).css('background-color', '#92D050').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Plaza' ) {
-                $(td).css('background-color', '#757171').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Restaurantes' ) {
-                $(td).css('background-color', '#B40431').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Retail' ) {
-                $(td).css('background-color', '#F7AC25').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Kidzania' ) {
-                $(td).css('background-color', '#FFD966').css('color', 'white').css('font-weight', 'bold');
-              }
-              if ( cellData === 'Transporte' ) {
-                $(td).css('background-color', '#FF4000').css('color', 'white').css('font-weight', 'bold');
-              }
-            }
-          },
-          {
-            "targets": 1,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 2,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-           },
-          {
-            "targets": 3,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-           },
-          {
-            "targets": 4,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 5,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 6,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-           },
-          {
-            "targets": 7,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-           },
-          {
-            "targets": 8,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-           },
-          {
-            "targets": 9,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 10,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 11,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 12,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 13,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 15,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData > 8 ) {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData >= 1 && cellData <= 6 ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-              if ( cellData > 6 && cellData <= 8 ) {
-                 $(td).css('background-color', '#F8FB68').css('color', '#D18106').css('font-weight', 'bold');
-              }
-              if(cellData <= 0){
-                $(td).css('background-color', '#cfcfcf');
-              }
-            }
-          },
-          {
-            "targets": 16,
-            "createdCell": function (td, cellData, rowDat1a, row, col) {
-              if ( cellData == '🖒') {
-                $(td).css('background-color', '#DFF2BF').css('color', 'green').css('font-weight', 'bold');
-              }
-              if (cellData === '☞'  ) {
-                $(td).css('background-color', '#F8FB68').css('color', 'black').css('font-weight', 'bold');
-              }
-              if ( cellData ==='👎' ) {
-                $(td).css('background-color', '#ff8a8a').css('color', 'red').css('font-weight', 'bold');
-              }
-            }
-          }
-        ],
+        }
       });
+
       vartable.fnClearTable();
-      $.each(JSON.parse(datajson), function(index, status){
+      $.each(JSON.parse(datajson), function(index, status){//dd(status);
         vartable.fnAddData([
           status.Vertical,
           status.Nombre_hotel,
@@ -479,14 +215,68 @@
           '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.idcomentario+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
           ]);
         });
+
     }
+
+    function enviar(e){
+      var valor= e.getAttribute('value');
+      var _token = $('input[name="_token"]').val();
+      //$('#modal-comments').modal('show');
+      $('#comment_a').val('');
+      $('#comment_b').val('');
+      $('#comment_c').val('');
+      $.ajax({
+           type: "POST",
+           url: './show_comments',
+           data: { sector : valor, _token : _token},
+           success: function (data) {
+            var datos = JSON.parse(data);
+            $('#comment_date').val(datos[0].Aux);
+            $('#comment_a').val(datos[0].Comentario1);
+            $('#comment_b').val(datos[0].Comentario2);
+            $('#comment_c').val(datos[0].Comentario3);
+             $('#modal-comments').modal('show');
+           },
+           error: function (data) {
+             console.log('Error:', data);
+           }
+       })
+    }
+$("#example1").on('search.dt', function() {
+
+});
+
     function tablaEnctwo(datajson, table, order){
+      //console.log(table);
+      //console.log(order);
+      //console.log(datajson);
       table.DataTable().destroy();
+
       var vartable = table.dataTable({
         dom: "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
               "<'row'<'col-sm-12'tr>>" +
               "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        //
+        // dom: "<'row'<'form-inline' <'col-sm-offset-0'B >l>>"
+        //       +"<'row' <'form-inline' <'toolbar'> <'col-sm-10'f>>>"
+        //       +"<rt>" +"<'row'<'form-inline'"
+        //       +" <'col-sm-6 col-md-6 col-lg-6'l>dssd"
+        //       +"<'col-sm-6 col-md-6 col-lg-6'p>>>",
+
+        // dom: "<'row'<'form-inline' <'col-sm-offset-5'B>>>"
+        //       +"<'row' <'form-inline' <'toolbar'> <'col-sm-10'f>>>"
+        //       +"<rt>" +"<'row'<'form-inline'"
+        //       +" <'col-sm-6 col-md-6 col-lg-6'l>dssd"
+        //       +"<'col-sm-6 col-md-6 col-lg-6'p>>>",
         buttons: [
+          // {
+          //   text: '<i class="fa fa-user-plus"></i>',
+          //   titleAttr: 'Agregar',
+          //   className: 'btn btn-success',
+          //   action: function(){
+          //     agregar_nuevo_usuario();
+          //     }
+          // },
           {
             extend: 'excelHtml5',
             text: '<i class="fa fa-file-excel-o"></i> Extraer a Excel',
@@ -524,6 +314,18 @@
                 columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
               },
           }
+          // ,{
+          //   extend: 'pdfHtml5',
+          //   text: '<i class="fa fa-file-pdf-o"></i> Extraer a PDF',
+          //   footer: true,
+          //   titleAttr: 'PDF',
+          //   orientation: 'landscape',
+          //   pageSize: 'LEGAL',
+          //   className: 'btn bg-orange',
+          //   exportOptions: {
+          //     columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+          //   }
+          // }
         ],
         paging: false,
         "order": [[ order, "asc" ]],
@@ -1021,76 +823,12 @@
           status.Mes1,//Diciembre
           status.anio,
           status.Promedio,
-          searchfechas(status.Indicador),
+          status.Indicador,
           status.IT,
           '<a href="javascript:void(0);" onclick="enviar(this)" value="'+status.idcomentario+'" class="btn btn-default btn-sm" role="button" data-target="#modal-edithotcl"><span class="fa fa-comments"></span></a>',
           ]);
         });
-    }
 
-    function modTableCali() {
-    	var datepicker3 = $('#searchmonth').val();
-      if (datepicker3 == '') { goodFormat= '12'; }
-      else { var goodFormat = datepicker3; }
-
-      var dateMoment1 = moment(goodFormat).format('MMM');
-      var dateMoment2 = moment(goodFormat).subtract(1, 'months').format('MMM');
-      var dateMoment3 = moment(goodFormat).subtract(2, 'months').format('MMM');
-      var dateMoment4 = moment(goodFormat).subtract(3, 'months').format('MMM');
-      var dateMoment5 = moment(goodFormat).subtract(4, 'months').format('MMM');
-      var dateMoment6 = moment(goodFormat).subtract(5, 'months').format('MMM');
-      var dateMoment7 = moment(goodFormat).subtract(6, 'months').format('MMM');
-      var dateMoment8 = moment(goodFormat).subtract(7, 'months').format('MMM');
-      var dateMoment9 = moment(goodFormat).subtract(8, 'months').format('MMM');
-      var dateMoment10 = moment(goodFormat).subtract(9, 'months').format('MMM');
-      var dateMoment11 = moment(goodFormat).subtract(10, 'months').format('MMM');
-      var dateMoment12 = moment(goodFormat).subtract(11, 'months').format('MMM');
-
-      $('#mes12').text(dateMoment1);
-      $('#mes11').text(dateMoment2);
-      $('#mes10').text(dateMoment3);
-      $('#mes09').text(dateMoment4);
-      $('#mes08').text(dateMoment5);
-      $('#mes07').text(dateMoment6);
-      $('#mes06').text(dateMoment7);
-      $('#mes05').text(dateMoment8);
-      $('#mes04').text(dateMoment9);
-      $('#mes03').text(dateMoment10);
-      $('#mes02').text(dateMoment11);
-      $('#mes01').text(dateMoment12);
-    }
-
-    function enviar(e){
-      var valor= e.getAttribute('value');
-      var _token = $('input[name="_token"]').val();
-      $('#comment_a').val('');
-      $('#comment_b').val('');
-      $('#comment_c').val('');
-      if (valor != '0') {
-        $.ajax({
-          type: "POST",
-          url: './show_comments',
-          data: { sector : valor, _token : _token},
-          success: function (data) {
-            var datos = JSON.parse(data);
-            $('#comment_date').val(datos[0].Aux);
-            $('#comment_a').val(datos[0].Comentario1);
-            $('#comment_b').val(datos[0].Comentario2);
-            $('#comment_c').val(datos[0].Comentario3);
-            $('#modal-comments').modal('show');
-          },
-          error: function (data) {
-            console.log('Error:', data);
-          }
-        });
-      }
-      else {
-        $('#comment_date').val('No disponible');
-        $('#comment_a').val('No disponible');
-        $('#comment_b').val('No disponible');
-        $('#comment_c').val('No disponible');
-        $('#modal-comments').modal('show');
-      }
     }
 
 
@@ -1113,17 +851,12 @@
       filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     }
     table.dataTable thead th {
-      font-size: 14px
+      font-size: 10px
     }
     table.dataTable tbody td {
       word-wrap:break-word !important;
-      font-size: 14px
+      font-size: 24px
     }
-    table.dataTable tfoot th {
-      word-wrap:break-word !important;
-      font-size: 14px
-    }
-
     .custombtntable{
       margin-right: 3px
     }
@@ -1276,8 +1009,8 @@
             <div class="col-xs-8 col-sm-2 col-md-11 col-lg-1">
               <select id="searchoperation" name="searchoperation" class="form-control" style="width: 100%;">
                 <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
-                <option value="1">Wifi Admin</option>
-                <option value="2">Wifimedia</option>
+                <option value="CUN">Wifi Admin</option>
+                <option value="CDMX">Wifimedia</option>
               </select>
             </div>
           </div>
@@ -1332,18 +1065,18 @@
                 <!-- <th> <small>No.</small> </th> -->
                 <th> <small>Vertical</small> </th>
                 <th> <small>Sitio</small> </th>
-                <th> <small id="mes01" name="mes01"></small> </th>
-                <th> <small id="mes02" name="mes02"></small> </th>
-                <th> <small id="mes03" name="mes03"></small> </th>
-                <th> <small id="mes04" name="mes04"></small> </th>
-                <th> <small id="mes05" name="mes05"></small> </th>
-                <th> <small id="mes06" name="mes06"></small> </th>
-                <th> <small id="mes07" name="mes07"></small> </th>
-                <th> <small id="mes08" name="mes08"></small> </th>
-                <th> <small id="mes09" name="mes09"></small> </th>
-                <th> <small id="mes10" name="mes10"></small> </th>
-                <th> <small id="mes11" name="mes11"></small> </th>
-                <th> <small id="mes12" name="mes12"></small> </th>
+                <th> <small>En.</small> </th>
+                <th> <small>Febr.</small> </th>
+                <th> <small>Mzo</small> </th>
+                <th> <small>Abr.</small> </th>
+                <th> <small>My.</small> </th>
+                <th> <small>Jun.</small> </th>
+                <th> <small>Jul.</small> </th>
+                <th> <small>Agto.</small> </th>
+                <th> <small>Sept.</small> </th>
+                <th> <small>Oct.</small> </th>
+                <th> <small>Nov.</small> </th>
+                <th> <small>Dic.</small> </th>
                 <th> <small>Año.</small> </th>
                 <th> <small>Prom.</small> </th>
                 <th> <small>Ind.</small> </th>

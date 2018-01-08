@@ -30,7 +30,7 @@
   @endif
 
   @if (Auth::user()->Privilegio == 'Cliente')
-  <script src="/js/reports/reports2client.js"></script>
+  <script src="/js/reports/reports2admincllient.js"></script>
   @endif
 
   <style media="screen">
@@ -202,7 +202,7 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <h1><i class="fa fa-bookmark-o"></i> {{ trans('message.titulorepbasic') }}</h1>
+          <h1 id="cab_reporte"><i class="fa fa-bookmark-o"></i> {{ trans('message.titulorepbasic') }}</h1>
           <p>{{ trans('message.subtitulorepbasic') }}</p>
           <p id="name_hotel" name="name_hotel"></p>
         </div>
@@ -361,10 +361,9 @@
       </div>
       <!-- /.row -->
 
-      <!-- WLAN row -->
-      <div class="row invoice-info">
-        <!--Mixed: Mobile, Tablet-->
-        <div class="col-xs-12 col-sm-12 col-lg-6">
+
+      <div class="row margin_div">
+        <div class="col-md-12 col-lg-6 col-sm-12 col-xs-12">
           <div class="media service-box">
               <div class="pull-left">
                   <i class="fa fa-user-secret"></i>
@@ -374,10 +373,10 @@
               </div>
           </div>
           <div id="graphicwlan">
-            <div id="mainwlan" style="height:225px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+            <div id="mainwlan" style="width: 100%; min-height: 240px; margin-right:0;padding-right:0;border-right-width:0;"></div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-lg-6">
+        <div class="col-md-12 col-lg-6 col-sm-12 col-xs-12">
           <div class="media service-box">
               <div class="pull-left">
                   <i class="fa fa-users"></i>
@@ -387,10 +386,12 @@
               </div>
           </div>
           <div id="graphictopssid">
-            <div id="maintopssid" style="height:225px; width: 100%; margin-right:0;padding-right:0;border-right-width:0;  "></div>
+            <div id="maintopssid" style="width: 100%; min-height: 240px; margin-right:0;padding-right:0;border-right-width:0;"></div>
           </div>
         </div>
       </div>
+
+      <!-- WLAN row -->
 
 
       <!-- Historico row -->
@@ -503,36 +504,6 @@
                 </tr>
               </thead>
               <tbody>
-          <!--  <tr>
-                  <td>USUARIOS MÁXIMOS POR HORA</td>
-                  <td>dd</td>
-                  <td>dd</td>
-                  <td>(Y)</td>
-                </tr>
-                <tr>
-                  <td>USUARIOS PROMEDIO POR HORA</td>
-                  <td>dd</td>
-                  <td>dd</td>
-                  <td>(Y)</td>
-                </tr>
-                <tr>
-                  <td>GIGABYTES POR DÍA</td>
-                  <td>dd</td>
-                  <td>dd</td>
-                  <td>(Y)</td>
-                </tr>
-                <tr>
-                  <td>ANCHO DE BANDA PROMEDIO</td>
-                  <td>dd</td>
-                  <td>dd</td>
-                  <td>(Y)</td>
-                </tr>
-                <tr>
-                  <td>DISPOSITIVOS POR MES</td>
-                  <td>dd</td>
-                  <td>dd</td>
-                  <td>(Y)</td>
-                </tr> -->
               </tbody>
             </table>
         </div>

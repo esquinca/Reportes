@@ -55,21 +55,24 @@ $('#generateGbInfo').on('click', function(){
 	var a1=validarInput('fecha_ngb');
   var a2=validarInput('valorgb_trans');
 
+	var a3=validarSelect('select_typezd');
+
   var _token = $('input[name="_token"]').val();
   var id_hotel_one= $('#select_onet').val();
+	var id_zd= $('#select_typezd').val();
 	var cap_date= $('#fecha_ngb').val();
   var cap_value= $('#valorgb_trans').val();
 
-	if (a0 == false || a1 == false || a2 == false) {
+	if (a0 == false || a1 == false || a2 == false || a3 == false) {
 		 toastr.error('Datos Requeridos. !!', 'Error', {timeOut: 1000});
 	}
 
-  if (a0 === true && a1 === true && a2 === true) {
+  if (a0 === true && a1 === true && a2 === true && a3 === true) {
 
 	  $.ajax({
          type: "POST",
          url: './transgb',
-         data: { ident : id_hotel_one, date: cap_date, vgb: cap_value, _token : _token },
+         data: { ident : id_hotel_one, zd: id_zd, date: cap_date, vgb: cap_value, _token : _token },
          success: function (data) {
 					 //console.log('v:', data);
 					 if (data == '0') {
@@ -298,3 +301,43 @@ function limp_four(){
 	$("#form_wlan div.form-group").attr("class","form-group has-default");
 	$('#fecha_nwlan').val('').datepicker('update');
 }
+
+$('#select_onet').on('change', function(e){
+    var id= $(this).val();
+		var _token = $('input[name="_token"]').val();
+    if (id!='') {
+			$.ajax({
+				type: "POST",
+				url: './obt_type_zd_ind',
+				data: { val: id,  _token : _token },
+				success: function (data) {
+					if (data == '') {
+						mensajetoast('Mensaje', '3', 'Sin datos', 1000);
+						$('#select_typezd').empty();
+						$('#select_typezd').append('<option value="" selected>Elije</option>');
+					}
+					else {
+						// alert(data);
+						$('#select_typezd').empty();
+						$('#select_typezd').append('<option value="" selected>Elije</option>');
+						if (data == '[]') {
+							$('#select_typezd').append('<option value="manual">Manual</option>');
+						}
+						else {
+							$.each(JSON.parse(data),function(index, objdata){
+								$("#select_typezd option").prop("selected", false);
+								$('#select_typezd').append('<option value="'+objdata.id_zone+'">'+ objdata.ip +'</option>');
+							});
+						}
+					}
+				},
+				error: function (data) {
+					console.log('Error:', data);
+				}
+			});
+		}
+		else {
+			$('#select_typezd').empty();
+			$('#select_typezd').append('<option value="" selected>Elije</option>');
+		}
+});
