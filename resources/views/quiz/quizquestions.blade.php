@@ -112,7 +112,13 @@
                             $date= $now->format('Y/m/d');
                             $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
                             $numMes = date ("m", strtotime($date));
-                            echo $meses[$numMes-2];
+                            $valorar= $numMes-2;
+                            if ($valorar == '-1') {
+                              echo $meses[11];
+                            }
+                            else {
+                              echo $meses[$valorar];
+                            }
                           ?>
                           , quisiera pedirle que respondiera a las siguientes preguntas.
                         </span>
@@ -202,7 +208,13 @@
                               $date= $now->format('Y/m/d');
                               $meses= array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
                               $numMes = date ("m", strtotime($date));
-                              echo $meses[$numMes-2];
+                              $valorar= $numMes-2;
+                              if ($valorar == '-1') {
+                                echo $meses[11];
+                              }
+                              else {
+                                echo $meses[$valorar];
+                              }
                             ?> con respecto a soporte.
                             </label>
                             <div>
