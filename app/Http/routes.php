@@ -231,7 +231,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//Rutas de pruebas.
 
 	Route::get('/pthehe', 'AssignConciergeController@rutaestadoserver');
-	Route::get('/acm1pt', 'UserQuizController@getEmailTemps');
+	Route::get('/acm1pt', 'QuizQuestionsController@');
 	Route::get('/acm1pt2', 'AssignConciergeController@sqltest');
 
 });

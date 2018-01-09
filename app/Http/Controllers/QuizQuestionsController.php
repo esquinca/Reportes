@@ -18,6 +18,8 @@ use DB;
 
 use Auth;
 
+use Mail;
+
 class QuizQuestionsController extends Controller
 {
     /**
@@ -121,6 +123,7 @@ class QuizQuestionsController extends Controller
      */
     public function createdata(Request $request)
     {
+      $data = [];
            $correo = Auth::user()->email;//BIEN
           $var_ids = $request->xqb;
         $var_probd = $request->select_one;//BIEN
@@ -329,6 +332,15 @@ class QuizQuestionsController extends Controller
             ]);
           }
        }
+       // aqui
+        $emailIT = DB::table('Enviar_Correo_Reporte')->select('Nickname')->where('id', '=', $id_hotel_calificando)->value('Nickname');
+        $data = [
+          'hotel' => $consulta_nomb_hotel,
+          'calificacion' => $var_calif,
+          'month' => $monthNumber,
+          'year' => $yearactual,
+        ];
+        $this->enviarConfirmacion2($data, $emailIT);
      }
      notificationMsg('success', 'Registrados con exito. !!');
      return Redirect::back();
@@ -339,12 +351,15 @@ class QuizQuestionsController extends Controller
         // return Redirect::back();
     }
 
-    public function enviarConfirmacion2($host, $msj, $subject)
+    public function enviarConfirmacion2($datos, $correoit)
     {
+      $itcorreo = (string)$correoit;
+      //$copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', 'rdelgado@sitwifi.com'];
+      $copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', $itcorreo];
+      //array_push($copias, $correoit);
       //Datos para el correo
-      Mail::send('emailMensajesBytes', $datos, function ($message) use ($correo, $nombre) {
-          $copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', 'rdelgado@sitwifi.com'];
-          $message->to($correo, $nombre)->bcc($copias,'Auto copia')->subject('Encuesta completada con exito');
+      Mail::send('emailMensajeConfirm', $datos, function ($message) use ($copias) {
+          $message->to('jesquinca@sitwifi.com', 'Jose Antonio')->bcc($copias,'Auto copia')->subject('Encuesta completada con exito');
           //$message->to('sonick.stark1@gmail.com', $nombre)->bcc($copias,'Auto copia')->subject("Anuncio importante..!!!");
       });
     }

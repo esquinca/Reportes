@@ -37,7 +37,7 @@ return [
     'google' => [
         'client_id' => '178783172867-pgu0mi8gkhvmvsleuq8pfvhnfjej94f1.apps.googleusercontent.com',
         'client_secret' => 'ljlm2s5YhFQcadFqW3MFoSZ4',
-        'redirect' => 'http://sitwificun.dyndns.org:8002/auth/google/callback',
+        'redirect' => 'http://sitwifi.com:8002/auth/google/callback',
     ],
 
 
