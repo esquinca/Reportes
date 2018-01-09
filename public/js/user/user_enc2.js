@@ -525,6 +525,23 @@ $('#btnregasig').on('click', function(){
   }
 });
 $('#mail_keyusergeneral_data').on('click', function(){
-  toastr.warning('Se proximamente tendra funcionalidad', 'Mensaje', {timeOut: 2000});
+  var dir_s = $(location).attr('host');
+  var _token = $('input[name="_token"]').val();
+
+  //toastr.warning('Se proximamente tendra funcionalidad', 'Mensaje', {timeOut: 2000});
+
+  $.ajax({
+    type: "POST",
+    url: './config_three_mailAll',
+    data: { xc: dir_s ,_token : _token},
+    success: function (data) {
+      if (data == 'OK') {
+        toastr.success('Datos enviados con exito!', 'Mensaje', {timeOut: 2000});
+      }
+    },
+    error: function (data) {
+      console.log('Error:', data);
+    }
+  })
 
 });

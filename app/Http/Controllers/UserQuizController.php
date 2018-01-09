@@ -361,6 +361,51 @@ class UserQuizController extends Controller
       }
 
     }
+
+      // mi funcion asjdnsjfsdvl
+     public function getEmailTemps(Request $request){
+      $host_res = $request -> xc;
+      $data = [];
+      $dir = "";
+      
+      $resultado= DB::table('user_reportes')->select(
+        'id',
+        'name',
+        'email',
+        'Privilegio',
+        'temp_pass',
+        'shell'
+      )
+      ->where('Privilegio', '=', 'Encuestado')
+      ->orderBy('id', 'asc')->get();
+
+      $count = count($resultado);
+      
+      for ($i=0; $i < $count; $i++) {
+        $dir= $host_res.'/survey_questions'.'/'.$resultado[$i]->shell;
+        $data = [
+          'nombre' => $resultado[$i]->name,
+          'correo' => $resultado[$i]->email,
+          'password' => $resultado[$i]->temp_pass,
+          'url' => $dir,
+          'mensaje' => 'Su tiempo estimado de responder la encuesta correspondiente al mes actual es de 10 dias',
+        ];
+        $this->enviarChido($resultado[$i]->email, $data);
+        $data = [];
+      }
+
+      //dd($resultado[0]->shell);
+      return 'OK';
+    }
+
+     public function enviarChido($correo, $datos)
+     {
+       Mail::send('emailMensajeEncuesta', $datos, function ($message) use ($correo) {
+           //$message->from('contactoweb@sitwifi.com', 'ContactoSitwifiWeb');
+           $message->to($correo)->subject('Encuesta Mensual');
+       });
+     }
+
     /**
      * Show the form for editing the specified resource.
      *

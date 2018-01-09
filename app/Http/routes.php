@@ -101,9 +101,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/assignclupdate', 'assignclientController@update');
 	Route::post('/assigncldelete', 'assignclientController@destroy');
 
-	Route::get('/pthehe', 'AssignConciergeController@rutaestadoserver');
-	Route::get('/acm1pt', 'AssignConciergeController@curlZen');
-	Route::get('/acm1pt2', 'AssignConciergeController@sqltest');
+
 	//Route::post('/acm1pt3', 'ImportController@insertExcel');
 
 	//Captura individual
@@ -158,7 +156,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::post('/config_rec_data_obj', 'UserQuizController@edithotelenc');
 	Route::post('/config_hotelenc_chang', 'UserQuizController@changehotelenc');
 	Route::post('/config_two_rand_all', 'UserQuizController@changeuserenckeys');
-
+	Route::post('/config_three_mailAll', 'UserQuizController@getEmailTemps');
 	//Pruebas encuesta con key
 	Route::get('/survey_questions/{id}', 'QuizQuestionsController@index');
 	// Route::get('/survey_questions/{id}', function ($id) {
@@ -228,5 +226,12 @@ Route::group(['middleware' => ['auth']], function() {
 	//change 4 enero
 	Route::post('/obt_type_zd', 'EditReportController@searchzd');
 	Route::post('/obt_type_zd_ind', 'IndividualController@searchzd');
+
+
+	//Rutas de pruebas.
+
+	Route::get('/pthehe', 'AssignConciergeController@rutaestadoserver');
+	Route::get('/acm1pt', 'UserQuizController@getEmailTemps');
+	Route::get('/acm1pt2', 'AssignConciergeController@sqltest');
 
 });
