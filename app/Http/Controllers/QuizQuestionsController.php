@@ -39,7 +39,18 @@ class QuizQuestionsController extends Controller
       $id_session = Auth::user()->id;
 
       $mes = date('F', strtotime('-1 month')) ;
-      $year = date("Y");
+      // $year = date("Y");
+
+      $numMes = date ("m", strtotime('-1 month'));
+      if ($numMes == '12') {
+        $yearactualcur = date('Y');
+        $nuevafecha = strtotime ( '-1 year' , strtotime ( $yearactualcur ) ) ;
+        $nuevafecha = date ( 'Y' , $nuevafecha );
+        $year = $nuevafecha;
+      }
+      else {
+        $year = date('Y');
+      }
 
       if ( $id_session != $sin_encriptar || $shell_session != $id_encriptado ) {
         # code...
@@ -131,7 +142,18 @@ class QuizQuestionsController extends Controller
 
    $monthName = date('F', strtotime('-1 month')) ;
    $monthNumber = date('m', strtotime('-1 month')) ;
-   $yearactual = date('Y') ;
+  //  $yearactual = date('Y') ;
+
+    $numMes = date ("m", strtotime('-1 month'));
+    if ($numMes == '12') {
+      $yearactualcur = date('Y');
+      $nuevafecha = strtotime ( '-1 year' , strtotime ( $yearactualcur ) ) ;
+      $nuevafecha = date ( 'Y' , $nuevafecha );
+      $yearactual = $nuevafecha;
+    }
+    else {
+      $yearactual = date('Y');
+    }
 
     for ($i=0; $i < $size_array_calif; $i++) {
        $id_hotel_calificando = $array_calif[$i];
@@ -315,6 +337,16 @@ class QuizQuestionsController extends Controller
         // notificationMsg('success', 'Registro completado!!');
         //dd($request);
         // return Redirect::back();
+    }
+
+    public function enviarConfirmacion2($host, $msj, $subject)
+    {
+      //Datos para el correo
+      Mail::send('emailMensajesBytes', $datos, function ($message) use ($correo, $nombre) {
+          $copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', 'rdelgado@sitwifi.com'];
+          $message->to($correo, $nombre)->bcc($copias,'Auto copia')->subject('Encuesta completada con exito');
+          //$message->to('sonick.stark1@gmail.com', $nombre)->bcc($copias,'Auto copia')->subject("Anuncio importante..!!!");
+      });
     }
 
     /**
