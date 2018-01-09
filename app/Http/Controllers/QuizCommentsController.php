@@ -51,19 +51,18 @@ class QuizCommentsController extends Controller
       $now= date("Y");
 
       //TODOS no vacio
-      if(!empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?,?)', array($year,$hotel,$user));}//sio
+      if(!empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarioAnioVenueIT(?,?,?)', array($year,$hotel,$user));}//sio
       //no hay filtro del año actual
-      if(empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($now)); }//sio
+      if(empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarioAnio(?)', array($now)); }//sio
       //año, hotel, user vacio
-      if(!empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($year)); }//sio
-      if(empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($hotel)); }//sio
-      if(empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?)', array($user)); }//sio
+      if(!empty($year) && empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarioAnio(?)', array($year)); }//sio
+      if(empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarioVenue(?)', array($hotel)); }//sio
+      if(empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarioIT(?)', array($user)); }//sio---------------------
 
-      if(!empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$hotel)); }//sio
-      if(!empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$user)); }//sio
+      if(!empty($year) && !empty($hotel) && empty($user)) { $sql = DB::select('CALL GetComentarioAnioHotel(?,?)', array($year,$hotel)); }//sio
+      if(!empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarioAnioIT(?,?)', array($year,$user)); }//sio
 
-      if(empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($hotel,$user)); }//sio
-      if(!empty($year) && empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarios(?,?)', array($year,$user)); }
+      if(empty($year) && !empty($hotel) && !empty($user)) { $sql = DB::select('CALL GetComentarioVenueIT(?,?)', array($hotel,$user)); }//sio
 
       return json_encode($sql);
     }

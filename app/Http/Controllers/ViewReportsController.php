@@ -37,31 +37,18 @@ class ViewReportsController extends Controller
           }
       }
       if($priv == 'IT'){
-          //
-          // $exiteClienteVer= DB::table('hotels')->where('CorreoSistemas', $correo)->count();
-          // if ($exiteClienteVer != 0) {
-          //     /*SI existe este en la lista de clientes*/
-          //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('CorreoSistemas', '=', $correo)->orderBy('id', 'asc')->get();
-          //     return view('viewreport.viewreports', compact('selectDatahotel'));
-          // }
-          // else {
-          //     /*SI existe no existe en la lista de clientes*/
-          //     $selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->where('user_reportes_id', '=', $ID)->orderBy('id', 'asc')->get();
-          //     return view('viewreport.viewreports', compact('selectDatahotel'));
-          // }
+          //$selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('IDUsuario', '=', $ID)->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
           $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('IDUsuario', '=', $ID)->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
-
-          //$selectDatahotel = DB::table('hoteles_registrados_reportes')->select('id','Nombre_hotel')->where('iduserreport', '=', $ID)->orderBy('id', 'asc')->get();
           return view('viewreport.viewreports2', compact('selectDatahotel'));
       }
       if ($priv == 'Admin' || $priv == 'Helpdesk' || $priv == 'Programador') {
-          //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
-          $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+          //$selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+          $selectDatahotel = DB::table('Autorizado')->select('IDHotels','Nombre_hotel')->orderBy('IDHotels', 'asc')->get();
           return view('viewreport.viewreports2', compact('selectDatahotel'));
       }
       if ($priv == 'Encuestador') {
-          //$selectDatahotel = DB::table('hotels')->select('id','Nombre_hotel')->orderBy('id', 'asc')->get();
-          $selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+          //$selectDatahotel = DB::table('HotelUserReport')->select('IDHotels','Nombre_hotel')->where('Nombre_hotel', 'NOT LIKE', 'Bodega%')->orderBy('IDHotels', 'asc')->get();
+          $selectDatahotel = DB::table('Autorizado')->select('IDHotels','Nombre_hotel')->orderBy('IDHotels', 'asc')->get();
           return view('viewreport.viewreports2', compact('selectDatahotel'));
       }
     }

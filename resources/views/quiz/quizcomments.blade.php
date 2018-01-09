@@ -203,12 +203,13 @@
         $.each(JSON.parse(datajson), function(index, status){
           vartable.fnAddData([
             status.Nombre_hotel,
+            status.Calificacion,
             status.Mes,
             status.Year1,
-            status.Comentario1,
-            status.Comentario2,
-            status.Comentario3,
-            status.nombrecomp,
+            status.Comercial,
+            status.Proyecto,
+            status.Soporte,
+            status.IT,
             ]);
           });
 
@@ -305,6 +306,7 @@
                 <tr class="bg-primary" style="background: #00A5BA;">
                   <!-- <th> <small>No.</small> </th> -->
                   <th> <small >Hotel</small> </th>
+                  <th> <small>Calificación.</small> </th>
                   <th> <small>Mes.</small> </th>
                   <th> <small>Año.</small> </th>
                   <th> <small>Comentario Comercial</small> </th>

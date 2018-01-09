@@ -59,6 +59,9 @@ function reset_quiz_current(){
   $("#anchobanda").attr("src","../img/hoteles/Sin_imagen.png");
   $("#typedevice").attr("src","../img/hoteles/Sin_imagen.png");
 
+  $("#anchobanda").attr("data-zoom-image","../img/hoteles/Sin_imagen.png");
+  $("#typedevice").attr("data-zoom-image","../img/hoteles/Sin_imagen.png");
+
   $('#table_detalle').DataTable().destroy();
   $('#table_detalle').DataTable(configTableAps).clear().draw();
 }
@@ -160,6 +163,7 @@ function obtenerAncho(){
       if (data == '0') {
         $("#content_img_report").css({'display' : 'none' , 'visibility' : 'hidden'});
         $("#anchobanda").attr("src","../img/hoteles/Sin_imagen.png");
+        $("#anchobanda").attr("data-zoom-image","../img/hoteles/Sin_imagen.png");
       }
       if (data == '1') {
         $.ajax({
@@ -169,6 +173,7 @@ function obtenerAncho(){
           success: function (data){
             var imagen = '../img/anchobanda/'+data;
             $("#anchobanda").attr("src",imagen);
+            $("#anchobanda").attr("data-zoom-image",imagen);
             $("#content_img_report").css({'display' : 'block' , 'visibility' : 'visible'});
           },
           error: function (data) {
@@ -197,6 +202,7 @@ function obtenertypedevice(){
       if (data == '0') {
         $("#content_img_type_device").css({'display' : 'none' , 'visibility' : 'hidden'});
         $("#typedevice").attr("src","../img/hoteles/Sin_imagen.png");
+        $("#typedevice").attr("data-zoom-image","../img/hoteles/Sin_imagen.png");
       }
       if (data == '1') {
         $.ajax({
@@ -206,6 +212,7 @@ function obtenertypedevice(){
           success: function (data){
             var imagen = '../img/devicetype/'+data;
             $("#typedevice").attr("src",imagen);
+            $("#typedevice").attr("data-zoom-image",imagen);
             $("#content_img_type_device").css({'display' : 'block' , 'visibility' : 'visible'});
           },
           error: function (data) {

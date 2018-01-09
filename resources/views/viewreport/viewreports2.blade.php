@@ -19,6 +19,7 @@
   <script src="/plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
   <!-- <script src="/js/reports/script_reports.js"></script> -->
   <script src="/plugins/echarts/echarts.js"></script>
+  <script src="/plugins/elevatezoomjquery/jquery.elevatezoom.js"></script>
   <!-- <script src="/js/reports/reports.js"></script> -->
 
   @if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'IT')
@@ -32,6 +33,11 @@
   @if (Auth::user()->Privilegio == 'Cliente')
   <script src="/js/reports/reports2admincllient.js"></script>
   @endif
+
+  <script type="text/javascript">
+    $("#anchobanda").elevateZoom({scrollZoom : true});
+    $("#typedevice").elevateZoom({scrollZoom : true});
+  </script>
 
   <style media="screen">
     .colornaranja{
@@ -468,7 +474,7 @@
               </div>
           </div>
           <div class="contentanchobanda">
-            <img id='anchobanda' name='anchobanda'src="{{ asset ('../img/anchobanda/123456.png') }}" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive">
+            <img id='anchobanda' name='anchobanda'src="" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive"  data-zoom-image="">
           </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-lg-6" id="content_img_type_device">
@@ -481,7 +487,7 @@
               </div>
           </div>
           <div class="contenttypedevice">
-            <img id='typedevice' name='typedevice'src="{{ asset ('../img/devicetype/1511276883.png') }}" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive">
+            <img id='typedevice' name='typedevice'src="" width="400px" height="400px" style="display:flex; margin:0 auto;" class="img-responsive"  data-zoom-image="">
           </div>
         </div>
 
