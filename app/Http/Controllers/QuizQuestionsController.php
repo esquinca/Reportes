@@ -355,11 +355,11 @@ class QuizQuestionsController extends Controller
     {
       $itcorreo = (string)$correoit;
       //$copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', 'rdelgado@sitwifi.com'];
-      $copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', $itcorreo];
+      $copias=['acauich@sitwifi.com','gramirez@sitwifi.com','jesquinca@sitwifi.com', 'rdelgado@sitwifi.com', $itcorreo];
       //array_push($copias, $correoit);
       //Datos para el correo
       Mail::send('emailMensajeConfirm', $datos, function ($message) use ($copias) {
-          $message->to('jesquinca@sitwifi.com', 'Jose Antonio')->bcc($copias,'Auto copia')->subject('Encuesta completada con exito');
+          $message->to('crangel@sitwifi.com', 'Carlos Rangel')->bcc($copias,'Auto copia')->subject('Encuesta completada con exito');
           //$message->to('sonick.stark1@gmail.com', $nombre)->bcc($copias,'Auto copia')->subject("Anuncio importante..!!!");
       });
     }
