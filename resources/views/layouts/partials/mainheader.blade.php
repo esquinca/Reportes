@@ -49,7 +49,7 @@
               </ul>
             </li>
             @endif
-            @if (Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Programador')
+            @if (Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Encuestador')
             <li class="dropdown tasks-menu">
               <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" title="{{ trans('message.notification') }}">
                 <i class="fa fa-flag-o"></i>

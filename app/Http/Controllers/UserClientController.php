@@ -144,7 +144,7 @@ class UserClientController extends Controller
 
         if ($size === 0) {
             DB::table('user_reportes')->insert([
-                ['name' => $nick, 'nombrecomp' => $nombre, 'email' => $mail, 'Privilegio' => 'Cliente' , 'password' => $pass]
+                ['name' => $nick, 'nombrecomp' => $nombre, 'email' => $mail, 'Privilegio' => 'Cliente' , 'password' => $pass, 'avatar' => 'default.jpg']
             ]);
             return 'OK';
         }
@@ -153,7 +153,7 @@ class UserClientController extends Controller
             if ($varnew === "Encuestado") {
                 # inserto
                 DB::table('user_reportes')->insert([
-                    ['name' => $nick, 'nombrecomp' => $nombre, 'email' => $mail, 'Privilegio' => 'Cliente' , 'password' => $pass]
+                    ['name' => $nick, 'nombrecomp' => $nombre, 'email' => $mail, 'Privilegio' => 'Cliente' , 'password' => $pass, 'avatar' => 'default.jpg']
                 ]);
                 return 'OK';
             }else{
@@ -246,7 +246,7 @@ class UserClientController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**

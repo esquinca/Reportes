@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin')
+@if (Auth::user()->Privilegio == 'Programador' || Auth::user()->Privilegio == 'Admin' || Auth::user()->Privilegio == 'Encuestador')
 
   @section('htmlheader_title')
       {{ trans('message.addUserclient') }}

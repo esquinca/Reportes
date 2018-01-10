@@ -116,6 +116,7 @@
               <li class="header">{{ trans('message.navigation') }}</li>
               <li><a href="{{ url('home') }}"><i class='fa fa-bookmark'></i> <span>{{ trans('message.home') }}</span></a></li>
               <li class="header">{{ trans('message.vtexreport') }}</li>
+              <li><a href="{{ url('approvals') }}"><i class='fa fa-check-circle'></i> <span>{{ trans('message.approval') }} {{ trans('message.priv_one') }}</span></a></li>
               <li><a href="{{ url('viewreports') }}"><i class='fa fa-file-text-o'></i> <span>{{{ trans('message.viewreport') }}}</span></a></li>
 
               <li class="header">{{ trans('message.quiz') }}</li>
@@ -125,6 +126,7 @@
 
               <li class="header">{{ trans('message.page') }}</li>
               <li><a href="{{ url('profile') }}"><i class='fa fa-user'></i> <span>{{ trans('message.profile') }}</span></a></li>
+              <li><a href="{{ url('config_two') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settingsb') }}</span></a></li>
               <li><a href="{{ url('config_three') }}"><i class='fa fa-cog'></i> <span>{{ trans('message.settingsc') }}</span></a></li>
 
             </ul>

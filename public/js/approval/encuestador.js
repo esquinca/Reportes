@@ -115,7 +115,7 @@ function tableapproval()
           objdataTable.Nombre_Reporte,
           objdataTable.FechaAutorizacion,
           estadoact,
-        '<a href="javascript:void(0);" onclick="enviarOne(this)" value="'+objdataTable.id+'" class="btn btn-success btn-xs " role="button"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Activar</a><a href="javascript:void(0);" onclick="enviarTwo(this)" value="'+objdataTable.id+'" class="btn btn-warning btn-xs" role="button"><span class="fa fa-hourglass-half" style="margin-right: 4px;"></span>Desactivar</a><a href="javascript:void(0);" onclick="enviarthree(this)" value="'+objdataTable.id+'" class="btn btn-danger btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-ban" style="margin-right: 4px;"></span>Eliminar</a>',
+        '<a href="javascript:void(0);" onclick="enviarOne(this)" value="'+objdataTable.id+'" class="btn btn-success btn-xs " role="button"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Activar</a><a href="javascript:void(0);" onclick="enviarTwo(this)" value="'+objdataTable.id+'" class="btn btn-warning btn-xs" role="button"><span class="fa fa-hourglass-half" style="margin-right: 4px;"></span>Desactivar</a>',
         ]);
       });
 
@@ -238,7 +238,7 @@ function tablaEnc(datajson, table, order){
         objdataTable.Nombre_Reporte,
         objdataTable.FechaAutorizacion,
         estadoact,
-'<a href="javascript:void(0);" onclick="enviarOne(this)" value="'+objdataTable.id+'" class="btn btn-success btn-xs " role="button"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Activar</a><a href="javascript:void(0);" onclick="enviarTwo(this)" value="'+objdataTable.id+'" class="btn btn-warning btn-xs" role="button"><span class="fa fa-hourglass-half" style="margin-right: 4px;"></span>Desactivar</a><a href="javascript:void(0);" onclick="enviarthree(this)" value="'+objdataTable.id+'" class="btn btn-danger btn-xs" role="button" data-target="#EditarServicioSx"><span class="fa fa-ban" style="margin-right: 4px;"></span>Eliminar</a>',
+'<a href="javascript:void(0);" onclick="enviarOne(this)" value="'+objdataTable.id+'" class="btn btn-success btn-xs " role="button"><span class="fa fa-check-square" style="margin-right: 4px;"></span>Activar</a><a href="javascript:void(0);" onclick="enviarTwo(this)" value="'+objdataTable.id+'" class="btn btn-warning btn-xs" role="button"><span class="fa fa-hourglass-half" style="margin-right: 4px;"></span>Desactivar</a>',
       ]);
     });
 }

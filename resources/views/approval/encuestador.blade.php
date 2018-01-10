@@ -32,6 +32,7 @@
   </style>
   @endpush
   @section('main-content')
+  {{ csrf_field() }}
   <div class="modal modal-default fade" id="modal-deltype" data-backdrop="static">
     <div class="modal-dialog" >
       <div class="modal-content">
