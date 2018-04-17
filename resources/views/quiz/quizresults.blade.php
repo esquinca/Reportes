@@ -1214,7 +1214,6 @@
         </div> -->
         <div class="col-md-12">
           <small>Se necesita aplicar un filtro para visualizar datos</small>
-
         </div>
       </div>
       {!! Form::open(['action' => 'QuizResultsController@filter', 'url' => '/result_filter', 'method' => 'post', 'id' => 'filasasw']) !!}
@@ -1232,7 +1231,6 @@
               </select>
             </div>
           </div>
-
           <div id="filter_month" name="filter_month" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
   						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Mes</strong>
@@ -1254,7 +1252,6 @@
               </select>
             </div>
           </div>
-
           <div id="filter_vertical" name="filter_vertical" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
   						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Vertical</strong>
@@ -1268,7 +1265,6 @@
               </select>
             </div>
           </div>
-
           <div id="filter_operation" name="filter_operation" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
   						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Operación</strong>
@@ -1281,8 +1277,6 @@
               </select>
             </div>
           </div>
-
-
           <div id="filter_average" name="filter_average" class="row row-separation control-filter">
             <div class="nowrap col-xs-4 col-sm-2 col-md-1 col-lg-1">
   						 <button id='' type="button" class="boton-mini btn btn-warning" ><i class="fa fa-minus-square" aria-hidden="true"></i></button> <strong>Promedio</strong>
@@ -1295,20 +1289,14 @@
               </select>
             </div>
           </div>
-
-
         </div>
-
         <div class="form-inline row-separation">
-
           <button id="boton-aplica-filtro-visitantes" type="button" class="btn btn-primary">
             <i class="glyphicon glyphicon-filter" aria-hidden="true"></i> Aplicar Filtro
           </button>
-
           <button id='boton_muestra_selectfiltro' type="button" class="btn btn-success">
             <i class="fa fa-plus-square" aria-hidden="true"></i> Añadir Filtro
           </button>
-
           <select id='selectfiltro'class ='selectFiltro' class="form-control">
             <option value="" selected="selected">{{ trans('message.optionOne') }}</option>
             <option value="filter_year">Año</option>
@@ -1317,7 +1305,6 @@
             <option value="filter_operation">Operación</option>
             <option value="filter_average">Promedio General * Mes</option>
           </select>
-
         </div>
       {!! Form::close() !!}
 

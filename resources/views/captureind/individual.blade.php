@@ -193,6 +193,10 @@
                           <input type="number" class="form-control" id="valorgb_trans" name="valorgb_trans" placeholder=" " maxlength="10" title="{{ trans('message.gbtrans')}}">
                         </div>
                       </div>
+                      <div class="form-group">
+                        <a id="" class="btn btn-success" type="submit" onclick="$(this).closest('form').submit()"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
+                        <a id="generateimgClear" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.cancelar')}}</a>
+                      </div>
 
                       <div class="form-group">
                         <a id="generateGbInfo" class="btn btn-success"><i class="fa fa-bookmark-o"></i> {{ trans('message.capturar')}}</a>
